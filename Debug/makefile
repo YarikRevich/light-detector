@@ -12,6 +12,8 @@ RM := rm -rf
 -include Drivers/STM32L4xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
+-include Core/External/Sensor/subdir.mk
+-include Core/External/Proto/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -58,34 +60,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := task4
+BUILD_ARTIFACT_NAME := light_detector
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-task4.elf \
+light_detector.elf \
 
 MAP_FILES += \
-task4.map \
+light_detector.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-task4.list \
+light_detector.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: task4.elf secondary-outputs
+main-build: light_detector.elf secondary-outputs
 
 # Tool invocations
-task4.elf task4.map: $(OBJS) $(USER_OBJS) /Users/yaroslavsvitlytskyi/STM32CubeIDE/workspace_1.14.0/task4/STM32L476RGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "task4.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/yaroslavsvitlytskyi/STM32CubeIDE/workspace_1.14.0/task4/STM32L476RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="task4.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+light_detector.elf light_detector.map: $(OBJS) $(USER_OBJS) /Users/yaroslavsvitlytskyi/STM32CubeIDE/workspace_1.14.0/light_detector/STM32L476RGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-g++ -o "light_detector.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/yaroslavsvitlytskyi/STM32CubeIDE/workspace_1.14.0/light_detector/STM32L476RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="light_detector.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -94,14 +96,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-task4.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "task4.list"
+light_detector.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "light_detector.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) default.size.stdout task4.elf task4.list task4.map
+	-$(RM) default.size.stdout light_detector.elf light_detector.list light_detector.map
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

@@ -48,6 +48,8 @@
 									<listOptionValue builtIn="false" value="../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32L4xx/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
+									<listOptionValue builtIn="false" value="../Core/External/Sensor"/>
+									<listOptionValue builtIn="false" value="../Core/External/Proto"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1702390565" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -203,5 +205,13 @@
 		<scannerConfigBuildInfo instanceId="com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.331241973;com.st.stm32cube.ide.mcu.gnu.managedbuild.config.exe.debug.331241973.;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.1444498056;com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1702390565">
 			<autodiscovery enabled="false" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
+	</storageModule>
+	<storageModule moduleId="refreshScope" versionNumber="2">
+		<configuration configurationName="Debug">
+			<resource resourceType="PROJECT" workspacePath="/light_detector"/>
+		</configuration>
+		<configuration configurationName="Release">
+			<resource resourceType="PROJECT" workspacePath="/light_detector"/>
+		</configuration>
 	</storageModule>
 </cproject>

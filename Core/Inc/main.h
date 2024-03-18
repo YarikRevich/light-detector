@@ -32,6 +32,8 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "tsl2591x.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -47,9 +49,6 @@ extern "C" {
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
 
-#define INT_Pin GPIO_PIN_9
-#define INT_GPIO_Port GPIOA
-
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -62,6 +61,9 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 
 /* USER CODE BEGIN Private defines */
+
+#define INT_Pin GPIO_PIN_9
+#define INT_GPIO_Port GPIOA
 
 /* USER CODE END Private defines */
 

@@ -1,0 +1,19 @@
+# MacOS
+
+.DS_Store
+
+# CMake
+
+cmake-build-debug/
+
+# CubeMX
+
+Debug/
+
+# CubeIDE
+
+.settings/
+
+# IDEA
+
+.idea/
