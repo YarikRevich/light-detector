@@ -31,8 +31,7 @@
 #ifndef _READ_BUFFER_INTERFACE_H_
 #define _READ_BUFFER_INTERFACE_H_
 
-#include <cstdint>
-
+#include <stdint.h>
 
 namespace EmbeddedProto 
 {
