@@ -52,17 +52,16 @@
 #define MAX_COUNT_100MS       (36863)
 #define MAX_COUNT             (65535)
 
-void I2C_WriteByte(uint8_t Cmd, uint8_t value);
-int I2C_ReadByte(uint8_t Cmd);
-int I2C_ReadWord(uint8_t Cmd);
-
+void I2C_WriteByte(uint8_t command, uint8_t value);
+int I2C_ReadByte(uint8_t command);
+int I2C_ReadWord(uint8_t command);
 void TSL2591X_Init();
 void TSL2591X_Reset();
-
 uint16_t TSL2591X_ReadLux();
 void TSL2591X_SetRawInterruptThreshold(uint16_t low, uint16_t high);
 void TSL2591X_SetLuxInterrupt(uint16_t low, uint16_t high);
 uint32_t TSL2591X_ReadFull();
 uint16_t TSL2591X_ReadInfrared();
 uint32_t TSL2591X_ReadVisible();
+
 #endif // LIGHT_DETECTOR_SENSOR_H

@@ -64,20 +64,12 @@ char buffer[50];
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim == &htim16) {
         HAL_UART_Transmit(&huart2, buffer, sizeof(buffer), 25);
-
-//        uint8_t test[] = "tim 16 interrupt\r\n";
-
-//        HAL_UART_Transmit(&huart2, test, sizeof(test), 25);
     }
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   if(GPIO_Pin == GPIO_PIN_13) {
-//	  HAL_UART_Transmit(&huart2, buffer, sizeof(buffer), 25);
-
-
-
 	  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
   } else {
       __NOP();

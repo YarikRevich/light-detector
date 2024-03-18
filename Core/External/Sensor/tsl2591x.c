@@ -1,87 +1,78 @@
 #include "tsl2591x.h"
 
-// uint8_t TSL2591_Gain, TSL2591_Time;
-
-void I2C_WriteByte(uint8_t Cmd, uint8_t value) {
+void I2C_WriteByte(uint8_t command, uint8_t value) {
     uint8_t buffer[1] = {value};
 
     HAL_I2C_Mem_Write(
-            &hi2c1, TSL2591X_ADDRESS, Cmd, I2C_MEMADD_SIZE_8BIT, buffer, 1, 0x20);
+            &hi2c1, TSL2591X_ADDRESS, command, I2C_MEMADD_SIZE_8BIT, buffer, 1, 0x20);
 }
 
-int I2C_ReadByte(uint8_t Cmd) {
+int I2C_ReadByte(uint8_t command) {
     uint8_t buffer[1] = {0};
 
     HAL_I2C_Mem_Read(
-            &hi2c1, TSL2591X_ADDRESS+1, Cmd, I2C_MEMADD_SIZE_8BIT, buffer, 1, 0x20);
+            &hi2c1, TSL2591X_ADDRESS+1, command, I2C_MEMADD_SIZE_8BIT, buffer, 1, 0x20);
 
     return buffer[0];
 }
 
-int I2C_ReadWord(uint8_t Cmd) {
+int I2C_ReadWord(uint8_t command) {
     uint8_t buffer[2] = {0, 0};
 
-    HAL_I2C_Mem_Read(&hi2c1, TSL2591X_ADDRESS+1, Cmd, I2C_MEMADD_SIZE_8BIT, buffer, 2, 0x20);
+    HAL_I2C_Mem_Read(&hi2c1, TSL2591X_ADDRESS+1, command, I2C_MEMADD_SIZE_8BIT, buffer, 2, 0x20);
 
     return ((buffer[1] << 8) | (buffer[0] & 0xff));
 }
 
-static uint8_t TSL2591X_ReadByte(uint8_t src)
-{
+static uint8_t TSL2591X_ReadByte(uint8_t src) {
     return I2C_ReadByte(src | COMMAND_BIT);
 }
 
-static uint16_t TSL2591X_ReadWord(uint8_t src)
-{
+static uint16_t TSL2591X_ReadWord(uint8_t src) {
     return I2C_ReadWord(src | COMMAND_BIT);
 }
 
-static void TSL2591X_WriteByte(uint8_t src, uint8_t Value)
-{
+static void TSL2591X_WriteByte(uint8_t src, uint8_t Value) {
     I2C_WriteByte(src | COMMAND_BIT, Value);
 }
 
-void TSL2591X_Enable()
-{
-    TSL2591X_WriteByte(ENABLE_REGISTER, \
-    ENABLE_AIEN | ENABLE_POWERON | ENABLE_AEN | ENABLE_NPIEN);
+void TSL2591X_Enable() {
+    TSL2591X_WriteByte(ENABLE_REGISTER, ENABLE_AIEN | ENABLE_POWERON | ENABLE_AEN | ENABLE_NPIEN);
 }
 
-void TSL2591X_Disable()
-{
-    TSL2591X_WriteByte(ENABLE_REGISTER, \
-    ENABLE_POWEROFF);
+void TSL2591X_Disable() {
+    TSL2591X_WriteByte(ENABLE_REGISTER,ENABLE_POWEROFF);
 }
 
-void TSL2591X_Reset()
-{
+void TSL2591X_Reset() {
     TSL2591X_WriteByte(CONTROL_REGISTER, SRESET);
 }
 
-uint8_t TSL2591X_GetGain(void)
-{
+uint8_t TSL2591X_GetGain(void) {
     uint8_t data;
 
     data = TSL2591X_ReadByte(CONTROL_REGISTER);
-    TSL2591_Gain = data & 0x30;
 
     return data & 0x30;
 }
 
 
-void TSL2591X_SetGain(uint8_t src)
-{
+void TSL2591X_SetGain(uint8_t src) {
     if(src == LOW_AGAIN || src == MEDIUM_AGAIN || src == HIGH_AGAIN || src == MAX_AGAIN){
-            uint8_t control = TSL2591X_ReadByte(CONTROL_REGISTER);
-            control &= 0xCf;
-            control |= src;
-            TSL2591X_WriteByte(CONTROL_REGISTER, control);
-            TSL2591_Gain = src;
+        uint8_t control = TSL2591X_ReadByte(CONTROL_REGISTER);
+        control &= 0xCf;
+        control |= src;
+        TSL2591X_WriteByte(CONTROL_REGISTER, control);
     }
 }
 
-void TSL2591X_SetIntegralTime(uint8_t src)
-{
+uint8_t TSL2591X_GetIntegralTime(){
+    uint8_t control = TSL2591X_ReadByte(CONTROL_REGISTER);
+
+    return control & 0x07;
+}
+
+void TSL2591X_SetIntegralTime(uint8_t src) {
     if(src < 0x06){
         uint8_t control = TSL2591X_ReadByte(CONTROL_REGISTER);
         control &= 0xf8;
@@ -100,67 +91,72 @@ uint16_t TSL2591X_ReadChannel1() {
 }
 
 uint16_t TSL2591_ReadLux() {
-    uint16_t max_counts,channel_0,channel_1;
-
     TSL2591X_Enable();
-    for(uint8_t i = 0; i < TSL2591_Time + 2; i++){
+
+    uint8_t externalIntegralTime = TSL2591X_GetIntegralTime();
+
+    for(uint8_t i = 0; i < externalIntegralTime + 2; i++){
         HAL_Delay(100);
     }
-    channel_0 = TSL2591X_ReadChannel0();
-    channel_1 = TSL2591X_ReadChannel1();
+
+    uint16_t channel0 = TSL2591X_ReadChannel0();
+    uint16_t channel1 = TSL2591X_ReadChannel1();
     TSL2591X_Disable();
 
     TSL2591X_Enable();
     TSL2591X_WriteByte(0xE7, 0x13);
     TSL2591X_Disable();
 
-    uint16_t atime = 100 * TSL2591_Time + 100;
-    if(TSL2591_Time == ATIME_100MS){
-        max_counts = MAX_COUNT_100MS;
+    uint16_t maxCounts;
+
+    if(externalIntegralTime == ATIME_100MS){
+        maxCounts = MAX_COUNT_100MS;
     }else{
-        max_counts = MAX_COUNT;
+        maxCounts = MAX_COUNT;
     }
 
-    uint8_t gain_t;
-    if (channel_0 >= max_counts || channel_1 >= max_counts){
-            gain_t = TSL2591X_GetGain();
-            if(gain_t != LOW_AGAIN){
-                gain_t = ((gain_t >> 4) - 1) << 4;
+    uint8_t externalGain;
 
-                TSL2591X_SetGain(gain_t);
+    if (channel0 >= maxCounts || channel1 >= maxCounts){
+            externalGain = TSL2591X_GetGain();
 
-                channel_0 = 0;
-                channel_1 = 0;
-                while(channel_0 <= 0 || channel_1 <=0){
-                    channel_0 = TSL2591X_ReadChannel0();
-                    channel_1 = TSL2591X_ReadChannel1();
-                }
-
-                HAL_Delay(100);
-            }else{
+            if (externalGain == LOW_AGAIN) {
                 return 0;
             }
-    }
-    double again;
-    again = 1.0;
-    if(TSL2591_Gain == MEDIUM_AGAIN){
-        again = 25.0;
-    }else if(TSL2591_Gain == HIGH_AGAIN){
-        again = 428.0;
-    }else if(TSL2591_Gain == MAX_AGAIN){
-        again = 9876.0;
-    }
-    double Cpl;
-    uint16_t lux1,lux2=0;
-    
-    Cpl = (atime * again) / LUX_DF;
-    lux1 = (int)((channel_0 - (2 * channel_1)) / Cpl);
 
-    if(lux1 > lux2){
-        return lux1;
-    } else {
-        return lux2;
+            externalGain = ((externalGain >> 4) - 1) << 4;
+
+            TSL2591X_SetGain(externalGain);
+
+            channel0 = 0;
+            channel1 = 0;
+            while(channel0 <= 0 || channel1 <=0){
+                channel0 = TSL2591X_ReadChannel0();
+                channel1 = TSL2591X_ReadChannel1();
+            }
+
+            HAL_Delay(100);
     }
+
+    double gain = 1.0;
+
+    externalGain = TSL2591X_GetGain();
+
+    if(externalGain == MEDIUM_AGAIN){
+        gain = 25.0;
+    }else if(externalGain == HIGH_AGAIN){
+        gain = 428.0;
+    }else if(externalGain == MAX_AGAIN){
+        gain = 9876.0;
+    }
+
+    uint16_t lux1 = (int)((channel0 - (2 * channel1)) / (((100 * externalIntegralTime + 100) * gain) / LUX_DF));
+
+    if (lux1 <= 0) {
+        return 0;
+    }
+
+    return lux1;
 }
 
 void TSL2591X_SetRawInterruptThreshold(uint16_t low, uint16_t high) {
@@ -180,22 +176,26 @@ void TSL2591X_SetRawInterruptThreshold(uint16_t low, uint16_t high) {
 }
 
 void TSL2591X_SetLuxInterrupt(uint16_t low, uint16_t high) {
-    double again = 1.0;
+    double gain = 1.0;
 
-    if(TSL2591_Gain == MEDIUM_AGAIN){
-        again = 25.0;
-    }else if(TSL2591_Gain == HIGH_AGAIN){
-        again = 428.0;
-    }else if(TSL2591_Gain == MAX_AGAIN){
-        again = 9876.0;
+    uint8_t externalGain = TSL2591X_GetGain();
+
+    if(externalGain == MEDIUM_AGAIN){
+        gain = 25.0;
+    }else if(externalGain == HIGH_AGAIN){
+        gain = 428.0;
+    }else if(externalGain == MAX_AGAIN){
+        gain = 9876.0;
     }
 
-    double cpl = ((100 * TSL2591_Time + 100) * again) / LUX_DF;
+    uint8_t externalIntegralTime = TSL2591X_GetIntegralTime();
+
+    double cpl = ((100 * externalIntegralTime + 100) * gain) / LUX_DF;
 
     uint16_t channel1 = TSL2591X_ReadChannel1();
 
-    uint16_t highLux = (int)(cpl * high)+ 2 * channel1 - 1;
-    uint16_t lowLux = (int)(cpl * low)+ 2 * channel1 + 1;
+    uint16_t highLux = (int)(cpl * high) + 2 * channel1 - 1;
+    uint16_t lowLux = (int)(cpl * low) + 2 * channel1 + 1;
 		
     TSL2591X_Enable();
     TSL2591X_WriteByte(AILTL_REGISTER, lowLux & 0xFF);
