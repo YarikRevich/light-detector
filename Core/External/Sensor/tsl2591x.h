@@ -1,5 +1,5 @@
-#ifndef _TSL2591_H_
-#define _TSL2591_H_
+#ifndef LIGHT_DETECTOR_SENSOR_H
+#define LIGHT_DETECTOR_SENSOR_H
 
 #include "i2c.h"
 #include <stdint.h>
@@ -65,4 +65,4 @@ void TSL2591X_SetLuxInterrupt(uint16_t low, uint16_t high);
 uint32_t TSL2591X_ReadFull();
 uint16_t TSL2591X_ReadInfrared();
 uint32_t TSL2591X_ReadVisible();
-#endif
+#endif // LIGHT_DETECTOR_SENSOR_H

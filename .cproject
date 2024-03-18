@@ -50,6 +50,9 @@
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
 									<listOptionValue builtIn="false" value="../Core/External/Sensor"/>
 									<listOptionValue builtIn="false" value="../Core/External/Proto"/>
+									<listOptionValue builtIn="false" value="../Core/External/Tools/Indicator"/>
+									<listOptionValue builtIn="false" value="../Core/External/Proto/Generated"/>
+									<listOptionValue builtIn="false" value="../ThirdParty"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1702390565" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
