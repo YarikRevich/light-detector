@@ -4,14 +4,14 @@ void I2C_WriteByte(uint8_t command, uint8_t value) {
     uint8_t buffer[1] = {value};
 
     HAL_I2C_Mem_Write(
-            &hi2c1, TSL2591X_ADDRESS, command, I2C_MEMADD_SIZE_8BIT, buffer, 1, 0x20);
+            &hi2c1, TSL2591X_ADDRESS, command, I2C_MEMADD_SIZE_8BIT, buffer, 1, I2C_TIMEOUT);
 }
 
 int I2C_ReadByte(uint8_t command) {
     uint8_t buffer[1] = {0};
 
     HAL_I2C_Mem_Read(
-            &hi2c1, TSL2591X_ADDRESS+1, command, I2C_MEMADD_SIZE_8BIT, buffer, 1, 0x20);
+            &hi2c1, TSL2591X_ADDRESS+1, command, I2C_MEMADD_SIZE_8BIT, buffer, 1, I2C_TIMEOUT);
 
     return buffer[0];
 }
@@ -19,7 +19,7 @@ int I2C_ReadByte(uint8_t command) {
 int I2C_ReadWord(uint8_t command) {
     uint8_t buffer[2] = {0, 0};
 
-    HAL_I2C_Mem_Read(&hi2c1, TSL2591X_ADDRESS+1, command, I2C_MEMADD_SIZE_8BIT, buffer, 2, 0x20);
+    HAL_I2C_Mem_Read(&hi2c1, TSL2591X_ADDRESS+1, command, I2C_MEMADD_SIZE_8BIT, buffer, 2, I2C_TIMEOUT);
 
     return ((buffer[1] << 8) | (buffer[0] & 0xff));
 }
@@ -78,7 +78,6 @@ void TSL2591X_SetIntegralTime(uint8_t src) {
         control &= 0xf8;
         control |= src;
         TSL2591X_WriteByte(CONTROL_REGISTER, control);
-        TSL2591_Time = src;
     }
 }
 

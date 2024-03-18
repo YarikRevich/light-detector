@@ -52,6 +52,8 @@
 #define MAX_COUNT_100MS       (36863)
 #define MAX_COUNT             (65535)
 
+#define I2C_TIMEOUT (0x20)
+
 void I2C_WriteByte(uint8_t command, uint8_t value);
 int I2C_ReadByte(uint8_t command);
 int I2C_ReadWord(uint8_t command);
