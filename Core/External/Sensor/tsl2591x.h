@@ -136,7 +136,7 @@ public:
      * @param low - given low state.
      * @param high - given high state.
      */
-    static void set_raw_interrupt_threshold(uint16_t low, uint16_t high);
+    static void invoke_raw_interrupt_threshold(uint16_t low, uint16_t high);
 
     /**
      * Sets LUX interruption configurations.
@@ -144,7 +144,7 @@ public:
      * @param low - given low state.
      * @param high - given high state.
      */
-    static void set_lux_interrupt(uint16_t low, uint16_t high);
+    static void invoke_lux_interrupt(uint16_t low, uint16_t high);
 private:
     /**
      * Indicated that the device has already been initialized.

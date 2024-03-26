@@ -3,11 +3,9 @@
 
 #include "write_buffer.h"
 
-//WriteBuffer()
-//        : bytes_used_(0),
-//          bytes_{0U} {
-//
-//}
+WriteBuffer::WriteBuffer() : bytes_used_(0), bytes_{0U} {
+
+}
 //
 //virtual ~WriteBuffer() = default;
 //

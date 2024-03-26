@@ -140,7 +140,7 @@ uint32_t TSL2591X::read_visible() {
     return ((channel1 << 16) | channel0) - channel1;
 }
 
-void TSL2591X::set_raw_interrupt_threshold(uint16_t low, uint16_t high) {
+void TSL2591X::invoke_raw_interrupt_threshold(uint16_t low, uint16_t high) {
     enable();
 
     write_byte(AILTL_REGISTER, low & 0xFF);
@@ -158,7 +158,7 @@ void TSL2591X::set_raw_interrupt_threshold(uint16_t low, uint16_t high) {
     disable();
 }
 
-void TSL2591X::set_lux_interrupt(uint16_t low, uint16_t high) {
+void TSL2591X::invoke_lux_interrupt(uint16_t low, uint16_t high) {
     double gain = 1.0;
 
     uint8_t externalGain = get_gain();

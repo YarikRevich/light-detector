@@ -49,7 +49,7 @@ else ()
     add_compile_options(-Og -g)
 endif ()
 
-include_directories(Core/Inc Drivers/STM32L4xx_HAL_Driver/Inc Drivers/STM32L4xx_HAL_Driver/Inc/Legacy Drivers/CMSIS/Device/ST/STM32L4xx/Include Drivers/CMSIS/Include Core/External/Sensor Core/External/Proto Core/External/Tools/Indicator Core/External/Proto/Generated ThirdParty Core/External/Proto/Buffer Core/External/RingBuffer Core/External/Timer Core/External/State)
+include_directories(Core/Inc Core/External/Sensor Core/External/Proto Core/External/Proto/Generated Core/External/Proto/Buffer Core/External/Tools/Indicator Core/External/Scheduler Core/External/Scheduler/State ThirdParty Drivers/STM32L4xx_HAL_Driver/Inc Drivers/STM32L4xx_HAL_Driver/Inc/Legacy Drivers/CMSIS/Device/ST/STM32L4xx/Include Drivers/CMSIS/Include)
 
 add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx)
 

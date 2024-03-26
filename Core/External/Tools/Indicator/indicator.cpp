@@ -1,29 +1,40 @@
-//
-// Created by Yaroslav Svitlytskyi on 18.03.2024.
-//
-
 #include "indicator.h"
 
-void Indicator::handle_check() {
+void Indicator::handle_status_check() {
 
 }
 
-/**
-     * Indicated initialization process success.
-     */
-static void toggle_initialization_success();
+void Indicator::toggle_initialization_success() {
+    for (int i = 0; i < 4; i++) {
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+        HAL_Delay(1000);
+    }
+};
 
-/**
- * Indicated initialization process failure.
- */
-static void toggle_initialization_failure();
+void Indicator::toggle_initialization_failure() {
+    for (int i = 0; i < 4; i++) {
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+        HAL_Delay(200);
+    }
+};
 
-/**
- * Indicated operation action success.
- */
-static void toggle_action_success();
+void Indicator::toggle_action_success() {
+    for (int i = 0; i < 2; i++) {
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+        HAL_Delay(1000);
+    }
+};
 
-/**
- * Indicated operation action failure.
- */
-static void toggle_action_failure();
+void Indicator::toggle_action_failure() {
+    for (int i = 0; i < 2; i++) {
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+        HAL_Delay(200);
+    }
+};
+
+void Indicator::toggle_invalid_request() {
+    for (int i = 0; i < 3; i++) {
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+        HAL_Delay(500);
+    }
+}
