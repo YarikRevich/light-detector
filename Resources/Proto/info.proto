@@ -1,0 +1,24 @@
+// Contains API declaration for board information bus.
+
+syntax = "proto3";
+
+package light_detector;
+
+// Represents all the available info retrieval options, which can be modified via info bus.
+enum InfoType {
+    GetGain = 0;
+    GetIntegralTime = 1;
+}
+
+// Represents info bus request send from the client to the board.
+message InfoBusRequest {
+    InfoType infoType = 1;
+}
+
+// Represents info bus response send to the client from the board.
+message InfoBusResponse {
+    uint32 deviceId = 1;
+    InfoType infoType = 2;
+    uint32 value = 3;
+    uint32 nonce = 4;
+}

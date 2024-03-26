@@ -44,17 +44,27 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-char buffer[50];
-
+/**
+ * Represents timer callback.
+ *
+ * @param htim - incoming timer tick data.
+ */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim == &htim16) {
-        HAL_UART_Transmit(&huart2, buffer, sizeof(buffer), 25);
+        Timer::handle();
+    } else {
+        __NOP();
     }
 }
 
+/**
+ * Represents button click callback.
+ *
+ * @param GPIO_Pin - incoming button click event data.
+ */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     if (GPIO_Pin == GPIO_PIN_13) {
-        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+        State::handle_check();
     } else {
         __NOP();
     }
@@ -95,25 +105,26 @@ int main(void) {
     MX_TIM16_Init();
     /* USER CODE BEGIN 2 */
 
-//    HAL_TIM_Base_Start_IT(&htim16);
-
-    TSL2591X_Init();
+    HAL_TIM_Base_Start_IT(&htim16);
 
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while (1) {
+        if (!TSL2591X::is_configured()) {
+            if (TSL2591X::is_available()) {
+                TSL2591X::init();
+
+                Indicator::toggle_initialization_success();
+            } else {
+                Indicator::toggle_initialization_failure();
+            }
+        }
+
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
-
-//    	sprintf(buffer, "%d\r\n", TSL2591_ReadLux());
-//    	TSL2591X_SetLuxInterrupt(50,200);
-//
-//    	printf("Infrared light: %d\r\n", TSL2591_ReadInfrared());
-//    	printf("Visible light: %d\r\n", TSL2591_ReadVisible());
-//    	printf("Full spectrum (IR + visible) light: %d\r\n\r\n", TSL2591X_ReadFull());
     }
     /* USER CODE END 3 */
 }

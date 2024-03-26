@@ -32,6 +32,9 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "timer.h"
+#include "state.h"
+#include "indicator.h"
 #include "tsl2591x.h"
 
 /* USER CODE END Includes */

@@ -25,8 +25,8 @@ endif
 
 .PHONY: generate
 generate: ## Generate prerequisites
-	@protoc --plugin=/Volumes/Files/embedded/university/techno/project/deps/EmbeddedProto -I./Resources/Proto --eams_out=./Core/External/Proto/Generated test.proto
-	@protoc -I./Resources/Proto --python_out=./Scripts/graph/proto test.proto
+	@protoc -I./Resources/Proto --python_out=./Scripts/graph/proto data.proto info.proto settings.proto
+	@protoc --plugin=/Volumes/Files/embedded/university/techno/project/deps/EmbeddedProto -I./Resources/Proto --eams_out=./Core/External/Proto/Generated data.proto info.proto settings.proto
 
 .PHONY: build
 build: ## Build the IOC project
