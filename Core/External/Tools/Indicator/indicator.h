@@ -1,7 +1,6 @@
 #ifndef LIGHT_DETECTOR_INDICATOR_H
 #define LIGHT_DETECTOR_INDICATOR_H
 
-#include <mutex>
 #include "state.h"
 #include "gpio.h"
 
@@ -40,7 +39,7 @@ public:
      */
     static void toggle_invalid_request();
 private:
-    
+
 };
 
 #endif //LIGHT_DETECTOR_INDICATOR_H

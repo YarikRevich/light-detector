@@ -5,17 +5,15 @@ void Scheduler::handle_tick() {
     handle_response();
 }
 
-void Scheduler::handle_status_check() {
-
-}
-
-void Scheduler::handle_request() {}() {
+void Scheduler::handle_request() {
     if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_RXNE) == SET) {
-        HAL_UART_Receive(&huart2, (int16_t *) &CAM_reso_W, 2, 1000);
+        uint8_t buffer[100];
+
+        HAL_UART_Receive(&huart2, buffer, sizeof(buffer), 1000);
     }
 }
 
-void Scheduler::handle_response() {}() {
+void Scheduler::handle_response() {
     if (TSL2591X::is_configured()) {
         TSL2591X::read_lux();
 
@@ -26,4 +24,8 @@ void Scheduler::handle_response() {}() {
 //    	printf("Visible light: %d\r\n", TSL2591_ReadVisible());
 //    	printf("Full spectrum (IR + visible) light: %d\r\n\r\n", TSL2591X_ReadFull());
     }
+}
+
+void Scheduler::handle_status_check() {
+
 }

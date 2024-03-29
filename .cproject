@@ -53,6 +53,7 @@
 									<listOptionValue builtIn="false" value="../Core/External/Tools/Indicator"/>
 									<listOptionValue builtIn="false" value="../Core/External/Scheduler"/>
 									<listOptionValue builtIn="false" value="../Core/External/Scheduler/State"/>
+									<listOptionValue builtIn="false" value="../Core/External/Tools/RingBuffer"/>
 									<listOptionValue builtIn="false" value="../ThirdParty"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32L4xx_HAL_Driver/Inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy"/>
@@ -78,6 +79,7 @@
 									<listOptionValue builtIn="false" value="../Core/External/Tools/Indicator"/>
 									<listOptionValue builtIn="false" value="../Core/External/Scheduler"/>
 									<listOptionValue builtIn="false" value="../Core/External/Scheduler/State"/>
+									<listOptionValue builtIn="false" value="../Core/External/Tools/RingBuffer"/>
 									<listOptionValue builtIn="false" value="../ThirdParty"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32L4xx_HAL_Driver/Inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy"/>

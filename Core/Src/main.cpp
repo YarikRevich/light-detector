@@ -50,11 +50,15 @@ void SystemClock_Config(void);
  * @param htim - incoming timer tick data.
  */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+    HAL_TIM_Base_Stop_IT(&htim16);
+
     if (htim == &htim16) {
         Scheduler::handle_tick();
     } else {
         __NOP();
     }
+
+    HAL_TIM_Base_Start_IT(&htim16);
 }
 
 /**
@@ -105,8 +109,6 @@ int main(void) {
     MX_TIM16_Init();
     /* USER CODE BEGIN 2 */
 
-    HAL_TIM_Base_Start_IT(&htim16);
-
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -117,6 +119,8 @@ int main(void) {
                 TSL2591X::init();
 
                 Indicator::toggle_initialization_success();
+
+                HAL_TIM_Base_Start_IT(&htim16);
             } else {
                 Indicator::toggle_initialization_failure();
             }
