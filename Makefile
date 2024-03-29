@@ -7,18 +7,22 @@ help:
 
 .PHONY: clean
 clean: ## Cleans generated core files
-ifneq ("$(wildcard $(./Debug))","")
+ifneq (,$(wildcard ./Debug))
 	@rm -r ./Debug
+
+	@echo "Debug directory has been successfully deleted"
 else
 	@echo "Debug directory does not exist"
 endif
 
-ifneq ("$(wildcard $(./Core/Src/main.c))","")
-    @cd ./Core/Src && \
-    		@find . -name "*.cpp" | xargs -I {} rm {} \
-            for file in *; do \
-                mv "$$file" "`echo $$file | sed 's/\.c$$/.cpp/'`"; \
-            done
+ifneq (,$(wildcard ./Core/Src/main.c))
+	@find ./Core/Src -name "*.cpp" | xargs -I {} rm {}
+	@cd ./Core/Src && \
+		for file in *; do \
+			mv "$$file" "`echo $$file | sed 's/\.c$$/.cpp/'`"; \
+		done
+
+	@echo "*.c files rename operation was performed successfully"
 else
 	@echo "*.c files intented to be renamed don't exist"
 endif
@@ -31,3 +35,6 @@ generate: ## Generate prerequisites
 .PHONY: build
 build: ## Build the IOC project
 	@cd ./code/go/0chain.net/authorizer/ && go mod download && go mod tidy && CGO_ENABLED=1 go test -v -tags bn256 ./...
+
+.PHONY: all
+all: generate build
