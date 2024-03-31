@@ -13,13 +13,13 @@ enum SettingsType {
     SetIntegralTime = 4;
 }
 
-// Represents settings bus request send from the client to the board.
-message SettingsBusRequest {
+// Represents settings bus request content send from the client to the board.
+message SettingsBusRequestContent {
     SettingsType settingsType = 1;
 }
 
-// Represents settings bus response send to the client from the board.
-message SettingsBusResponse {
+// Represents settings bus response content send to the client from the board.
+message SettingsBusResponseContent {
     uint32 deviceId = 1;
     SettingsType settingsType = 2;
     bool result = 3;

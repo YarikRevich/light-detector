@@ -1,21 +1,21 @@
-#ifndef LIGHT_DETECTOR_WRITE_BUFFER_H
-#define LIGHT_DETECTOR_WRITE_BUFFER_H
+#ifndef LIGHT_DETECTOR_RESPONSE_BUFFER_H
+#define LIGHT_DETECTOR_RESPONSE_BUFFER_H
 
 #include <WriteBufferInterface.h>
 #include <stdio.h>
 #include <cstring>
 
 /**
- * Represents write buffer implementation for protocol buffers serialization.
+ * Represents response buffer implementation for protocol buffers serialization.
  *
  * @tparam BUFFER_SIZE
  */
 template<uint32_t BUFFER_SIZE>
-class WriteBuffer : public EmbeddedProto::WriteBufferInterface {
+class ResponseBuffer : public EmbeddedProto::WriteBufferInterface {
 public:
-    WriteBuffer();
+    ResponseBuffer();
 
-    virtual ~WriteBuffer() = default;
+    virtual ~ResponseBuffer() = default;
 
     /**
      * @see EmbeddedProto::WriteBufferInterface
@@ -79,4 +79,4 @@ private:
     uint8_t bytes[BUFFER_SIZE];
 };
 
-#endif //LIGHT_DETECTOR_WRITE_BUFFER_H
+#endif //LIGHT_DETECTOR_RESPONSE_BUFFER_H

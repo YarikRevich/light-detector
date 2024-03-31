@@ -1,11 +1,11 @@
 /*
  *  This file is generated with Embedded Proto, PLEASE DO NOT EDIT!
- *  source: info.proto
+ *  source: Content/info.proto
  */
 
 // This file is generated. Please do not edit!
-#ifndef INFO_H
-#define INFO_H
+#ifndef CONTENT_INFO_H
+#define CONTENT_INFO_H
 
 #include <cstdint>
 #include <MessageInterface.h>
@@ -29,21 +29,21 @@ enum class InfoType : uint32_t
   GetIntegralTime = 1
 };
 
-class InfoBusRequest final: public ::EmbeddedProto::MessageInterface
+class InfoBusRequestContent final: public ::EmbeddedProto::MessageInterface
 {
   public:
-    InfoBusRequest() = default;
-    InfoBusRequest(const InfoBusRequest& rhs )
+    InfoBusRequestContent() = default;
+    InfoBusRequestContent(const InfoBusRequestContent& rhs )
     {
       set_infoType(rhs.get_infoType());
     }
 
-    InfoBusRequest(const InfoBusRequest&& rhs ) noexcept
+    InfoBusRequestContent(const InfoBusRequestContent&& rhs ) noexcept
     {
       set_infoType(rhs.get_infoType());
     }
 
-    ~InfoBusRequest() override = default;
+    ~InfoBusRequestContent() override = default;
 
     enum class FieldNumber : uint32_t
     {
@@ -51,13 +51,13 @@ class InfoBusRequest final: public ::EmbeddedProto::MessageInterface
       INFOTYPE = 1
     };
 
-    InfoBusRequest& operator=(const InfoBusRequest& rhs)
+    InfoBusRequestContent& operator=(const InfoBusRequestContent& rhs)
     {
       set_infoType(rhs.get_infoType());
       return *this;
     }
 
-    InfoBusRequest& operator=(const InfoBusRequest&& rhs) noexcept
+    InfoBusRequestContent& operator=(const InfoBusRequestContent&& rhs) noexcept
     {
       set_infoType(rhs.get_infoType());
       return *this;
@@ -230,11 +230,11 @@ class InfoBusRequest final: public ::EmbeddedProto::MessageInterface
 
 };
 
-class InfoBusResponse final: public ::EmbeddedProto::MessageInterface
+class InfoBusResponseContent final: public ::EmbeddedProto::MessageInterface
 {
   public:
-    InfoBusResponse() = default;
-    InfoBusResponse(const InfoBusResponse& rhs )
+    InfoBusResponseContent() = default;
+    InfoBusResponseContent(const InfoBusResponseContent& rhs )
     {
       set_deviceId(rhs.get_deviceId());
       set_infoType(rhs.get_infoType());
@@ -242,7 +242,7 @@ class InfoBusResponse final: public ::EmbeddedProto::MessageInterface
       set_nonce(rhs.get_nonce());
     }
 
-    InfoBusResponse(const InfoBusResponse&& rhs ) noexcept
+    InfoBusResponseContent(const InfoBusResponseContent&& rhs ) noexcept
     {
       set_deviceId(rhs.get_deviceId());
       set_infoType(rhs.get_infoType());
@@ -250,7 +250,7 @@ class InfoBusResponse final: public ::EmbeddedProto::MessageInterface
       set_nonce(rhs.get_nonce());
     }
 
-    ~InfoBusResponse() override = default;
+    ~InfoBusResponseContent() override = default;
 
     enum class FieldNumber : uint32_t
     {
@@ -261,7 +261,7 @@ class InfoBusResponse final: public ::EmbeddedProto::MessageInterface
       NONCE = 4
     };
 
-    InfoBusResponse& operator=(const InfoBusResponse& rhs)
+    InfoBusResponseContent& operator=(const InfoBusResponseContent& rhs)
     {
       set_deviceId(rhs.get_deviceId());
       set_infoType(rhs.get_infoType());
@@ -270,7 +270,7 @@ class InfoBusResponse final: public ::EmbeddedProto::MessageInterface
       return *this;
     }
 
-    InfoBusResponse& operator=(const InfoBusResponse&& rhs) noexcept
+    InfoBusResponseContent& operator=(const InfoBusResponseContent&& rhs) noexcept
     {
       set_deviceId(rhs.get_deviceId());
       set_infoType(rhs.get_infoType());
@@ -516,4 +516,4 @@ class InfoBusResponse final: public ::EmbeddedProto::MessageInterface
 };
 
 } // End of namespace light_detector
-#endif // INFO_H
+#endif // CONTENT_INFO_H

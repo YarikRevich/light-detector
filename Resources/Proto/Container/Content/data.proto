@@ -12,13 +12,13 @@ enum DataType {
     Visible = 3;
 }
 
-// Represents data bus request send from the client to the board.
-message DataBusRequest {
+// Represents data bus request content send from the client to the board.
+message DataBusRequestContent {
     DataType dataType = 1;
 }
 
-// Represents data bus response send to the client from the board.
-message DataBusResponse {
+// Represents data bus response content send to the client from the board.
+message DataBusResponseContent {
     uint32 deviceId = 1;
     DataType dataType = 2;
     uint32 value = 3;

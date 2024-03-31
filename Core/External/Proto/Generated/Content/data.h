@@ -1,11 +1,11 @@
 /*
  *  This file is generated with Embedded Proto, PLEASE DO NOT EDIT!
- *  source: settings.proto
+ *  source: Content/data.proto
  */
 
 // This file is generated. Please do not edit!
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef CONTENT_DATA_H
+#define CONTENT_DATA_H
 
 #include <cstdint>
 #include <MessageInterface.h>
@@ -23,64 +23,63 @@
 
 namespace light_detector {
 
-enum class SettingsType : uint32_t
+enum class DataType : uint32_t
 {
-  Enable = 0,
-  Disable = 1,
-  Reset = 2,
-  SetGain = 3,
-  SetIntegralTime = 4
+  Raw = 0,
+  Full = 1,
+  Infrared = 2,
+  Visible = 3
 };
 
-class SettingsBusRequest final: public ::EmbeddedProto::MessageInterface
+class DataBusRequestContent final: public ::EmbeddedProto::MessageInterface
 {
   public:
-    SettingsBusRequest() = default;
-    SettingsBusRequest(const SettingsBusRequest& rhs )
+    DataBusRequestContent() = default;
+    DataBusRequestContent(const DataBusRequestContent& rhs )
     {
-      set_settingsType(rhs.get_settingsType());
+      set_dataType(rhs.get_dataType());
     }
 
-    SettingsBusRequest(const SettingsBusRequest&& rhs ) noexcept
+    DataBusRequestContent(const DataBusRequestContent&& rhs ) noexcept
     {
-      set_settingsType(rhs.get_settingsType());
+      set_dataType(rhs.get_dataType());
     }
 
-    ~SettingsBusRequest() override = default;
+    ~DataBusRequestContent() override = default;
 
     enum class FieldNumber : uint32_t
     {
       NOT_SET = 0,
-      SETTINGSTYPE = 1
+      DATATYPE = 1
     };
 
-    SettingsBusRequest& operator=(const SettingsBusRequest& rhs)
+    DataBusRequestContent& operator=(const DataBusRequestContent& rhs)
     {
-      set_settingsType(rhs.get_settingsType());
+      set_dataType(rhs.get_dataType());
       return *this;
     }
 
-    SettingsBusRequest& operator=(const SettingsBusRequest&& rhs) noexcept
+    DataBusRequestContent& operator=(const DataBusRequestContent&& rhs) noexcept
     {
-      set_settingsType(rhs.get_settingsType());
+      set_dataType(rhs.get_dataType());
       return *this;
     }
 
-    static constexpr char const* SETTINGSTYPE_NAME = "settingsType";
-    inline void clear_settingsType() { settingsType_.clear(); }
-    inline void set_settingsType(const SettingsType& value) { settingsType_ = value; }
-    inline void set_settingsType(const SettingsType&& value) { settingsType_ = value; }
-    inline const SettingsType& get_settingsType() const { return settingsType_.get(); }
-    inline SettingsType settingsType() const { return settingsType_.get(); }
+    static constexpr char const* DATATYPE_NAME = "dataType";
+    inline void clear_dataType() { dataType_.clear(); }
+    inline void set_dataType(const DataType& value) { dataType_ = value; }
+    inline void set_dataType(const DataType&& value) { dataType_ = value; }
+    inline const DataType& get_dataType() const { return dataType_.get(); }
+    inline DataType dataType() const { return dataType_.get(); }
 
 
     ::EmbeddedProto::Error serialize(::EmbeddedProto::WriteBufferInterface& buffer) const override
     {
       ::EmbeddedProto::Error return_value = ::EmbeddedProto::Error::NO_ERRORS;
 
-      if((static_cast<SettingsType>(0) != settingsType_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
+      if((static_cast<DataType>(0) != dataType_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
       {
-        return_value = settingsType_.serialize_with_id(static_cast<uint32_t>(FieldNumber::SETTINGSTYPE), buffer, false);
+        return_value = dataType_.serialize_with_id(static_cast<uint32_t>(FieldNumber::DATATYPE), buffer, false);
       }
 
       return return_value;
@@ -99,8 +98,8 @@ class SettingsBusRequest final: public ::EmbeddedProto::MessageInterface
         id_tag = static_cast<FieldNumber>(id_number);
         switch(id_tag)
         {
-          case FieldNumber::SETTINGSTYPE:
-            return_value = settingsType_.deserialize_check_type(buffer, wire_type);
+          case FieldNumber::DATATYPE:
+            return_value = dataType_.deserialize_check_type(buffer, wire_type);
             break;
 
           case FieldNumber::NOT_SET:
@@ -132,7 +131,7 @@ class SettingsBusRequest final: public ::EmbeddedProto::MessageInterface
 
     void clear() override
     {
-      clear_settingsType();
+      clear_dataType();
 
     }
 
@@ -141,8 +140,8 @@ class SettingsBusRequest final: public ::EmbeddedProto::MessageInterface
       char const* name = nullptr;
       switch(fieldNumber)
       {
-        case FieldNumber::SETTINGSTYPE:
-          name = SETTINGSTYPE_NAME;
+        case FieldNumber::DATATYPE:
+          name = DATATYPE_NAME;
           break;
         default:
           name = "Invalid FieldNumber";
@@ -204,7 +203,7 @@ class SettingsBusRequest final: public ::EmbeddedProto::MessageInterface
         left_chars.size -= n_chars_used;
       }
 
-      left_chars = settingsType_.to_string(left_chars, indent_level + 2, SETTINGSTYPE_NAME, true);
+      left_chars = dataType_.to_string(left_chars, indent_level + 2, DATATYPE_NAME, true);
   
       if( 0 == indent_level) 
       {
@@ -229,55 +228,55 @@ class SettingsBusRequest final: public ::EmbeddedProto::MessageInterface
   private:
 
 
-      EmbeddedProto::enumeration<SettingsType> settingsType_ = static_cast<SettingsType>(0);
+      EmbeddedProto::enumeration<DataType> dataType_ = static_cast<DataType>(0);
 
 };
 
-class SettingsBusResponse final: public ::EmbeddedProto::MessageInterface
+class DataBusResponseContent final: public ::EmbeddedProto::MessageInterface
 {
   public:
-    SettingsBusResponse() = default;
-    SettingsBusResponse(const SettingsBusResponse& rhs )
+    DataBusResponseContent() = default;
+    DataBusResponseContent(const DataBusResponseContent& rhs )
     {
       set_deviceId(rhs.get_deviceId());
-      set_settingsType(rhs.get_settingsType());
-      set_result(rhs.get_result());
+      set_dataType(rhs.get_dataType());
+      set_value(rhs.get_value());
       set_nonce(rhs.get_nonce());
     }
 
-    SettingsBusResponse(const SettingsBusResponse&& rhs ) noexcept
+    DataBusResponseContent(const DataBusResponseContent&& rhs ) noexcept
     {
       set_deviceId(rhs.get_deviceId());
-      set_settingsType(rhs.get_settingsType());
-      set_result(rhs.get_result());
+      set_dataType(rhs.get_dataType());
+      set_value(rhs.get_value());
       set_nonce(rhs.get_nonce());
     }
 
-    ~SettingsBusResponse() override = default;
+    ~DataBusResponseContent() override = default;
 
     enum class FieldNumber : uint32_t
     {
       NOT_SET = 0,
       DEVICEID = 1,
-      SETTINGSTYPE = 2,
-      RESULT = 3,
+      DATATYPE = 2,
+      VALUE = 3,
       NONCE = 4
     };
 
-    SettingsBusResponse& operator=(const SettingsBusResponse& rhs)
+    DataBusResponseContent& operator=(const DataBusResponseContent& rhs)
     {
       set_deviceId(rhs.get_deviceId());
-      set_settingsType(rhs.get_settingsType());
-      set_result(rhs.get_result());
+      set_dataType(rhs.get_dataType());
+      set_value(rhs.get_value());
       set_nonce(rhs.get_nonce());
       return *this;
     }
 
-    SettingsBusResponse& operator=(const SettingsBusResponse&& rhs) noexcept
+    DataBusResponseContent& operator=(const DataBusResponseContent&& rhs) noexcept
     {
       set_deviceId(rhs.get_deviceId());
-      set_settingsType(rhs.get_settingsType());
-      set_result(rhs.get_result());
+      set_dataType(rhs.get_dataType());
+      set_value(rhs.get_value());
       set_nonce(rhs.get_nonce());
       return *this;
     }
@@ -290,20 +289,20 @@ class SettingsBusResponse final: public ::EmbeddedProto::MessageInterface
     inline const uint32_t& get_deviceId() const { return deviceId_.get(); }
     inline uint32_t deviceId() const { return deviceId_.get(); }
 
-    static constexpr char const* SETTINGSTYPE_NAME = "settingsType";
-    inline void clear_settingsType() { settingsType_.clear(); }
-    inline void set_settingsType(const SettingsType& value) { settingsType_ = value; }
-    inline void set_settingsType(const SettingsType&& value) { settingsType_ = value; }
-    inline const SettingsType& get_settingsType() const { return settingsType_.get(); }
-    inline SettingsType settingsType() const { return settingsType_.get(); }
+    static constexpr char const* DATATYPE_NAME = "dataType";
+    inline void clear_dataType() { dataType_.clear(); }
+    inline void set_dataType(const DataType& value) { dataType_ = value; }
+    inline void set_dataType(const DataType&& value) { dataType_ = value; }
+    inline const DataType& get_dataType() const { return dataType_.get(); }
+    inline DataType dataType() const { return dataType_.get(); }
 
-    static constexpr char const* RESULT_NAME = "result";
-    inline void clear_result() { result_.clear(); }
-    inline void set_result(const bool& value) { result_ = value; }
-    inline void set_result(const bool&& value) { result_ = value; }
-    inline bool& mutable_result() { return result_.get(); }
-    inline const bool& get_result() const { return result_.get(); }
-    inline bool result() const { return result_.get(); }
+    static constexpr char const* VALUE_NAME = "value";
+    inline void clear_value() { value_.clear(); }
+    inline void set_value(const uint32_t& value) { value_ = value; }
+    inline void set_value(const uint32_t&& value) { value_ = value; }
+    inline uint32_t& mutable_value() { return value_.get(); }
+    inline const uint32_t& get_value() const { return value_.get(); }
+    inline uint32_t value() const { return value_.get(); }
 
     static constexpr char const* NONCE_NAME = "nonce";
     inline void clear_nonce() { nonce_.clear(); }
@@ -323,14 +322,14 @@ class SettingsBusResponse final: public ::EmbeddedProto::MessageInterface
         return_value = deviceId_.serialize_with_id(static_cast<uint32_t>(FieldNumber::DEVICEID), buffer, false);
       }
 
-      if((static_cast<SettingsType>(0) != settingsType_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
+      if((static_cast<DataType>(0) != dataType_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
       {
-        return_value = settingsType_.serialize_with_id(static_cast<uint32_t>(FieldNumber::SETTINGSTYPE), buffer, false);
+        return_value = dataType_.serialize_with_id(static_cast<uint32_t>(FieldNumber::DATATYPE), buffer, false);
       }
 
-      if((false != result_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
+      if((0U != value_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
       {
-        return_value = result_.serialize_with_id(static_cast<uint32_t>(FieldNumber::RESULT), buffer, false);
+        return_value = value_.serialize_with_id(static_cast<uint32_t>(FieldNumber::VALUE), buffer, false);
       }
 
       if((0U != nonce_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
@@ -358,12 +357,12 @@ class SettingsBusResponse final: public ::EmbeddedProto::MessageInterface
             return_value = deviceId_.deserialize_check_type(buffer, wire_type);
             break;
 
-          case FieldNumber::SETTINGSTYPE:
-            return_value = settingsType_.deserialize_check_type(buffer, wire_type);
+          case FieldNumber::DATATYPE:
+            return_value = dataType_.deserialize_check_type(buffer, wire_type);
             break;
 
-          case FieldNumber::RESULT:
-            return_value = result_.deserialize_check_type(buffer, wire_type);
+          case FieldNumber::VALUE:
+            return_value = value_.deserialize_check_type(buffer, wire_type);
             break;
 
           case FieldNumber::NONCE:
@@ -400,8 +399,8 @@ class SettingsBusResponse final: public ::EmbeddedProto::MessageInterface
     void clear() override
     {
       clear_deviceId();
-      clear_settingsType();
-      clear_result();
+      clear_dataType();
+      clear_value();
       clear_nonce();
 
     }
@@ -414,11 +413,11 @@ class SettingsBusResponse final: public ::EmbeddedProto::MessageInterface
         case FieldNumber::DEVICEID:
           name = DEVICEID_NAME;
           break;
-        case FieldNumber::SETTINGSTYPE:
-          name = SETTINGSTYPE_NAME;
+        case FieldNumber::DATATYPE:
+          name = DATATYPE_NAME;
           break;
-        case FieldNumber::RESULT:
-          name = RESULT_NAME;
+        case FieldNumber::VALUE:
+          name = VALUE_NAME;
           break;
         case FieldNumber::NONCE:
           name = NONCE_NAME;
@@ -484,8 +483,8 @@ class SettingsBusResponse final: public ::EmbeddedProto::MessageInterface
       }
 
       left_chars = deviceId_.to_string(left_chars, indent_level + 2, DEVICEID_NAME, true);
-      left_chars = settingsType_.to_string(left_chars, indent_level + 2, SETTINGSTYPE_NAME, false);
-      left_chars = result_.to_string(left_chars, indent_level + 2, RESULT_NAME, false);
+      left_chars = dataType_.to_string(left_chars, indent_level + 2, DATATYPE_NAME, false);
+      left_chars = value_.to_string(left_chars, indent_level + 2, VALUE_NAME, false);
       left_chars = nonce_.to_string(left_chars, indent_level + 2, NONCE_NAME, false);
   
       if( 0 == indent_level) 
@@ -512,11 +511,11 @@ class SettingsBusResponse final: public ::EmbeddedProto::MessageInterface
 
 
       EmbeddedProto::uint32 deviceId_ = 0U;
-      EmbeddedProto::enumeration<SettingsType> settingsType_ = static_cast<SettingsType>(0);
-      EmbeddedProto::boolean result_ = false;
+      EmbeddedProto::enumeration<DataType> dataType_ = static_cast<DataType>(0);
+      EmbeddedProto::uint32 value_ = 0U;
       EmbeddedProto::uint32 nonce_ = 0U;
 
 };
 
 } // End of namespace light_detector
-#endif // SETTINGS_H
+#endif // CONTENT_DATA_H

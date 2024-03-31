@@ -1,7 +1,7 @@
 #ifndef LIGHT_DETECTOR_SENSOR_H
 #define LIGHT_DETECTOR_SENSOR_H
 
-#include "i2c.h"
+#include "stm32l4xx_hal.h"
 #include <stdint.h>
 #include <stdio.h>
 
@@ -55,6 +55,8 @@
 #define MAX_COUNT             (65535)
 
 #define I2C_TIMEOUT (0x20)
+
+extern I2C_HandleTypeDef hi2c1;
 
 /**
  * Represents driver implementation for "Waveshare" TSL2591X light sensor.
@@ -121,7 +123,7 @@ public:
      *
      * @return read infrared data.
      */
-    static uint16_t  read_infrared();
+    static uint16_t read_infrared();
 
     /**
      * Reads visible data from the sensor.
@@ -145,6 +147,7 @@ public:
      * @param high - given high state.
      */
     static void invoke_lux_interrupt(uint16_t low, uint16_t high);
+
 private:
     /**
      * Indicated that the device has already been initialized.

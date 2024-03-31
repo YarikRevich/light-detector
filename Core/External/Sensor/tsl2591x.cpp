@@ -1,5 +1,7 @@
 #include "tsl2591x.h"
 
+bool TSL2591X::initialized = false;
+
 void TSL2591X::init() {
     enable();
 

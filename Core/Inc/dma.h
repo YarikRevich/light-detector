@@ -21,12 +21,13 @@
 #ifndef __DMA_H__
 #define __DMA_H__
 
+#include "main.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
 
 /* DMA memory to memory transfer handles -------------------------------------*/
 

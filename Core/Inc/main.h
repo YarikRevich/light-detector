@@ -22,6 +22,10 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
+#include "scheduler.h"
+#include "indicator.h"
+#include "tsl2591x.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -31,10 +35,6 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
-#include "scheduler.h"
-#include "indicator.h"
-#include "tsl2591x.h"
 
 /* USER CODE END Includes */
 
@@ -63,9 +63,6 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 
 /* USER CODE BEGIN Private defines */
-
-#define INT_Pin GPIO_PIN_9
-#define INT_GPIO_Port GPIOA
 
 /* USER CODE END Private defines */
 

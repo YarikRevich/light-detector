@@ -10,13 +10,13 @@ enum InfoType {
     GetIntegralTime = 1;
 }
 
-// Represents info bus request send from the client to the board.
-message InfoBusRequest {
+// Represents info bus request content send from the client to the board.
+message InfoBusRequestContent {
     InfoType infoType = 1;
 }
 
-// Represents info bus response send to the client from the board.
-message InfoBusResponse {
+// Represents info bus response content send to the client from the board.
+message InfoBusResponseContent {
     uint32 deviceId = 1;
     InfoType infoType = 2;
     uint32 value = 3;

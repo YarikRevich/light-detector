@@ -21,18 +21,19 @@
 #ifndef __I2C_H__
 #define __I2C_H__
 
+#include "main.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
 
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
 
-extern I2C_HandleTypeDef hi2c1;
+//extern I2C_HandleTypeDef hi2c1;
 
 /* USER CODE BEGIN Private defines */
 

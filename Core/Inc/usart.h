@@ -21,18 +21,17 @@
 #ifndef __USART_H__
 #define __USART_H__
 
+#include "main.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "main.h"
 
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
-
-extern UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN Private defines */
 

@@ -1,11 +1,11 @@
 #ifndef _DEMO_WRITE_BUFFER_H_
 #define _DEMO_WRITE_BUFFER_H_
 
-#include "write_buffer.h"
+#include "response_buffer.h"
 
-WriteBuffer::WriteBuffer() : bytes_used_(0), bytes_{0U} {
-
-}
+//WriteBuffer::WriteBuffer() : bytes_used_(0), bytes_{0U} {
+//
+//}
 //
 //virtual ~WriteBuffer() = default;
 //
