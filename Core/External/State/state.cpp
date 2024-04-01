@@ -11,8 +11,8 @@ int State::get_amount_of_processed_requests() {
     return amount_of_processed_requests;
 };
 
-int State::get_current_response_nonce() {
-    return current_response_nonce;
+int State::allocate_response_nonce() {
+    return current_response_nonce++;
 }
 
 Sequence<light_detector::RequestContainer> State::get_request_container_sequence() {

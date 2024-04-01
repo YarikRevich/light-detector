@@ -14,18 +14,7 @@ int SchedulerHandler::handle_response() {
 
     if (!request_container_sequence.is_empty()) {
         return request_container_sequence.traverse([](const light_detector::RequestContainer &content) -> int {
-            if (ProtoHelper::is_data_bus_request_container(content)) {
-
-                return SchedulerHandler::process_data_bus_request_content_response(content);
-            } else if (ProtoHelper::is_info_bus_request_container(content)) {
-
-                return SchedulerHandler::process_info_bus_request_content_response(content);
-            } else if (ProtoHelper::is_settings_bus_request_container(content)) {
-
-                return SchedulerHandler::process_settings_bus_request_content_response(content);
-            }
-
-            return EXIT_SUCCESS;
+            return SchedulerHandler::try_process_response_container(content);
         });
     }
 
@@ -39,6 +28,36 @@ int SchedulerHandler::try_process_request_container() {
             &huart2, request_buffer.get_raw_buffer(), request_buffer.get_size(), 1000);
 
     return ProtoCodec::decode_request_container();
+}
+
+int SchedulerHandler::try_process_response_container(const light_detector::RequestContainer &content) {
+    if (ProtoHelper::is_data_bus_request_container(content)) {
+
+        if (SchedulerHandler::process_data_bus_request_content_response(content) != EXIT_SUCCESS) {
+            return EXIT_FAILURE;
+        }
+    } else if (ProtoHelper::is_info_bus_request_container(content)) {
+
+        if (SchedulerHandler::process_info_bus_request_content_response(content) != EXIT_SUCCESS) {
+            return EXIT_FAILURE;
+        }
+    } else if (ProtoHelper::is_settings_bus_request_container(content)) {
+
+        if (SchedulerHandler::process_settings_bus_request_content_response(content) != EXIT_SUCCESS) {
+            return EXIT_FAILURE;
+        }
+    }
+
+    return SchedulerHandler::try_transmit_response_container();
+}
+
+int SchedulerHandler::try_transmit_response_container() {
+    auto request_buffer = ProtoCodec::get_request_buffer();
+
+    HAL_UART_Receive(
+            &huart2, request_buffer.get_raw_buffer(), request_buffer.get_size(), 1000);
+
+    return EXIT_SUCCESS;
 }
 
 int SchedulerHandler::process_data_bus_request_content_response(
@@ -78,7 +97,7 @@ int SchedulerHandler::process_data_bus_request_content_of_raw_data_type_response
     TSL2591X::invoke_lux_interrupt(LUX_LOW, LUX_HIGH);
 
     data_bus_response_content.set_value(value);
-    data_bus_response_content.set_nonce(State::get_current_response_nonce());
+    data_bus_response_content.set_nonce(State::allocate_response_nonce());
 
     response_container.set_dataBus(data_bus_response_content);
 
@@ -99,7 +118,7 @@ int SchedulerHandler::process_data_bus_request_content_of_full_data_type_respons
     uint32_t value = TSL2591X::read_full();
 
     data_bus_response_content.set_value(value);
-    data_bus_response_content.set_nonce(State::get_current_response_nonce());
+    data_bus_response_content.set_nonce(State::allocate_response_nonce());
 
     response_container.set_dataBus(data_bus_response_content);
 
@@ -120,7 +139,7 @@ int SchedulerHandler::process_data_bus_request_content_of_infrared_data_type_res
     uint16_t value = TSL2591X::read_infrared();
 
     data_bus_response_content.set_value(value);
-    data_bus_response_content.set_nonce(State::get_current_response_nonce());
+    data_bus_response_content.set_nonce(State::allocate_response_nonce());
 
     response_container.set_dataBus(data_bus_response_content);
 
@@ -141,7 +160,7 @@ int SchedulerHandler::process_data_bus_request_content_of_visible_data_type_resp
     uint32_t value = TSL2591X::read_visible();
 
     data_bus_response_content.set_value(value);
-    data_bus_response_content.set_nonce(State::get_current_response_nonce());
+    data_bus_response_content.set_nonce(State::allocate_response_nonce());
 
     response_container.set_dataBus(data_bus_response_content);
 
@@ -178,7 +197,7 @@ int SchedulerHandler::process_info_bus_request_content_of_gain_info_type_respons
     uint8_t value = TSL2591X::get_gain();
 
     info_bus_response_content.set_value(value);
-    info_bus_response_content.set_nonce(State::get_current_response_nonce());
+    info_bus_response_content.set_nonce(State::allocate_response_nonce());
 
     response_container.set_infoBus(info_bus_response_content);
 
@@ -199,7 +218,7 @@ int SchedulerHandler::process_info_bus_request_content_of_integral_time_info_typ
     uint8_t value = TSL2591X::get_integral_time();
 
     info_bus_response_content.set_value(value);
-    info_bus_response_content.set_nonce(State::get_current_response_nonce());
+    info_bus_response_content.set_nonce(State::allocate_response_nonce());
 
     response_container.set_infoBus(info_bus_response_content);
 

@@ -42,6 +42,21 @@ private:
     static int try_process_request_container();
 
     /**
+     * Attempts to process outcoming response container if there is one.
+     *
+     * @param content - given request container content.
+     * @return status of the response container processing.
+     */
+    static int try_process_response_container(const light_detector::RequestContainer &content);
+
+    /**
+     * Attempts to transmit outcoming response container.
+     *
+     * @return status of the response container processing.
+     */
+    static int try_transmit_response_container();
+
+    /**
      * Attempts to process data bus request content response.
      *
      * @param content - given data bus request content.

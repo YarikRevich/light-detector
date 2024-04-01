@@ -19,11 +19,11 @@ public:
     static int get_amount_of_processed_requests();
 
     /**
-     * Retrieves current(latest) response nonce.
+     * Allocates new response nonce.
      *
-     * @return retrieved response nonce.
+     * @return allocated response nonce.
      */
-    static int get_current_response_nonce();
+    static int allocate_response_nonce();
 
     /**
      * Retrieves request container sequence.
