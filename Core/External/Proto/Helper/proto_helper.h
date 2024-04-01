@@ -93,6 +93,23 @@ public:
      * @return result of the check.
      */
     static bool is_data_bus_request_content_of_visible_data_type(const light_detector::DataBusRequestContent& content);
+
+    /**
+     * Checks if the given info bus request content of gain info type.
+     *
+     * @param content - given info bus request content.
+     * @return result of the check.
+     */
+    static bool is_info_bus_request_content_of_gain_info_type(const light_detector::InfoBusRequestContent& content);
+
+    /**
+     * Checks if the given info bus request content of integral time info type.
+     *
+     * @param content - given info bus request content.
+     * @return result of the check.
+     */
+    static bool is_info_bus_request_content_of_integral_time_info_type(
+            const light_detector::InfoBusRequestContent& content);
 };
 
 #endif //LIGHT_DETECTOR_PROTO_HELPER_H

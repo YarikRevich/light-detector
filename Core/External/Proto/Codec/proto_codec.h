@@ -62,11 +62,6 @@ private:
      * Represents common request container instance.
      */
     static light_detector::RequestContainer request_container;
-
-    /**
-     * Represents common response container instance.
-     */
-    static light_detector::ResponseContainer response_container;
 };
 
 #endif //LIGHT_DETECTOR_PROTO_CODEC_H

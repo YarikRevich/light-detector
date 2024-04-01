@@ -49,6 +49,9 @@
 #define CHAN1_LOW             (0x16)
 #define CHAN1_HIGH            (0x14)
 
+#define LUX_LOW               50
+#define LUX_HIGH              200
+
 #define LUX_DF                (762.0)
 
 #define MAX_COUNT_100MS       (36863)

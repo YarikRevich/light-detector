@@ -19,6 +19,13 @@ public:
     static int get_amount_of_processed_requests();
 
     /**
+     * Retrieves current(latest) response nonce.
+     *
+     * @return retrieved response nonce.
+     */
+    static int get_current_response_nonce();
+
+    /**
      * Retrieves request container sequence.
      *
      * @return retrieved request container sequence.
@@ -30,6 +37,11 @@ private:
      * Represents amount of processed incoming requests.
      */
     static int amount_of_processed_requests;
+
+    /**
+     * Represents current(latest) response nonce.
+     */
+    static int current_response_nonce;
 
     /**
      * Represents sequence of request containers.

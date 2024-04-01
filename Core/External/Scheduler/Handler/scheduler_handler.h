@@ -47,7 +47,7 @@ private:
      * @param content - given data bus request content.
      * @return status of the data bus request content response processing.
      */
-    static int process_data_bus_request_content_response(const light_detector::DataBusRequestContent& content);
+    static int process_data_bus_request_content_response(const light_detector::RequestContainer& content);
 
     /**
      * Attempts to process data bus request content of raw data type response.
@@ -56,7 +56,34 @@ private:
      * @return status of the data bus request content response processing.
      */
     static int process_data_bus_request_content_of_raw_data_type_response(
-            const light_detector::DataBusRequestContent& content);
+            const light_detector::RequestContainer& content);
+
+    /**
+     * Attempts to process data bus request content of full data type response.
+     *
+     * @param content - given data bus request content.
+     * @return status of the data bus request content response processing.
+     */
+    static int process_data_bus_request_content_of_full_data_type_response(
+            const light_detector::RequestContainer& content);
+
+    /**
+     * Attempts to process data bus request content of infrared data type response.
+     *
+     * @param content - given data bus request content.
+     * @return status of the data bus request content response processing.
+     */
+    static int process_data_bus_request_content_of_infrared_data_type_response(
+            const light_detector::RequestContainer& content);
+
+    /**
+     * Attempts to process data bus request content of visible data type response.
+     *
+     * @param content - given data bus request content.
+     * @return status of the data bus request content response processing.
+     */
+    static int process_data_bus_request_content_of_visible_data_type_response(
+            const light_detector::RequestContainer& content);
 
     /**
      * Attempts to process info bus request content response.
@@ -64,7 +91,7 @@ private:
      * @param content - given info bus request content.
      * @return status of the info bus request content response processing.
      */
-    static int process_info_bus_request_content_response(const light_detector::InfoBusRequestContent& content);
+    static int process_info_bus_request_content_response(const light_detector::RequestContainer& content);
 
     /**
      * Attempts to process settings bus request content response.
@@ -72,7 +99,7 @@ private:
      * @param content - given settings bus request content.
      * @return status of the settings bus request content response processing.
      */
-    static int process_settings_bus_request_content_response(const light_detector::SettingsBusRequestContent& content);
+    static int process_settings_bus_request_content_response(const light_detector::RequestContainer& content);
 };
 
 #endif //LIGHT_DETECTOR_SCHEDULER_HANDLER_H

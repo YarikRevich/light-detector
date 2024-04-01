@@ -16,16 +16,13 @@ int SchedulerHandler::handle_response() {
         return request_container_sequence.traverse([](const light_detector::RequestContainer &content) -> int {
             if (ProtoHelper::is_data_bus_request_container(content)) {
 
-                return SchedulerHandler::process_data_bus_request_content_response(
-                        ProtoHelper::extract_data_bus_request_content(content));
+                return SchedulerHandler::process_data_bus_request_content_response(content);
             } else if (ProtoHelper::is_info_bus_request_container(content)) {
 
-                return SchedulerHandler::process_info_bus_request_content_response(
-                        ProtoHelper::extract_info_bus_request_content(content));
+                return SchedulerHandler::process_info_bus_request_content_response(content);
             } else if (ProtoHelper::is_settings_bus_request_container(content)) {
 
-                return SchedulerHandler::process_settings_bus_request_content_response(
-                        ProtoHelper::extract_settings_bus_request_content(content));
+                return SchedulerHandler::process_settings_bus_request_content_response(content);
             }
 
             return EXIT_SUCCESS;
@@ -45,42 +42,142 @@ int SchedulerHandler::try_process_request_container() {
 }
 
 int SchedulerHandler::process_data_bus_request_content_response(
-        const light_detector::DataBusRequestContent& content) {
-    if (ProtoHelper::is_data_bus_request_content_of_raw_data_type(content)) {
+        const light_detector::RequestContainer& content) {
+    auto data_bus_request_content =
+            ProtoHelper::extract_data_bus_request_content(content);
 
-        SchedulerHandler::process_data_bus_request_content_of_raw_data_type_response(content);
-    } else if (ProtoHelper::is_data_bus_request_content_of_full_data_type(content)) {
+    if (ProtoHelper::is_data_bus_request_content_of_raw_data_type(data_bus_request_content)) {
 
-    } else if (ProtoHelper::is_data_bus_request_content_of_infrared_data_type(content)) {
+        return SchedulerHandler::process_data_bus_request_content_of_raw_data_type_response(content);
+    } else if (ProtoHelper::is_data_bus_request_content_of_full_data_type(data_bus_request_content)) {
 
-    } else if (ProtoHelper::is_data_bus_request_content_of_visible_data_type(content)) {
+        return SchedulerHandler::process_data_bus_request_content_of_full_data_type_response(content);
+    } else if (ProtoHelper::is_data_bus_request_content_of_infrared_data_type(data_bus_request_content)) {
 
+        return SchedulerHandler::process_data_bus_request_content_of_infrared_data_type_response(content);
+    } else if (ProtoHelper::is_data_bus_request_content_of_visible_data_type(data_bus_request_content)) {
+
+        return SchedulerHandler::process_data_bus_request_content_of_visible_data_type_response(content);
     }
 
-
-
-
-//    	printf("Infrared light: %d\r\n", TSL2591_ReadInfrared());
-//    	printf("Visible light: %d\r\n", TSL2591_ReadVisible());
-//    	printf("Full spectrum (IR + visible) light: %d\r\n\r\n", TSL2591X_ReadFull());
-//    }
+    return EXIT_SUCCESS;
 }
 
 int SchedulerHandler::process_data_bus_request_content_of_raw_data_type_response(
-        const light_detector::DataBusRequestContent &content) {
+        const light_detector::RequestContainer &content) {
+    light_detector::ResponseContainer response_container;
+
+    response_container.set_msgId(content.get_msgId());
+
     light_detector::DataBusResponseContent data_bus_response_content;
 
+    data_bus_response_content.set_deviceId(TSL2591X::get_device_id());
+    data_bus_response_content.set_dataType(light_detector::DataType::Raw);
 
-    TSL2591X::read_lux();
-    TSL2591X::invoke_lux_interrupt(50, 200);
+    uint16_t value = TSL2591X::read_lux();
+    TSL2591X::invoke_lux_interrupt(LUX_LOW, LUX_HIGH);
+
+    data_bus_response_content.set_value(value);
+    data_bus_response_content.set_nonce(State::get_current_response_nonce());
+
+    response_container.set_dataBus(data_bus_response_content);
+
+    return ProtoCodec::encode_response_container(response_container);
+}
+
+int SchedulerHandler::process_data_bus_request_content_of_full_data_type_response(
+        const light_detector::RequestContainer &content) {
+    light_detector::ResponseContainer response_container;
+
+    response_container.set_msgId(content.get_msgId());
+
+    light_detector::DataBusResponseContent data_bus_response_content;
+
+    data_bus_response_content.set_deviceId(TSL2591X::get_device_id());
+    data_bus_response_content.set_dataType(light_detector::DataType::Full);
+
+    uint32_t value = TSL2591X::read_full();
+
+    data_bus_response_content.set_value(value);
+    data_bus_response_content.set_nonce(State::get_current_response_nonce());
+
+    response_container.set_dataBus(data_bus_response_content);
+
+    return ProtoCodec::encode_response_container(response_container);
+}
+
+int SchedulerHandler::process_data_bus_request_content_of_infrared_data_type_response(
+        const light_detector::RequestContainer &content) {
+    light_detector::ResponseContainer response_container;
+
+    response_container.set_msgId(content.get_msgId());
+
+    light_detector::DataBusResponseContent data_bus_response_content;
+
+    data_bus_response_content.set_deviceId(TSL2591X::get_device_id());
+    data_bus_response_content.set_dataType(light_detector::DataType::Infrared);
+
+    uint16_t value = TSL2591X::read_infrared();
+
+    data_bus_response_content.set_value(value);
+    data_bus_response_content.set_nonce(State::get_current_response_nonce());
+
+    response_container.set_dataBus(data_bus_response_content);
+
+    return ProtoCodec::encode_response_container(response_container);
+}
+
+int SchedulerHandler::process_data_bus_request_content_of_visible_data_type_response(
+        const light_detector::RequestContainer &content) {
+    light_detector::ResponseContainer response_container;
+
+    response_container.set_msgId(content.get_msgId());
+
+    light_detector::DataBusResponseContent data_bus_response_content;
+
+    data_bus_response_content.set_deviceId(TSL2591X::get_device_id());
+    data_bus_response_content.set_dataType(light_detector::DataType::Visible);
+
+    uint32_t value = TSL2591X::read_visible();
+
+    data_bus_response_content.set_value(value);
+    data_bus_response_content.set_nonce(State::get_current_response_nonce());
+
+    response_container.set_dataBus(data_bus_response_content);
+
+    return ProtoCodec::encode_response_container(response_container);
 }
 
 int SchedulerHandler::process_info_bus_request_content_response(
-        const light_detector::InfoBusRequestContent& content) {
+        const light_detector::RequestContainer& content) {
+    auto info_bus_request_content =
+            ProtoHelper::extract_info_bus_request_content(content);
 
+    if (ProtoHelper::is_info_bus_request_content_of_gain_info_type(info_bus_request_content)) {
+
+    }
+
+    light_detector::ResponseContainer response_container;
+
+    response_container.set_msgId(content.get_msgId());
+
+    light_detector::InfoBusResponseContent info_bus_response_content;
+
+    info_bus_response_content.set_deviceId(TSL2591X::get_device_id());
+    info_bus_response_content.set_infoType(light_detector::InfoType::GetGain);
+
+
+//    uint32_t value = TSL2591X::read_visible();
+//
+//    data_bus_response_content.set_value(value);
+//    data_bus_response_content.set_nonce(State::get_current_response_nonce());
+
+    response_container.set_infoBus(info_bus_response_content);
+
+    return ProtoCodec::encode_response_container(response_container);
 }
 
 int SchedulerHandler::process_settings_bus_request_content_response(
-        const light_detector::SettingsBusRequestContent& content) {
+        const light_detector::RequestContainer& content) {
 
 }

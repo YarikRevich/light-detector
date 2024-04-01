@@ -6,8 +6,6 @@ ResponseBuffer<100> ProtoCodec::response_buffer = ResponseBuffer<100>();
 
 light_detector::RequestContainer request_container = light_detector::RequestContainer();
 
-light_detector::ResponseContainer response_container = light_detector::ResponseContainer();
-
 RequestBuffer<100> ProtoCodec::get_request_buffer() {
     return request_buffer;
 }
@@ -30,5 +28,9 @@ int ProtoCodec::decode_request_container() {
 }
 
 int ProtoCodec::encode_response_container(const light_detector::ResponseContainer& content) {
-    response_container.serialize()
+    if (content.serialize(response_buffer) == ::EmbeddedProto::Error::NO_ERRORS) {
+        return EXIT_SUCCESS;
+    }
+
+    return EXIT_FAILURE;
 };

@@ -42,3 +42,13 @@ bool ProtoHelper::is_data_bus_request_content_of_infrared_data_type(const light_
 bool ProtoHelper::is_data_bus_request_content_of_visible_data_type(const light_detector::DataBusRequestContent &content) {
     return content.dataType() == light_detector::DataType::Visible;
 }
+
+bool ProtoHelper::is_info_bus_request_content_of_gain_info_type(
+        const light_detector::InfoBusRequestContent& content) {
+    return content.infoType() == light_detector::InfoType::Gain;
+};
+
+bool ProtoHelper::is_info_bus_request_content_of_integral_time_info_type(
+        const light_detector::InfoBusRequestContent& content) {
+    return content.infoType() == light_detector::InfoType::IntegralTime;
+};
