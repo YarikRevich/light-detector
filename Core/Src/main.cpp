@@ -53,7 +53,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     HAL_TIM_Base_Stop_IT(&htim16);
 
     if (htim == &htim16) {
-        Scheduler::handle_tick();
+//        Scheduler::handle_tick();
     } else {
         __NOP();
     }
@@ -68,7 +68,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
  */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     if (GPIO_Pin == GPIO_PIN_13) {
-        Scheduler::handle_status_check()
+//        Scheduler::handle_status_check();
     } else {
         __NOP();
     }

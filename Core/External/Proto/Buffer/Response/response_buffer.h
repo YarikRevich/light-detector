@@ -1,7 +1,7 @@
 #ifndef LIGHT_DETECTOR_RESPONSE_BUFFER_H
 #define LIGHT_DETECTOR_RESPONSE_BUFFER_H
 
-#include <WriteBufferInterface.h>
+#include "WriteBufferInterface.h"
 
 #include <cstdio>
 #include <cstring>
@@ -16,7 +16,7 @@ class ResponseBuffer : public EmbeddedProto::WriteBufferInterface {
 public:
     ResponseBuffer();
 
-    virtual ~ResponseBuffer() = default;
+    ~ResponseBuffer() override = default;
 
     /**
      * Retrieves raw buffer used for direct data injection.

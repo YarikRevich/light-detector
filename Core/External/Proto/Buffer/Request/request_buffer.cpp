@@ -1,7 +1,7 @@
 #include "request_buffer.h"
 
 template<uint32_t BUFFER_SIZE>
-RequestBuffer<BUFFER_SIZE>::RequestBuffer() : index(0), size(0), bytes{0U} {
+RequestBuffer<BUFFER_SIZE>::RequestBuffer() : index(0), size(0), bytes{0} {
 }
 
 template<uint32_t BUFFER_SIZE>

@@ -3,6 +3,7 @@
 
 #include <queue>
 #include <functional>
+#include <cstdlib>
 
 /**
  * Represents sequence wrapper implementation.

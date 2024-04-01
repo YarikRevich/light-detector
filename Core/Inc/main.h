@@ -22,7 +22,7 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
-#include "scheduler.h"
+//#include "scheduler.h"
 #include "indicator.h"
 #include "tsl2591x.h"
 

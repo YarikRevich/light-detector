@@ -1,9 +1,9 @@
 #ifndef LIGHT_DETECTOR_REQUEST_BUFFER_H
 #define LIGHT_DETECTOR_REQUEST_BUFFER_H
 
-#include <stdio.h>
-
 #include "ReadBufferInterface.h"
+
+#include <cstdio>
 
 /**
  * Represents request buffer implementation for protocol buffers serialization.
