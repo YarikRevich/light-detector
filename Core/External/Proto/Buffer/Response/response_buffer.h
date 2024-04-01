@@ -2,13 +2,14 @@
 #define LIGHT_DETECTOR_RESPONSE_BUFFER_H
 
 #include <WriteBufferInterface.h>
-#include <stdio.h>
+
+#include <cstdio>
 #include <cstring>
 
 /**
  * Represents response buffer implementation for protocol buffers serialization.
  *
- * @tparam BUFFER_SIZE
+ * @tparam BUFFER_SIZE - given size of the internal response buffer.
  */
 template<uint32_t BUFFER_SIZE>
 class ResponseBuffer : public EmbeddedProto::WriteBufferInterface {
@@ -18,6 +19,13 @@ public:
     virtual ~ResponseBuffer() = default;
 
     /**
+     * Retrieves raw buffer used for direct data injection.
+     *
+     * @return raw buffer reference.
+     */
+    uint8_t *get_raw_buffer();
+
+    /**
      * @see EmbeddedProto::WriteBufferInterface
      */
     void clear() override;
@@ -25,47 +33,27 @@ public:
     /**
      * @see EmbeddedProto::WriteBufferInterface
      */
-    [[nodiscard]] uint32_t get_size() const override {
-        return bytes_used;
-    }
+    [[nodiscard]] uint32_t get_size() const override;
 
     /**
      * @see EmbeddedProto::WriteBufferInterface
      */
-    [[nodiscard]] uint32_t get_max_size() const override {
-        return BUFFER_SIZE;
-    }
+    [[nodiscard]] uint32_t get_max_size() const override;
 
     /**
      * @see EmbeddedProto::WriteBufferInterface
      */
-    [[nodiscard]] uint32_t get_available_size() const override {
-        return -bytes_used;
-    }
+    [[nodiscard]] uint32_t get_available_size() const override;
 
     /**
      * @see EmbeddedProto::WriteBufferInterface
      */
-    bool push(const uint8_t byte) override {
-        bool result = BUFFER_SIZE > bytes_used;
-        if (result) {
-            bytes[bytes_used] = byte;
-            ++bytes_used;
-        }
-        return result;
-    }
+    bool push(const uint8_t byte) override;
 
     /**
      * @see EmbeddedProto::WriteBufferInterface
      */
-    bool push(const uint8_t *bytes, const uint32_t length) override {
-        bool result = BUFFER_SIZE >= (bytes_used + length);
-        if (result) {
-            memcpy(bytes, bytes + bytes_used, length);
-            bytes_used += length;
-        }
-        return result;
-    }
+    bool push(const uint8_t *src, const uint32_t length) override;
 
 private:
     /**
@@ -76,7 +64,7 @@ private:
     /**
      * Represents current buffer data.
      */
-    uint8_t bytes[BUFFER_SIZE];
+    uint8_t *bytes[BUFFER_SIZE];
 };
 
 #endif //LIGHT_DETECTOR_RESPONSE_BUFFER_H

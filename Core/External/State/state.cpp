@@ -1,7 +1,11 @@
 #include "state.h"
 
-Sequence<light_detector::RequestContainer> State::requestContainerSequence = NULL;
+int State::amount_of_processed_requests = 0;
 
-Sequence<light_detector::RequestContainer> State::getRequestContainerSequence() {
-    return this->sequence;
+int State::get_amount_of_processed_requests() {
+    return amount_of_processed_requests;
+};
+
+Sequence<light_detector::RequestContainer> State::get_request_container_sequence() {
+    return request_container_sequence;
 }

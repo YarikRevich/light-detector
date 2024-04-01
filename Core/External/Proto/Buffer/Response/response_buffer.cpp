@@ -3,45 +3,53 @@
 
 #include "response_buffer.h"
 
-//WriteBuffer::WriteBuffer() : bytes_used_(0), bytes_{0U} {
-//
-//}
-//
-//virtual ~WriteBuffer() = default;
-//
-//void clear() override {
-//bytes_used_ = 0;
-//}
-//
-//uint32_t get_size() const override {
-//return bytes_used_;
-//}
-//
-//uint32_t get_max_size() const override {
-//return BUFFER_SIZE;
-//}
-//
-//uint32_t get_available_size() const override {
-//return -bytes_used_;
-//}
-//
-//bool push(const uint8_t byte) override {
-//bool result = BUFFER_SIZE > bytes_used_;
-//if (result) {
-//bytes_[bytes_used_] = byte;
-//++bytes_used_;
-//}
-//return result;
-//}
-//
-//bool push(const uint8_t *bytes, const uint32_t length) override {
-//bool result = BUFFER_SIZE >= (bytes_used_ + length);
-//if (result) {
-//memcpy(bytes_ + bytes_used_, bytes, length);
-//bytes_used_ += length;
-//}
-//return result;
-//}
+template<uint32_t BUFFER_SIZE>
+ResponseBuffer<BUFFER_SIZE>::ResponseBuffer() : bytes_used(0), bytes{0U} {
+}
 
+template<uint32_t BUFFER_SIZE>
+uint8_t *ResponseBuffer<BUFFER_SIZE>::get_raw_buffer() {
+    return bytes;
+}
+
+template<uint32_t BUFFER_SIZE>
+void ResponseBuffer<BUFFER_SIZE>::clear() {
+    bytes_used = 0;
+}
+
+template<uint32_t BUFFER_SIZE>
+uint32_t ResponseBuffer<BUFFER_SIZE>::get_size() const {
+    return bytes_used;
+}
+
+template<uint32_t BUFFER_SIZE>
+uint32_t ResponseBuffer<BUFFER_SIZE>::get_max_size() const {
+    return BUFFER_SIZE;
+}
+
+template<uint32_t BUFFER_SIZE>
+uint32_t ResponseBuffer<BUFFER_SIZE>::get_available_size() const {
+    return -bytes_used;
+}
+
+template<uint32_t BUFFER_SIZE>
+bool ResponseBuffer<BUFFER_SIZE>::push(const uint8_t byte) {
+    bool result = BUFFER_SIZE > bytes_used;
+    if (result) {
+        bytes[bytes_used] = byte;
+        ++bytes_used;
+    }
+    return result;
+}
+
+template<uint32_t BUFFER_SIZE>
+bool ResponseBuffer<BUFFER_SIZE>::push(const uint8_t *src, const uint32_t length) {
+    bool result = BUFFER_SIZE >= (bytes_used + length);
+    if (result) {
+        memcpy(bytes + bytes_used, src, length);
+        bytes_used += length;
+    }
+    return result;
+}
 
 #endif // _DEMO_WRITE_BUFFER_H_

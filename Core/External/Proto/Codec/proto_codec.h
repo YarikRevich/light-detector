@@ -10,6 +10,8 @@
 #include "request_buffer.h"
 #include "response_buffer.h"
 
+#include "state.h"
+
 /**
  * Represents codec used to decompose and composite request and response.
  */
@@ -20,54 +22,51 @@ public:
      *
      * @return common instance of request buffer.
      */
-    static RequestBuffer<100> getRequestBuffer();
+    static RequestBuffer<100> get_request_buffer();
 
     /**
      * Retrieves common response buffer instance.
      *
      * @return common instance of response buffer.
      */
-    static ResponseBuffer<100> getResponseBuffer();
+    static ResponseBuffer<100> get_response_buffer();
+
+    /**
+     * Attempts to decode request container, looking for raw data from request buffer. If the decoding is
+     * successful, then the result is pushed to the request container sequence.
+     *
+     * @return status of the decode operation.
+     */
+    static int decode_request_container();
+
+    /**
+     * Attempts to decode request container, looking for raw data from request buffer. If the decoding is
+     * successful, then the result is pushed to the request container sequence.
+     *
+     * @param content - given response container.
+     * @return status of the decode operation.
+     */
+    static int encode_response_container(const light_detector::ResponseContainer& content);
 private:
     /**
      * Represents common instance of request buffer.
      */
-    static RequestBuffer<100> requestBuffer;
+    static RequestBuffer<100> request_buffer;
 
     /**
      * Represents common instance of response buffer.
      */
-    static ResponseBuffer<100> responseBuffer;
-//
-//    /**
-//     * Represents data bus request implementation.
-//     */
-//    static light_detector::DataBusRequestContent dataBusRequestContent;
-//
-//    /**
-//     * Represents data bus response implementation.
-//     */
-//    light_detector::DataBusResponse dataBusResponse;
-//
-//    /**
-//     * Represents info bus request implementation.
-//     */
-//    light_detector::InfoBusRequest infoBusRequest;
-//
-//    /**
-//     * Represents info bus response implementation.
-//     */
-//    light_detector::InfoBusResponse infoBusResponse;
-//
-//    /**
-//     * Represents settings bus request implementation.
-//     */
-//    light_detector::SettingsBusRequest settingsBusRequest;
-//
-//    /**
-//     * Represents settings bus response implementation.
-//     */
-//    light_detector::SettingsBusResponse settingsBusResponse;
+    static ResponseBuffer<100> response_buffer;
+
+    /**
+     * Represents common request container instance.
+     */
+    static light_detector::RequestContainer request_container;
+
+    /**
+     * Represents common response container instance.
+     */
+    static light_detector::ResponseContainer response_container;
 };
 
 #endif //LIGHT_DETECTOR_PROTO_CODEC_H

@@ -10,11 +10,6 @@
 class Indicator {
 public:
     /**
-    * Handles incoming action to check the current state of the sensor.
-    */
-    static void handle_status_check();
-
-    /**
      * Indicated initialization process success.
      */
     static void toggle_initialization_success();
@@ -38,8 +33,11 @@ public:
      * Indicated invalid incoming request.
      */
     static void toggle_invalid_request();
-private:
 
+    /**
+     * Indicated invalid outcoming response.
+     */
+    static void toggle_invalid_response();
 };
 
 #endif //LIGHT_DETECTOR_INDICATOR_H

@@ -8,7 +8,7 @@
 /**
  * Represents request buffer implementation for protocol buffers serialization.
  *
- * @tparam BUFFER_SIZE
+ * @tparam BUFFER_SIZE - given size of the internal request buffer.
  */
 template<uint32_t BUFFER_SIZE>
 class RequestBuffer : public EmbeddedProto::ReadBufferInterface {

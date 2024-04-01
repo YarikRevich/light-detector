@@ -1,0 +1,44 @@
+#include "proto_helper.h"
+
+bool ProtoHelper::is_data_bus_request_container(const light_detector::RequestContainer& container) {
+    return container.get_which_content() == light_detector::RequestContainer::FieldNumber::DATABUS;
+}
+
+bool ProtoHelper::is_info_bus_request_container(const light_detector::RequestContainer& container) {
+    return container.get_which_content() == light_detector::RequestContainer::FieldNumber::INFOBUS;
+}
+
+bool ProtoHelper::is_settings_bus_request_container(const light_detector::RequestContainer& container) {
+    return container.get_which_content() == light_detector::RequestContainer::FieldNumber::SETTINGSBUS;
+}
+
+light_detector::DataBusRequestContent ProtoHelper::extract_data_bus_request_content(
+        const light_detector::RequestContainer& container) {
+    return container.dataBus();
+}
+
+light_detector::InfoBusRequestContent ProtoHelper::extract_info_bus_request_content(
+        const light_detector::RequestContainer& container) {
+    return container.infoBus();
+}
+
+light_detector::SettingsBusRequestContent ProtoHelper::extract_settings_bus_request_content(
+        const light_detector::RequestContainer& container) {
+    return container.settingsBus();
+}
+
+bool ProtoHelper::is_data_bus_request_content_of_raw_data_type(const light_detector::DataBusRequestContent &content) {
+    return content.dataType() == light_detector::DataType::Raw;
+}
+
+bool ProtoHelper::is_data_bus_request_content_of_full_data_type(const light_detector::DataBusRequestContent &content) {
+    return content.dataType() == light_detector::DataType::Full;
+}
+
+bool ProtoHelper::is_data_bus_request_content_of_infrared_data_type(const light_detector::DataBusRequestContent &content) {
+    return content.dataType() == light_detector::DataType::Infrared;
+}
+
+bool ProtoHelper::is_data_bus_request_content_of_visible_data_type(const light_detector::DataBusRequestContent &content) {
+    return content.dataType() == light_detector::DataType::Visible;
+}

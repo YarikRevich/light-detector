@@ -49,15 +49,15 @@ else ()
     add_compile_options(-Og -g)
 endif ()
 
-include_directories(Core/Inc Core/External/Sensor Core/External/Proto/Codec Core/External/Proto/Generated Core/External/Proto/Generated/Content Core/External/Proto/Buffer Core/External/Proto/Buffer/Request Core/External/Proto/Buffer/Response Core/External/Scheduler Core/External/State Core/External/Tools/Indicator Core/External/Tools/Sequence ThirdParty Drivers/STM32L4xx_HAL_Driver/Inc Drivers/STM32L4xx_HAL_Driver/Inc/Legacy Drivers/CMSIS/Device/ST/STM32L4xx/Include Drivers/CMSIS/Include)
+include_directories(Core/Inc Core/External/Sensor Core/External/Proto/Helper Core/External/Proto/Codec Core/External/Proto/Generated Core/External/Proto/Generated/Content Core/External/Proto/Buffer Core/External/Proto/Buffer/Request Core/External/Proto/Buffer/Response Core/External/Scheduler Core/External/Scheduler/Handler Core/External/State Core/External/Tools/Indicator Core/External/Tools/Sequence ThirdParty Drivers/STM32L4xx_HAL_Driver/Inc Drivers/STM32L4xx_HAL_Driver/Inc/Legacy Drivers/CMSIS/Device/ST/STM32L4xx/Include Drivers/CMSIS/Include)
 
 add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx)
 
 file(GLOB_RECURSE SOURCES "ThirdParty/*.*" "Core/*.*" "Drivers/*.*")
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32L476RGTX_FLASH.ld
-        Core/External/Tools/Sequence/sequence.cpp
-        Core/External/Tools/Sequence/sequence.h)
+        Core/External/Scheduler/Handler/scheduler_handler.cpp
+        Core/External/Scheduler/Handler/scheduler_handler.h)
 
 add_link_options(-Wl,-gc-sections,--print-memory-usage,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map)
 add_link_options(-mcpu=cortex-m4 -mthumb -mthumb-interwork)
