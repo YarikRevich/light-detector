@@ -16,6 +16,7 @@ enum SettingsType {
 // Represents settings bus request content send from the client to the board.
 message SettingsBusRequestContent {
     SettingsType settingsType = 1;
+    optional int32 value = 2;
 }
 
 // Represents settings bus response content send to the client from the board.

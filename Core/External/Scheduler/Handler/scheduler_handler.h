@@ -94,6 +94,24 @@ private:
     static int process_info_bus_request_content_response(const light_detector::RequestContainer& content);
 
     /**
+     * Attempts to process info bus request content of gain info type response.
+     *
+     * @param content - given info bus request content.
+     * @return status of the info bus request content response processing.
+     */
+    static int process_info_bus_request_content_of_gain_info_type_response(
+            const light_detector::RequestContainer& content);
+
+    /**
+     * Attempts to process info bus request content of integral time info type response.
+     *
+     * @param content - given info bus request content.
+     * @return status of the info bus request content response processing.
+     */
+    static int process_info_bus_request_content_of_integral_time_info_type_response(
+            const light_detector::RequestContainer& content);
+
+    /**
      * Attempts to process settings bus request content response.
      *
      * @param content - given settings bus request content.

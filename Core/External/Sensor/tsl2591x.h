@@ -151,6 +151,20 @@ public:
      */
     static void invoke_lux_interrupt(uint16_t low, uint16_t high);
 
+    /**
+     * Retrieves integral time option from the sensor.
+     *
+     * @return read value.
+     */
+    static uint8_t get_integral_time();
+
+    /**
+    * Retrieves the value of gain option from the sensor.
+    *
+    * @return retrieved value.
+    */
+    static uint8_t get_gain();
+
 private:
     /**
      * Indicated that the device has already been initialized.
@@ -172,25 +186,11 @@ private:
     static uint16_t read_channel1();
 
     /**
-     * Retrieves integral time option from the sensor.
-     *
-     * @return read value.
-     */
-    static uint8_t get_integral_time();
-
-    /**
      * Sets integral time option to the sensor.
      *
      * @param src - given value to be set.
      */
     static void set_integral_time(uint8_t src);
-
-    /**
-     * Retrieves the value of gain option from the sensor.
-     *
-     * @return retrieved value.
-     */
-    static uint8_t get_gain();
 
     /**
      * Sets the value of gain option to the sensor.

@@ -42,7 +42,7 @@ int SchedulerHandler::try_process_request_container() {
 }
 
 int SchedulerHandler::process_data_bus_request_content_response(
-        const light_detector::RequestContainer& content) {
+        const light_detector::RequestContainer &content) {
     auto data_bus_request_content =
             ProtoHelper::extract_data_bus_request_content(content);
 
@@ -149,14 +149,23 @@ int SchedulerHandler::process_data_bus_request_content_of_visible_data_type_resp
 }
 
 int SchedulerHandler::process_info_bus_request_content_response(
-        const light_detector::RequestContainer& content) {
+        const light_detector::RequestContainer &content) {
     auto info_bus_request_content =
             ProtoHelper::extract_info_bus_request_content(content);
 
     if (ProtoHelper::is_info_bus_request_content_of_gain_info_type(info_bus_request_content)) {
 
+        return process_info_bus_request_content_of_gain_info_type_response(content);
+    } else if (ProtoHelper::is_info_bus_request_content_of_integral_time_info_type(info_bus_request_content)) {
+
+        return process_info_bus_request_content_of_integral_time_info_type_response(content);
     }
 
+    return EXIT_SUCCESS;
+}
+
+int SchedulerHandler::process_info_bus_request_content_of_gain_info_type_response(
+        const light_detector::RequestContainer &content) {
     light_detector::ResponseContainer response_container;
 
     response_container.set_msgId(content.get_msgId());
@@ -164,20 +173,40 @@ int SchedulerHandler::process_info_bus_request_content_response(
     light_detector::InfoBusResponseContent info_bus_response_content;
 
     info_bus_response_content.set_deviceId(TSL2591X::get_device_id());
-    info_bus_response_content.set_infoType(light_detector::InfoType::GetGain);
+    info_bus_response_content.set_infoType(light_detector::InfoType::Gain);
 
+    uint8_t value = TSL2591X::get_gain();
 
-//    uint32_t value = TSL2591X::read_visible();
-//
-//    data_bus_response_content.set_value(value);
-//    data_bus_response_content.set_nonce(State::get_current_response_nonce());
+    info_bus_response_content.set_value(value);
+    info_bus_response_content.set_nonce(State::get_current_response_nonce());
 
     response_container.set_infoBus(info_bus_response_content);
 
     return ProtoCodec::encode_response_container(response_container);
-}
+};
+
+int SchedulerHandler::process_info_bus_request_content_of_integral_time_info_type_response(
+        const light_detector::RequestContainer &content) {
+    light_detector::ResponseContainer response_container;
+
+    response_container.set_msgId(content.get_msgId());
+
+    light_detector::InfoBusResponseContent info_bus_response_content;
+
+    info_bus_response_content.set_deviceId(TSL2591X::get_device_id());
+    info_bus_response_content.set_infoType(light_detector::InfoType::IntegralTime);
+
+    uint8_t value = TSL2591X::get_integral_time();
+
+    info_bus_response_content.set_value(value);
+    info_bus_response_content.set_nonce(State::get_current_response_nonce());
+
+    response_container.set_infoBus(info_bus_response_content);
+
+    return ProtoCodec::encode_response_container(response_container);
+};
 
 int SchedulerHandler::process_settings_bus_request_content_response(
-        const light_detector::RequestContainer& content) {
+        const light_detector::RequestContainer &content) {
 
 }

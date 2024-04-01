@@ -39,11 +39,29 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
     SettingsBusRequestContent(const SettingsBusRequestContent& rhs )
     {
       set_settingsType(rhs.get_settingsType());
+      if(rhs.has_value())
+      {
+        set_value(rhs.get_value());
+      }
+      else
+      {
+        clear_value();
+      }
+
     }
 
     SettingsBusRequestContent(const SettingsBusRequestContent&& rhs ) noexcept
     {
       set_settingsType(rhs.get_settingsType());
+      if(rhs.has_value())
+      {
+        set_value(rhs.get_value());
+      }
+      else
+      {
+        clear_value();
+      }
+
     }
 
     ~SettingsBusRequestContent() override = default;
@@ -51,18 +69,37 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
     enum class FieldNumber : uint32_t
     {
       NOT_SET = 0,
-      SETTINGSTYPE = 1
+      SETTINGSTYPE = 1,
+      VALUE = 2
     };
 
     SettingsBusRequestContent& operator=(const SettingsBusRequestContent& rhs)
     {
       set_settingsType(rhs.get_settingsType());
+      if(rhs.has_value())
+      {
+        set_value(rhs.get_value());
+      }
+      else
+      {
+        clear_value();
+      }
+
       return *this;
     }
 
     SettingsBusRequestContent& operator=(const SettingsBusRequestContent&& rhs) noexcept
     {
       set_settingsType(rhs.get_settingsType());
+      if(rhs.has_value())
+      {
+        set_value(rhs.get_value());
+      }
+      else
+      {
+        clear_value();
+      }
+      
       return *this;
     }
 
@@ -73,6 +110,34 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
     inline const SettingsType& get_settingsType() const { return settingsType_.get(); }
     inline SettingsType settingsType() const { return settingsType_.get(); }
 
+    static constexpr char const* VALUE_NAME = "value";
+    inline bool has_value() const
+    {
+      return 0 != (presence::mask(presence::fields::VALUE) & presence_[presence::index(presence::fields::VALUE)]);
+    }
+    inline void clear_value()
+    {
+      presence_[presence::index(presence::fields::VALUE)] &= ~(presence::mask(presence::fields::VALUE));
+      value_.clear();
+    }
+    inline void set_value(const int32_t& value)
+    {
+      presence_[presence::index(presence::fields::VALUE)] |= presence::mask(presence::fields::VALUE);
+      value_ = value;
+    }
+    inline void set_value(const int32_t&& value)
+    {
+      presence_[presence::index(presence::fields::VALUE)] |= presence::mask(presence::fields::VALUE);
+      value_ = value;
+    }
+    inline int32_t& mutable_value()
+    {
+      presence_[presence::index(presence::fields::VALUE)] |= presence::mask(presence::fields::VALUE);
+      return value_.get();
+    }
+    inline const int32_t& get_value() const { return value_.get(); }
+    inline int32_t value() const { return value_.get(); }
+
 
     ::EmbeddedProto::Error serialize(::EmbeddedProto::WriteBufferInterface& buffer) const override
     {
@@ -81,6 +146,11 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
       if((static_cast<SettingsType>(0) != settingsType_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
       {
         return_value = settingsType_.serialize_with_id(static_cast<uint32_t>(FieldNumber::SETTINGSTYPE), buffer, false);
+      }
+
+      if(has_value() && (::EmbeddedProto::Error::NO_ERRORS == return_value))
+      {
+        return_value = value_.serialize_with_id(static_cast<uint32_t>(FieldNumber::VALUE), buffer, true);
       }
 
       return return_value;
@@ -101,6 +171,11 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
         {
           case FieldNumber::SETTINGSTYPE:
             return_value = settingsType_.deserialize_check_type(buffer, wire_type);
+            break;
+
+          case FieldNumber::VALUE:
+            presence_[presence::index(presence::fields::VALUE)] |= presence::mask(presence::fields::VALUE);
+            return_value = value_.deserialize_check_type(buffer, wire_type);
             break;
 
           case FieldNumber::NOT_SET:
@@ -133,6 +208,7 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
     void clear() override
     {
       clear_settingsType();
+      clear_value();
 
     }
 
@@ -143,6 +219,9 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
       {
         case FieldNumber::SETTINGSTYPE:
           name = SETTINGSTYPE_NAME;
+          break;
+        case FieldNumber::VALUE:
+          name = VALUE_NAME;
           break;
         default:
           name = "Invalid FieldNumber";
@@ -205,6 +284,7 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
       }
 
       left_chars = settingsType_.to_string(left_chars, indent_level + 2, SETTINGSTYPE_NAME, true);
+      left_chars = value_.to_string(left_chars, indent_level + 2, VALUE_NAME, false);
   
       if( 0 == indent_level) 
       {
@@ -228,8 +308,43 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
 
   private:
 
+      // Define constants for tracking the presence of fields.
+      // Use a struct to scope the variables from user fields as namespaces are not allowed within classes.
+      struct presence
+      {
+        // An enumeration with all the fields for which presence has to be tracked.
+        enum class fields : uint32_t
+        {
+          VALUE
+        };
+
+        // The number of fields for which presence has to be tracked.
+        static constexpr uint32_t N_FIELDS = 1;
+
+        // Which type are we using to track presence.
+        using TYPE = uint32_t;
+
+        // How many bits are there in the presence type.
+        static constexpr uint32_t N_BITS = std::numeric_limits<TYPE>::digits;
+
+        // How many variables of TYPE do we need to bit mask all presence fields.
+        static constexpr uint32_t SIZE = (N_FIELDS / N_BITS) + ((N_FIELDS % N_BITS) > 0 ? 1 : 0);
+
+        // Obtain the index of a given field in the presence array.
+        static constexpr uint32_t index(const fields& field) { return static_cast<uint32_t>(field) / N_BITS; }
+
+        // Obtain the bit mask for the given field assuming we are at the correct index in the presence array.
+        static constexpr TYPE mask(const fields& field)
+        {
+          return static_cast<uint32_t>(0x01) << (static_cast<uint32_t>(field) % N_BITS);
+        }
+      };
+
+      // Create an array in which the presence flags are stored.
+      typename presence::TYPE presence_[presence::SIZE] = {0};
 
       EmbeddedProto::enumeration<SettingsType> settingsType_ = static_cast<SettingsType>(0);
+      EmbeddedProto::int32 value_ = 0;
 
 };
 
