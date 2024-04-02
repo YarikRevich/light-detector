@@ -1,0 +1,26 @@
+// Contains API declaration for board data bus.
+
+syntax = "proto3";
+
+package light_detector;
+
+// Represents all the available data types, which can be transferred via data bus.
+enum DataType {
+    Raw = 0;
+    Full = 1;
+    Infrared = 2;
+    Visible = 3;
+}
+
+// Represents data bus request content send from the client to the board.
+message DataBusRequestContent {
+    DataType dataType = 1;
+}
+
+// Represents data bus response content send to the client from the board.
+message DataBusResponseContent {
+    uint32 deviceId = 1;
+    DataType dataType = 2;
+    uint32 value = 3;
+    uint32 nonce = 4;
+}

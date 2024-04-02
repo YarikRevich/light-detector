@@ -1,0 +1,19 @@
+// Contains API declaration for request content container.
+
+syntax = "proto3";
+
+package light_detector;
+
+import "Content/data.proto";
+import "Content/info.proto";
+import "Content/settings.proto";
+
+// Represents request container sent from the client to the board.
+message RequestContainer {
+    uint32 msgId = 1;
+    oneof content {
+        DataBusRequestContent dataBus = 2;
+        InfoBusRequestContent infoBus = 3;
+        SettingsBusRequestContent settingsBus = 4;
+    }
+}

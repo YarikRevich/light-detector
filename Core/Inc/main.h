@@ -22,6 +22,9 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
+#include "scheduler.h"
+#include "state.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -46,9 +49,6 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
-#define INT_Pin GPIO_PIN_9
-#define INT_GPIO_Port GPIOA
 
 /* USER CODE END EM */
 
