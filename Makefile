@@ -34,7 +34,6 @@ generate: ## Generate prerequisites
 
 .PHONY: build
 build: ## Build the IOC project
-	@cd ./code/go/0chain.net/authorizer/ && go mod download && go mod tidy && CGO_ENABLED=1 go test -v -tags bn256 ./...
 
 .PHONY: all
 all: generate build
