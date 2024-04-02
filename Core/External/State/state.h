@@ -30,14 +30,14 @@ public:
      *
      * @return retrieved task sequence.
      */
-    static Sequence<std::function<int()>> get_task_sequence();
+    static Sequence<std::function<int()>>& get_task_sequence();
 
     /**
      * Retrieves request container sequence.
      *
      * @return retrieved request container sequence.
      */
-    static Sequence<light_detector::RequestContainer> get_request_container_sequence();
+    static Sequence<light_detector::RequestContainer>& get_request_container_sequence();
 
 private:
     /**

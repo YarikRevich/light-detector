@@ -15,11 +15,11 @@ int Sequence<T>::traverse_with_break(std::function<int(T)> callback) {
 
 template <typename T>
 void Sequence<T>::traverse_with_skip(std::function<int(T)> callback) {
-    std::queue<std::function<int(T)>> vacated_queue;
+    std::queue<T> vacated_queue;
 
     while (!sequence.empty()) {
         if (callback(sequence.front()) != EXIT_SUCCESS) {
-            vacated_queue.push(callback);
+            vacated_queue.push(sequence.front());
         }
 
         sequence.pop();

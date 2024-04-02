@@ -1,7 +1,6 @@
 #ifndef LIGHT_DETECTOR_INDICATOR_H
 #define LIGHT_DETECTOR_INDICATOR_H
 
-#include "state.h"
 #include "gpio.h"
 
 /**

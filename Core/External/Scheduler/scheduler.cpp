@@ -22,11 +22,10 @@ void Scheduler::schedule_status_check() {
     State::get_task_sequence().add([]() -> int {
         if (TSL2591X::is_available()) {
             Indicator::toggle_action_success();
-
         } else {
             Indicator::toggle_action_failure();
         }
 
-        return EXIT_FAILURE;
+        return EXIT_SUCCESS;
     });
 }

@@ -55,7 +55,9 @@ add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx)
 
 file(GLOB_RECURSE SOURCES "ThirdParty/*.*" "Core/*.*" "Drivers/*.*")
 
-set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32L476RGTX_FLASH.ld)
+set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32L476RGTX_FLASH.ld
+        Core/External/Tools/Mutex/mutex.cpp
+        Core/External/Tools/Mutex/mutex.h)
 
 add_link_options(-Wl,-gc-sections,--print-memory-usage,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map)
 add_link_options(-mcpu=cortex-m4 -mthumb -mthumb-interwork)

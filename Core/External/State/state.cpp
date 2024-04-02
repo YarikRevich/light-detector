@@ -18,10 +18,10 @@ int State::allocate_response_nonce() {
     return current_response_nonce++;
 }
 
-Sequence<std::function<int()>> State::get_task_sequence() {
+Sequence<std::function<int()>>& State::get_task_sequence() {
     return task_sequence;
 }
 
-Sequence<light_detector::RequestContainer> State::get_request_container_sequence() {
+Sequence<light_detector::RequestContainer>& State::get_request_container_sequence() {
     return request_container_sequence;
 }
