@@ -2,6 +2,7 @@
 #define LIGHT_DETECTOR_STATE_H
 
 #include "request.h"
+#include "mutex.h"
 #include "sequence.h"
 
 #include <queue>
@@ -24,6 +25,13 @@ public:
      * @return allocated response nonce.
      */
     static int allocate_response_nonce();
+
+    /**
+     * Retrieves button mutex.
+     *
+     * @return retrieved button mutex.
+     */
+    static Mutex& get_button_mutex();
 
     /**
      * Retrieves task sequence used to perform scheduled tasks execution.
@@ -49,6 +57,11 @@ private:
      * Represents current(latest) response nonce.
      */
     static int current_response_nonce;
+
+    /**
+     * Represents button mutex used to manage pressed button operations invokation.
+     */
+    static Mutex button_mutex;
 
     /**
     * Represents scheduled tasks sequence.

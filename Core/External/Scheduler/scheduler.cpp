@@ -26,6 +26,8 @@ void Scheduler::schedule_status_check() {
             Indicator::toggle_action_failure();
         }
 
+        State::get_button_mutex().unlock();
+
         return EXIT_SUCCESS;
     });
 }

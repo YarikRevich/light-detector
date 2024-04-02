@@ -23,6 +23,7 @@
 #define __MAIN_H
 
 #include "scheduler.h"
+#include "state.h"
 
 #ifdef __cplusplus
 extern "C" {

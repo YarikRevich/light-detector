@@ -59,6 +59,7 @@
 									<listOptionValue builtIn="false" value="../Core/External/Scheduler/Handler"/>
 									<listOptionValue builtIn="false" value="../Core/External/State"/>
 									<listOptionValue builtIn="false" value="../Core/External/Tools/Indicator"/>
+									<listOptionValue builtIn="false" value="../Core/External/Tools/Mutex"/>
 									<listOptionValue builtIn="false" value="../Core/External/Tools/Sequence"/>
 									<listOptionValue builtIn="false" value="../ThirdParty/Inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32L4xx_HAL_Driver/Inc"/>
@@ -90,6 +91,7 @@
 									<listOptionValue builtIn="false" value="../Core/External/State"/>
 									<listOptionValue builtIn="false" value="../Core/External/Scheduler/Handler"/>
 									<listOptionValue builtIn="false" value="../Core/External/Tools/Indicator"/>
+									<listOptionValue builtIn="false" value="../Core/External/Tools/Mutex"/>
 									<listOptionValue builtIn="false" value="../Core/External/Tools/Sequence"/>
 									<listOptionValue builtIn="false" value="../ThirdParty/Inc"/>
 									<listOptionValue builtIn="false" value="../Drivers/STM32L4xx_HAL_Driver/Inc"/>
