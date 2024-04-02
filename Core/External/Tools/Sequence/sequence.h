@@ -5,6 +5,8 @@
 #include <functional>
 #include <cstdlib>
 
+#include "request.h"
+
 /**
  * Represents sequence wrapper implementation.
  *
@@ -14,12 +16,21 @@ template <typename T>
 class Sequence {
 public:
     /**
-     * Iterates over all available content and removes it from the sequence.
+     * Iterates over all available content and removes it from the sequence. If error occurs, then the execution
+     * is stopped and task is still present in the loop.
      *
      * @param callback - given callback to be called for each iteration.
      * @return status of the performed operation.
      */
-    int traverse(std::function<int(T)> callback);
+    int traverse_with_break(std::function<int(T)> callback);
+
+    /**
+     * Iterates over all available content and removes it from the sequence. If error occurs, then the execution is skipped
+     * and task is still present in the loop.
+     *
+     * @param callback - given callback to be called for each iteration.
+     */
+    void traverse_with_skip(std::function<int(T)> callback);
 
     /**
      * Adds new value to the sequence.

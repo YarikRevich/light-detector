@@ -53,7 +53,7 @@ include_directories(Core/Inc Core/External/Proto/Buffer Core/External/Proto/Buff
 
 add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx)
 
-file(GLOB_RECURSE SOURCES "Core/*.*" "Drivers/*.*" "ThirdParty/*.*")
+file(GLOB_RECURSE SOURCES "ThirdParty/*.*" "Core/*.*" "Drivers/*.*")
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32L476RGTX_FLASH.ld)
 

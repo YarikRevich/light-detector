@@ -26,6 +26,13 @@ public:
     static int allocate_response_nonce();
 
     /**
+     * Retrieves task sequence used to perform scheduled tasks execution.
+     *
+     * @return retrieved task sequence.
+     */
+    static Sequence<std::function<int()>> get_task_sequence();
+
+    /**
      * Retrieves request container sequence.
      *
      * @return retrieved request container sequence.
@@ -44,7 +51,12 @@ private:
     static int current_response_nonce;
 
     /**
-     * Represents sequence of request containers.
+    * Represents scheduled tasks sequence.
+    */
+    static Sequence<std::function<int()>> task_sequence;
+
+    /**
+     * Represents sequence of request containers. Used for internal scheduler logic.
      */
     static Sequence<light_detector::RequestContainer> request_container_sequence;
 };

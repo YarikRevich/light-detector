@@ -5,6 +5,8 @@
 
 #include <cstdio>
 
+#define DEFAULT_REQUEST_BUFFER_SIZE 100
+
 /**
  * Represents request buffer implementation for protocol buffers serialization.
  *

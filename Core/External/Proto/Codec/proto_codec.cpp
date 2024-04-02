@@ -1,16 +1,19 @@
 #include "proto_codec.h"
 
-RequestBuffer<100> ProtoCodec::request_buffer = RequestBuffer<100>();
+RequestBuffer<DEFAULT_REQUEST_BUFFER_SIZE> ProtoCodec::request_buffer =
+        RequestBuffer<DEFAULT_REQUEST_BUFFER_SIZE>();
 
-ResponseBuffer<100> ProtoCodec::response_buffer = ResponseBuffer<100>();
+ResponseBuffer<DEFAULT_RESPONSE_BUFFER_SIZE> ProtoCodec::response_buffer =
+        ResponseBuffer<DEFAULT_RESPONSE_BUFFER_SIZE>();
 
-light_detector::RequestContainer request_container = light_detector::RequestContainer();
+light_detector::RequestContainer ProtoCodec::request_container =
+        light_detector::RequestContainer();
 
-RequestBuffer<100> ProtoCodec::get_request_buffer() {
+RequestBuffer<DEFAULT_REQUEST_BUFFER_SIZE>& ProtoCodec::get_request_buffer() {
     return request_buffer;
 }
 
-ResponseBuffer<100> ProtoCodec::get_response_buffer() {
+ResponseBuffer<DEFAULT_RESPONSE_BUFFER_SIZE>& ProtoCodec::get_response_buffer() {
     return response_buffer;
 }
 

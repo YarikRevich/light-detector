@@ -6,19 +6,20 @@
 #include "indicator.h"
 
 /**
- * Represents task scheduler implementation.
+ * Represents task scheduler implementation. Its methods are intended to be called to schedule tasks to be executed
+ * in a main loop.
  */
 class Scheduler {
 public:
     /**
-     * Handles external timer tick action.
+     * Schedules external timer tick action.
      */
-    static void handle_tick();
+    static void schedule_tick();
 
     /**
-     * Handles external button status check action.
+     * Schedules external button status check action.
      */
-    static void handle_status_check();
+    static void schedule_status_check();
 };
 
 #endif //LIGHT_DETECTOR_SCHEDULER_H

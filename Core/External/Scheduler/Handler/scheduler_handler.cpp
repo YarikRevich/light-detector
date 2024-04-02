@@ -13,7 +13,7 @@ int SchedulerHandler::handle_response() {
     auto request_container_sequence = State::get_request_container_sequence();
 
     if (!request_container_sequence.is_empty()) {
-        return request_container_sequence.traverse([](const light_detector::RequestContainer &content) -> int {
+        return request_container_sequence.traverse_with_break([](const light_detector::RequestContainer &content) -> int {
             return SchedulerHandler::try_process_response_container(content);
         });
     }
@@ -52,10 +52,10 @@ int SchedulerHandler::try_process_response_container(const light_detector::Reque
 }
 
 int SchedulerHandler::try_transmit_response_container() {
-    auto request_buffer = ProtoCodec::get_request_buffer();
+    auto response_buffer = ProtoCodec::get_response_buffer();
 
-    HAL_UART_Receive(
-            &huart2, request_buffer.get_raw_buffer(), request_buffer.get_size(), 1000);
+    HAL_UART_Transmit(
+            &huart2, response_buffer.get_raw_buffer(), response_buffer.get_size(), 1000);
 
     return EXIT_SUCCESS;
 }

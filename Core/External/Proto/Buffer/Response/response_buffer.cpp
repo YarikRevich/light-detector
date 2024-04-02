@@ -6,7 +6,7 @@ ResponseBuffer<BUFFER_SIZE>::ResponseBuffer() : bytes_used(0), bytes{0} {
 
 template<uint32_t BUFFER_SIZE>
 uint8_t *ResponseBuffer<BUFFER_SIZE>::get_raw_buffer() {
-    return bytes;
+    return bytes[0];
 }
 
 template<uint32_t BUFFER_SIZE>
@@ -33,7 +33,7 @@ template<uint32_t BUFFER_SIZE>
 bool ResponseBuffer<BUFFER_SIZE>::push(const uint8_t byte) {
     bool result = BUFFER_SIZE > bytes_used;
     if (result) {
-        bytes[bytes_used] = byte;
+        (*bytes[bytes_used]) = byte;
         ++bytes_used;
     }
     return result;
@@ -48,3 +48,5 @@ bool ResponseBuffer<BUFFER_SIZE>::push(const uint8_t *src, const uint32_t length
     }
     return result;
 }
+
+template class ResponseBuffer<DEFAULT_RESPONSE_BUFFER_SIZE>;

@@ -6,6 +6,8 @@
 #include <cstdio>
 #include <cstring>
 
+#define DEFAULT_RESPONSE_BUFFER_SIZE 100
+
 /**
  * Represents response buffer implementation for protocol buffers serialization.
  *
