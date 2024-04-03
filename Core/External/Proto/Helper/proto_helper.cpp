@@ -51,4 +51,29 @@ bool ProtoHelper::is_info_bus_request_content_of_gain_info_type(
 bool ProtoHelper::is_info_bus_request_content_of_integral_time_info_type(
         const light_detector::InfoBusRequestContent& content) {
     return content.infoType() == light_detector::InfoType::IntegralTime;
+}
+
+bool ProtoHelper::is_settings_bus_request_content_of_enable_settings_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.settingsType() == light_detector::SettingsType::Enable;
+}
+
+bool ProtoHelper::is_settings_bus_request_content_of_disable_settings_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.settingsType() == light_detector::SettingsType::Disable;
+}
+
+bool ProtoHelper::is_settings_bus_request_content_of_reset_settings_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.settingsType() == light_detector::SettingsType::Reset;
+}
+
+bool ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.settingsType() == light_detector::SettingsType::SetGain;
+}
+
+bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.settingsType() == light_detector::SettingsType::SetIntegralTime;
 };

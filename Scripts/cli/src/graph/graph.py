@@ -1,3 +1,4 @@
+
 import tkinter
 from tkinter import Tk
 
@@ -6,11 +7,13 @@ from matplotlib.figure import Figure
 
 from serial.tools import list_ports
 
+
 def retrieve_ports() -> list[str]:
     """Retrieves standardized"""
 
     for entity in list_ports.comports():
         pass
+
 
 def render_figure(data: list[str]) -> None:
     """Renderes figure with the given content"""
@@ -31,10 +34,4 @@ def render_figure(data: list[str]) -> None:
 
     root.mainloop()
 
-def main() -> None:
-    """Represents entrypoint"""
-
-    render_figure(retrieve_ports())
-
-if __name__ == "__main__":
-    main()
+render_figure(retrieve_ports())

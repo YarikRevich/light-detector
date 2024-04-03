@@ -27,13 +27,11 @@ else
 	@echo "*.c files intented to be renamed don't exist"
 endif
 
-.PHONY: generate
-generate: ## Generate ProtocolBuffers files(used mainly for development)
-	@protoc -I./Resources/Proto/Container --python_out=./Scripts/graph/proto Content/data.proto Content/info.proto Content/settings.proto request.proto response.proto
-	@protoc --plugin=/Volumes/Files/embedded/university/techno/project/deps/EmbeddedProto -I./Resources/Proto/Container --eams_out=./Core/External/Proto/Generated Content/data.proto Content/info.proto Content/settings.proto request.proto response.proto
+prepare: ## Install prerequisites
+	pip3 install -r requirements.txt
 
-.PHONY: build
-build: ## Build the IOC project
+install: prepare ## Build and install the application
+	python3 setup.py install --user
 
 .PHONY: all
-all: generate build
+all: install

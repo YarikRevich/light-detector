@@ -133,6 +133,51 @@ private:
      * @return status of the settings bus request content response processing.
      */
     static int process_settings_bus_request_content_response(const light_detector::RequestContainer& content);
+
+    /**
+     * Attempts to process settings bus request content of enable settings type response.
+     *
+     * @param content - given settings bus request content.
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_enable_settings_type_response(
+            const light_detector::RequestContainer& content);
+
+    /**
+     * Attempts to process settings bus request content of disable settings type response.
+     *
+     * @param content - given settings bus request content.
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_disable_settings_type_response(
+            const light_detector::RequestContainer& content);
+
+    /**
+     * Attempts to process settings bus request content of reset settings type response.
+     *
+     * @param content - given settings bus request content.
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_reset_settings_type_response(
+            const light_detector::RequestContainer& content);
+
+    /**
+     * Attempts to process settings bus request content of set gain settings type response.
+     *
+     * @param content - given settings bus request content.
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_gain_settings_type_response(
+            const light_detector::RequestContainer& content);
+
+    /**
+     * Attempts to process settings bus request content of set integral time settings type response.
+     *
+     * @param content - given settings bus request content.
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_integral_time_settings_type_response(
+            const light_detector::RequestContainer& content);
 };
 
 #endif //LIGHT_DETECTOR_SCHEDULER_HANDLER_H

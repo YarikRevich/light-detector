@@ -227,5 +227,72 @@ int SchedulerHandler::process_info_bus_request_content_of_integral_time_info_typ
 
 int SchedulerHandler::process_settings_bus_request_content_response(
         const light_detector::RequestContainer &content) {
+    auto settings_bus_request_content =
+            ProtoHelper::extract_settings_bus_request_content(content);
 
+    if (ProtoHelper::is_settings_bus_request_content_of_enable_settings_type(
+            settings_bus_request_content)) {
+
+
+    } else if (ProtoHelper::is_settings_bus_request_content_of_disable_settings_type(
+            settings_bus_request_content)) {
+
+
+    } else if (ProtoHelper::is_settings_bus_request_content_of_reset_settings_type(
+            settings_bus_request_content)) {
+
+
+    } else if (ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type(
+            settings_bus_request_content)) {
+
+
+    } else if (ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type(
+            settings_bus_request_content)) {
+
+
+    }
+
+    return EXIT_SUCCESS;
+}
+
+int SchedulerHandler::process_settings_bus_request_content_of_enable_settings_type_response(
+        const light_detector::RequestContainer &content) {
+    light_detector::ResponseContainer response_container;
+
+    response_container.set_msgId(content.get_msgId());
+
+    light_detector::SettingsBusResponseContent settings_bus_response_content;
+
+    settings_bus_response_content.set_deviceId(TSL2591X::get_device_id());
+    settings_bus_response_content.set_settingsType(light_detector::SettingsType::Enable);
+
+    TSL2591X::enable();
+    uint8_t value = TSL2591X::get_integral_time();
+
+    settings_bus_response_content.set_result(true);
+    settings_bus_response_content.set_nonce(State::allocate_response_nonce());
+
+    response_container.set_settingsBus(settings_bus_response_content);
+
+    return ProtoCodec::encode_response_container(response_container);
+}
+
+int SchedulerHandler::process_settings_bus_request_content_of_disable_settings_type_response(
+        const light_detector::RequestContainer &content) {
+    return 0;
+}
+
+int SchedulerHandler::process_settings_bus_request_content_of_reset_settings_type_response(
+        const light_detector::RequestContainer &content) {
+    return 0;
+}
+
+int SchedulerHandler::process_settings_bus_request_content_of_set_gain_settings_type_response(
+        const light_detector::RequestContainer &content) {
+    return 0;
+}
+
+int SchedulerHandler::process_settings_bus_request_content_of_set_integral_time_settings_type_response(
+        const light_detector::RequestContainer &content) {
+    return 0;
 }

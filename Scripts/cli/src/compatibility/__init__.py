@@ -1,0 +1,2 @@
+from .campatibility import is_manufacturer_allowed
+from .campatibility import is_device_allowed

@@ -8,6 +8,7 @@ package light_detector;
 enum InfoType {
     Gain = 0;
     IntegralTime = 1;
+    ProcessedRequests = 2;
 }
 
 // Represents info bus request content send from the client to the board.

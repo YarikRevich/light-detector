@@ -1,12 +1,13 @@
-# light-detector
+# CLI
 
 [![Build](https://github.com/YarikRevich/ResourceTracker/actions/workflows/build.yml/badge.svg)](https://github.com/YarikRevich/ResourceTracker/actions/workflows/build.yml)
-![STM32](https://img.shields.io/badge/stm32-blue)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![MacOS](https://img.shields.io/badge/MacOS-8773f5?style=for-the-badge&logo=macos&logoColor=black)
 [![StandWithUkraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
 
 ## General Information
 
-A driver-like application, which allows to communicate with TSL2591X light sensor with the help of CLI, based on STM32L476RG embedded system.
+Allows to perform communication with serial connected devices.
 
 Includes following features:
 * Retrieve latest sensor data(**raw**, **full**, **infrared**, **visible**)

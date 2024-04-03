@@ -110,6 +110,58 @@ public:
      */
     static bool is_info_bus_request_content_of_integral_time_info_type(
             const light_detector::InfoBusRequestContent& content);
+
+
+
+
+
+
+
+
+    /**
+     * Checks if the given settings bus request content of enable settings type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_enable_settings_type(
+            const light_detector::SettingsBusRequestContent& content);
+
+    /**
+     * Checks if the given settings bus request content of disable settings type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_disable_settings_type(
+            const light_detector::SettingsBusRequestContent& content);
+
+    /**
+     * Checks if the given settings bus request content of reset settings type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_reset_settings_type(
+            const light_detector::SettingsBusRequestContent& content);
+
+    /**
+     * Checks if the given settings bus request content of set gain settings type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_set_gain_settings_type(
+            const light_detector::SettingsBusRequestContent& content);
+
+    /**
+     * Checks if the given settings bus request content of set integral time settings type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_set_integral_time_settings_type(
+            const light_detector::SettingsBusRequestContent& content);
 };
 
 #endif //LIGHT_DETECTOR_PROTO_HELPER_H
