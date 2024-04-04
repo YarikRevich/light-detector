@@ -1,0 +1,1 @@
+from .middleware import is_device_available

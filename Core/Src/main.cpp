@@ -68,10 +68,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
  */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     if (GPIO_Pin == GPIO_PIN_13) {
-        if (!State::get_button_mutex().is_locked()) {
-            State::get_button_mutex().lock();
+        if (State::is_device_configured()) {
+            if (!State::get_button_mutex().is_locked()) {
+                State::get_button_mutex().lock();
 
-            Scheduler::schedule_status_check();
+                Scheduler::schedule_status_check();
+            }
         }
     } else {
         __NOP();
@@ -118,9 +120,12 @@ int main(void) {
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while (1) {
-        if (!TSL2591X::is_configured()) {
+        if (!State::is_device_configured()) {
             if (TSL2591X::is_available()) {
                 TSL2591X::init();
+
+                State::set_device_configured(true);
+                State::set_device_enabled(true);
 
                 Indicator::toggle_initialization_success();
 

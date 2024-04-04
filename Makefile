@@ -29,7 +29,7 @@ endif
 
 .PHONY: generate
 generate: ## Generate ProtocolBuffers files(used mainly for development)
-	@protoc -I./Resources/Proto/Container --python_out=./Scripts/graph/proto Content/data.proto Content/info.proto Content/settings.proto request.proto response.proto
+	@protoc -I./Resources/Proto/Container --python_out=./Scripts/cli/src/proto Content/data.proto Content/info.proto Content/settings.proto request.proto response.proto
 	@protoc --plugin=/Volumes/Files/embedded/university/techno/project/deps/EmbeddedProto -I./Resources/Proto/Container --eams_out=./Core/External/Proto/Generated Content/data.proto Content/info.proto Content/settings.proto request.proto response.proto
 
 .PHONY: build

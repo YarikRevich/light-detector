@@ -7,7 +7,7 @@
 
 ## General Information
 
-Allows to perform communication with serial connected devices.
+Allows to perform operations with serial connected devices.
 
 Includes following features:
 * Retrieve latest sensor data(**raw**, **full**, **infrared**, **visible**)
@@ -29,11 +29,5 @@ If **ProtocolBuffers** files need to be regenerated it's required to execute the
 ```shell
 make generate
 ```
-
-## Scripts
-
-### CLI
-
-Detailed documentation can be found [here](./Scripts/cli/README.md)
 
 # Use cases

@@ -79,13 +79,6 @@ public:
     static bool is_available();
 
     /**
-     * Checks if the device has already been configured.
-     *
-     * @return result of the check.
-     */
-    static bool is_configured();
-
-    /**
      * Retrieves device id of the sensor.
      *
      * @return read device id.
@@ -166,11 +159,6 @@ public:
     static uint8_t get_gain();
 
 private:
-    /**
-     * Indicated that the device has already been initialized.
-     */
-    static bool initialized;
-
     /**
     * Reads value from the zero channel.
     *

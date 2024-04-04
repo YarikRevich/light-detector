@@ -1,1 +1,1 @@
-from .available_devices_dto import AvailableDevicesDto
+from .dto import AvailableDevicesDto

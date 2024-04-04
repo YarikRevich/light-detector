@@ -1,33 +1,21 @@
-from serial.tools import list_ports
-from serial import Serial
-
-from .list_available_devices import ListAvailableDevicesCommand
+from .get_available_devices import GetAvailableDevicesCommand
+from .get_info import GetInfoCommand
 
 
 class BaseCommand:
     """Represents base command handler."""
 
-    def list_available_devices(self, name="list-available-devices") -> None:
-        """Lists all the available compatible devices connected to serial ports."""
+    @staticmethod
+    def get_available_devices() -> None:
+        """Returns all the available compatible devices connected to serial ports."""
 
-        ListAvailableDevicesCommand.handle()
+        GetAvailableDevicesCommand.handle()
 
-        # """bit rate and bit amount per image"""
-        #
-        #
-        # ser = Serial("COM7", 9600)
-        # with open("/dev/COM7", "rb") as ser:
-        #     while True:
-        #         bs = ser.read(2048)
-        #         print(repr(bs))
-        #
-        # for entity in list_ports.comports():
-        #     print(entity.name, entity.device, entity.description, entity.manufacturer)
+    @staticmethod
+    def get_info(device: str, bound_rate: int, type: str) -> None:
+        """
+        Returns selected metadata info retrieved from the board.
+        The available info types are 'gain', 'integral_time', 'processed_requests'
+        """
 
-    #
-    # def is_connected(self, ):
-    #     """"""
-    #     return 2 * number
-
-    """list available ports
-    is connected """
+        GetInfoCommand.handle(device, bound_rate, type)

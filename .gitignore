@@ -21,3 +21,4 @@ Debug/
 # Scripts
 
 **/env/
+**/__pycache__/

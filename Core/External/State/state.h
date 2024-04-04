@@ -13,6 +13,34 @@
 class State {
 public:
     /**
+     * Checks if the device is configured.
+     *
+     * @return result of the check.
+     */
+    static bool is_device_configured();
+
+    /**
+     * Sets device configured mode with the given value.
+     *
+     * @param value - value of the configure mode.
+     */
+    static void set_device_configured(bool value);
+
+    /**
+     * Checks if the device is enabled.
+     *
+     * @return result of the check.
+     */
+    static bool is_device_enabled();
+
+    /**
+     * Sets device enabled mode with the given value.
+     *
+     * @param value - value of the enabled mode.
+     */
+    static void set_device_enabled(bool value);
+
+    /**
      * Retrieves amount of processed events.
      *
      * @return amount of processed events.
@@ -48,6 +76,16 @@ public:
     static Sequence<light_detector::RequestContainer>& get_request_container_sequence();
 
 private:
+    /**
+     * Represents device configured mode.
+     */
+    static bool device_configured;
+
+    /**
+     * Represents device enabled mode.
+     */
+    static bool device_enabled;
+
     /**
      * Represents amount of processed incoming requests.
      */

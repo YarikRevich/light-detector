@@ -4,15 +4,9 @@ from tkinter import Tk
 
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg)
 from matplotlib.figure import Figure
+from matplotlib import pyplot as plt
 
-from serial.tools import list_ports
-
-
-def retrieve_ports() -> list[str]:
-    """Retrieves standardized"""
-
-    for entity in list_ports.comports():
-        pass
+plt.savefig('foo.png')
 
 
 def render_figure(data: list[str]) -> None:
@@ -33,5 +27,3 @@ def render_figure(data: list[str]) -> None:
     canvas.get_tk_widget().pack(side=tkinter.TOP, fill=tkinter.BOTH, expand=1)
 
     root.mainloop()
-
-render_figure(retrieve_ports())
