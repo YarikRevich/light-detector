@@ -1,8 +1,8 @@
 import logging
 from serial.tools import list_ports
 
-from compatibility import is_manufacturer_allowed
-from compatibility import is_description_valid
+from middleware import is_manufacturer_allowed
+from middleware import is_description_valid
 from dto import AvailableDevicesDto
 from tools import print_output
 

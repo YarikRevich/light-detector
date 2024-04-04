@@ -26,7 +26,9 @@ namespace light_detector {
 enum class InfoType : uint32_t
 {
   Gain = 0,
-  IntegralTime = 1
+  IntegralTime = 1,
+  ProcessedRequests = 2,
+  DeviceAvailable = 3
 };
 
 class InfoBusRequestContent final: public ::EmbeddedProto::MessageInterface

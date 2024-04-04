@@ -115,29 +115,16 @@ int main(void) {
     MX_TIM16_Init();
     /* USER CODE BEGIN 2 */
 
+    Scheduler::schedule_configuration();
+
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while (1) {
-        if (!State::is_device_configured()) {
-            if (TSL2591X::is_available()) {
-                TSL2591X::init();
-
-                State::set_device_configured(true);
-                State::set_device_enabled(true);
-
-                Indicator::toggle_initialization_success();
-
-                HAL_TIM_Base_Start_IT(&htim16);
-            } else {
-                Indicator::toggle_initialization_failure();
-            }
-        } else {
-            State::get_task_sequence().traverse_with_skip([](const std::function<int()> &callback) -> int {
-                return callback();
-            });
-        }
+        State::get_task_sequence().traverse_with_skip([](const std::function<int()> &callback) -> int {
+            return callback();
+        });
 
         /* USER CODE END WHILE */
 

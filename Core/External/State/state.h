@@ -27,25 +27,16 @@ public:
     static void set_device_configured(bool value);
 
     /**
-     * Checks if the device is enabled.
-     *
-     * @return result of the check.
-     */
-    static bool is_device_enabled();
-
-    /**
-     * Sets device enabled mode with the given value.
-     *
-     * @param value - value of the enabled mode.
-     */
-    static void set_device_enabled(bool value);
-
-    /**
      * Retrieves amount of processed events.
      *
      * @return amount of processed events.
      */
-    static int get_amount_of_processed_requests();
+    static int get_processed_requests();
+
+    /**
+     * Increases amount of processed events.
+     */
+    static void increase_processed_requests();
 
     /**
      * Allocates new response nonce.
@@ -82,14 +73,9 @@ private:
     static bool device_configured;
 
     /**
-     * Represents device enabled mode.
-     */
-    static bool device_enabled;
-
-    /**
      * Represents amount of processed incoming requests.
      */
-    static int amount_of_processed_requests;
+    static int processed_requests;
 
     /**
      * Represents current(latest) response nonce.

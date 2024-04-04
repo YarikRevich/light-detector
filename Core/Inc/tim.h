@@ -21,7 +21,9 @@
 #ifndef __TIM_H__
 #define __TIM_H__
 
-#include "main.h"
+#include "stm32l4xx_hal.h"
+
+extern TIM_HandleTypeDef htim16;
 
 #ifdef __cplusplus
 extern "C" {
@@ -33,13 +35,14 @@ extern "C" {
 
 /* USER CODE END Includes */
 
-extern TIM_HandleTypeDef htim16;
 
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
 void MX_TIM16_Init(void);
+
+void Error_Handler(void);
 
 /* USER CODE BEGIN Prototypes */
 

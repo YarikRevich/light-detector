@@ -20,7 +20,7 @@ void Scheduler::schedule_tick() {
 
 void Scheduler::schedule_status_check() {
     State::get_task_sequence().add([]() -> int {
-        if (TSL2591X::is_available()) {
+        if (State::is_device_configured() && TSL2591X::is_available()) {
             Indicator::toggle_action_success();
         } else {
             Indicator::toggle_action_failure();
@@ -29,5 +29,25 @@ void Scheduler::schedule_status_check() {
         State::get_button_mutex().unlock();
 
         return EXIT_SUCCESS;
+    });
+}
+
+void Scheduler::schedule_configuration() {
+    State::get_task_sequence().add([]() -> int {
+        if (TSL2591X::is_available()) {
+            TSL2591X::init();
+
+            State::set_device_configured(true);
+
+            Indicator::toggle_initialization_success();
+
+            HAL_TIM_Base_Start_IT(&htim16);
+
+            return EXIT_SUCCESS;
+        } else {
+            Indicator::toggle_initialization_failure();
+
+            return EXIT_FAILURE;
+        }
     });
 }

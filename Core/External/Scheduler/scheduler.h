@@ -1,6 +1,8 @@
 #ifndef LIGHT_DETECTOR_SCHEDULER_H
 #define LIGHT_DETECTOR_SCHEDULER_H
 
+#include "tim.h"
+
 #include "scheduler_handler.h"
 #include "state.h"
 #include "indicator.h"
@@ -20,6 +22,11 @@ public:
      * Schedules external button status check action.
      */
     static void schedule_status_check();
+
+    /**
+     * Schedules device configuration action.
+     */
+    static void schedule_configuration();
 };
 
 #endif //LIGHT_DETECTOR_SCHEDULER_H

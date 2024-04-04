@@ -10,6 +10,7 @@ class GetInfoCommand:
     GAIN_TYPE = "gain"
     INTEGRAL_TIME_TYPE = "integral_time"
     PROCESSED_REQUESTS_TYPE = "processed_requests"
+    DEVICE_AVAILABLE_TYPE = "device_available"
 
     @staticmethod
     def handle(device: str, bound_rate: int, type: str):
@@ -29,8 +30,11 @@ class GetInfoCommand:
             case GetInfoCommand.PROCESSED_REQUESTS_TYPE:
                 GetInfoCommand.process_get_processed_requests_info(device, bound_rate)
 
+            case GetInfoCommand.DEVICE_AVAILABLE_TYPE:
+                GetInfoCommand.process_get_device_available_info(device, bound_rate)
+
             case _:
-                logging.error("Given type is not valid.")
+                logging.error("Given info type is not valid.")
 
     @staticmethod
     def process_get_gain_info(device: str, bound_rate: int):
@@ -47,5 +51,11 @@ class GetInfoCommand:
     @staticmethod
     def process_get_processed_requests_info(device: str, bound_rate: int):
         """Processes request to retrieve 'processed_requests' metadata info from the device"""
+
+        pass
+
+    @staticmethod
+    def process_get_device_available_info(device: str, bound_rate: int):
+        """Processes request to retrieve 'device_available' metadata info from the device"""
 
         pass

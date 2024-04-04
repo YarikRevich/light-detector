@@ -1,2 +1,0 @@
-from .compatibility import is_manufacturer_allowed
-from .compatibility import is_description_valid

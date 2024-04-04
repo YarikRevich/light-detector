@@ -21,7 +21,7 @@
 #ifndef __DMA_H__
 #define __DMA_H__
 
-#include "main.h"
+#include "stm32l4xx_hal.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -40,6 +40,8 @@ extern "C" {
 /* USER CODE END Private defines */
 
 void MX_DMA_Init(void);
+
+void Error_Handler(void);
 
 /* USER CODE BEGIN Prototypes */
 

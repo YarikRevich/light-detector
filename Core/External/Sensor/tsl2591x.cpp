@@ -28,6 +28,8 @@ void TSL2591X::disable() {
 
 void TSL2591X::reset() {
     write_byte(CONTROL_REGISTER, SRESET);
+
+    init();
 }
 
 uint16_t TSL2591X::read_lux() {

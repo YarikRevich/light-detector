@@ -2,9 +2,7 @@
 
 bool State::device_configured = false;
 
-bool State::device_enabled = false;
-
-int State::amount_of_processed_requests = 0;
+int State::processed_requests = 0;
 
 int State::current_response_nonce = 0;
 
@@ -24,16 +22,12 @@ void State::set_device_configured(bool value) {
     device_configured = true;
 }
 
-bool State::is_device_enabled() {
-    return device_enabled;
-}
+int State::get_processed_requests() {
+    return processed_requests;
+};
 
-void State::set_device_enabled(bool value) {
-    device_enabled = true;
-}
-
-int State::get_amount_of_processed_requests() {
-    return amount_of_processed_requests;
+void State::increase_processed_requests() {
+    processed_requests++;
 };
 
 int State::allocate_response_nonce() {

@@ -127,30 +127,30 @@ private:
             const light_detector::RequestContainer& content);
 
     /**
+     * Attempts to process info bus request content of processed requests info type response.
+     *
+     * @param content - given info bus request content.
+     * @return status of the info bus request content response processing.
+     */
+    static int process_info_bus_request_content_of_processed_requests_info_type_response(
+            const light_detector::RequestContainer& content);
+
+    /**
+     * Attempts to process info bus request content of device available info type response.
+     *
+     * @param content - given info bus request content.
+     * @return status of the info bus request content response processing.
+     */
+    static int process_info_bus_request_content_of_device_available_info_type_response(
+            const light_detector::RequestContainer& content);
+
+    /**
      * Attempts to process settings bus request content response.
      *
      * @param content - given settings bus request content.
      * @return status of the settings bus request content response processing.
      */
     static int process_settings_bus_request_content_response(const light_detector::RequestContainer& content);
-
-    /**
-     * Attempts to process settings bus request content of enable settings type response.
-     *
-     * @param content - given settings bus request content.
-     * @return status of the settings bus request content response processing.
-     */
-    static int process_settings_bus_request_content_of_enable_settings_type_response(
-            const light_detector::RequestContainer& content);
-
-    /**
-     * Attempts to process settings bus request content of disable settings type response.
-     *
-     * @param content - given settings bus request content.
-     * @return status of the settings bus request content response processing.
-     */
-    static int process_settings_bus_request_content_of_disable_settings_type_response(
-            const light_detector::RequestContainer& content);
 
     /**
      * Attempts to process settings bus request content of reset settings type response.

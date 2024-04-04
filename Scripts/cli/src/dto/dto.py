@@ -1,5 +1,5 @@
 class AvailableDevicesDto:
-    """Represents dto used to hold result of 'list_available_devices' command"""
+    """Represents dto used to hold result of 'list_available_devices' command."""
 
     # Represents a shortened description of the connected device.
     description: str
@@ -14,3 +14,10 @@ class AvailableDevicesDto:
         self.description = description
         self.manufacturer = manufacturer
         self.location = location
+
+
+class RetrievedDataDto:
+    """Represents dto used to hold the result of a series of 'get_data' command."""
+
+    def __init__(self):
+        pass

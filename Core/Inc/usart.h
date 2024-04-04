@@ -21,7 +21,7 @@
 #ifndef __USART_H__
 #define __USART_H__
 
-#include "main.h"
+#include "stm32l4xx_hal.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,6 +38,8 @@ extern "C" {
 /* USER CODE END Private defines */
 
 void MX_USART2_UART_Init(void);
+
+void Error_Handler(void);
 
 /* USER CODE BEGIN Prototypes */
 

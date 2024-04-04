@@ -25,11 +25,9 @@ namespace light_detector {
 
 enum class SettingsType : uint32_t
 {
-  Enable = 0,
-  Disable = 1,
-  Reset = 2,
-  SetGain = 3,
-  SetIntegralTime = 4
+  Reset = 0,
+  SetGain = 1,
+  SetIntegralTime = 2
 };
 
 class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
