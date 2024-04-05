@@ -29,13 +29,33 @@ int SchedulerHandler::handle_response() {
 int SchedulerHandler::try_process_request_container() {
     auto request_buffer = ProtoCodec::get_request_buffer();
 
+//    uint8_t test[100] = {0, 0, 0, 0, 0, 0};
+
     HAL_UART_Receive(
-            &huart2, request_buffer.get_raw_buffer(), request_buffer.get_size(), 1000);
+            &huart2, &request_buffer.get_raw_buffer()[0], 100, 100000);
+
+//    request_buffer.get_raw_buffer()[0] = test[0];
+//    request_buffer.get_raw_buffer()[1] = test[1];
+//    request_buffer.get_raw_buffer()[2] = test[2];
+//    request_buffer.get_raw_buffer()[3] = test[3];
+//    request_buffer.get_raw_buffer()[4] = test[4];
+//    request_buffer.get_raw_buffer()[5] = test[5];
+
+//    if (request_buffer.get_raw_buffer()[0] != 1 && request_buffer.get_raw_buffer()[4] != 1) {
+//        Indicator::toggle_action_success();
+//    }
+
+//    HAL_UART_Receive(
+//            &huart2, request_buffer.get_raw_buffer(), request_buffer.get_size(), 100000);
 
     return ProtoCodec::decode_request_container();
 }
 
 int SchedulerHandler::try_process_response_container(const light_detector::RequestContainer &content) {
+    if (content.msgId() == 1) {
+        Indicator::toggle_action_success();
+    }
+
     if (ProtoHelper::is_data_bus_request_container(content)) {
 
         if (SchedulerHandler::process_data_bus_request_content_response(content) != EXIT_SUCCESS) {

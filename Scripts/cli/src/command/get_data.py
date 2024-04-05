@@ -19,10 +19,10 @@ class GetDataCommand:
     VISIBLE_TYPE = "visible"
 
     @staticmethod
-    def handle(device: str, bound_rate: int, type: str, series: int, export: str, figure: str):
+    def handle(device: str, baud_rate: int, type: str, series: int, export: str, figure: str):
         """Handles the execution of command wrapper."""
 
-        if not is_device_available():
+        if not is_device_available(device):
             logging.error("Selected device is not available")
             return
 
@@ -31,16 +31,16 @@ class GetDataCommand:
         for i in range(series):
             match type:
                 case GetDataCommand.RAW_TYPE:
-                    data.append(GetDataCommand.process_get_raw_data(device, bound_rate))
+                    data.append(GetDataCommand.process_get_raw_data(device, baud_rate))
 
                 case GetDataCommand.FULL_TYPE:
-                    data.append(GetDataCommand.process_get_full_data(device, bound_rate))
+                    data.append(GetDataCommand.process_get_full_data(device, baud_rate))
 
                 case GetDataCommand.INFRARED_TYPE:
-                    data.append(GetDataCommand.process_get_infrared_data(device, bound_rate))
+                    data.append(GetDataCommand.process_get_infrared_data(device, baud_rate))
 
                 case GetDataCommand.VISIBLE_TYPE:
-                    data.append(GetDataCommand.process_get_visible_data(device, bound_rate))
+                    data.append(GetDataCommand.process_get_visible_data(device, baud_rate))
 
                 case _:
                     logging.error("Given data type is not valid.")
@@ -66,25 +66,29 @@ class GetDataCommand:
             figure.save()
 
     @staticmethod
-    def process_get_raw_data(device: str, bound_rate: int) -> RetrievedDataDto:
+    def process_get_raw_data(device: str, baud_rate: int) -> RetrievedDataDto:
         """Processes request to retrieve 'raw' data from the device"""
 
-        pass
+        client = Client(device, baud_rate)
+
+        client.send_data_bus_request_raw_data_type_content()
+
+        return None
 
     @staticmethod
-    def process_get_full_data(device: str, bound_rate: int) -> RetrievedDataDto:
+    def process_get_full_data(device: str, baud_rate: int) -> RetrievedDataDto:
         """Processes request to retrieve 'full' data from the device"""
 
         pass
 
     @staticmethod
-    def process_get_infrared_data(device: str, bound_rate: int) -> RetrievedDataDto:
+    def process_get_infrared_data(device: str, baud_rate: int) -> RetrievedDataDto:
         """Processes request to retrieve 'infrared' data from the device"""
 
         pass
 
     @staticmethod
-    def process_get_visible_data(device: str, bound_rate: int) -> RetrievedDataDto:
+    def process_get_visible_data(device: str, baud_rate: int) -> RetrievedDataDto:
         """Processes request to retrieve 'visible' data from the device"""
 
         pass

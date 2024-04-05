@@ -11,6 +11,7 @@
 #include "proto_codec.h"
 #include "proto_helper.h"
 
+#include "indicator.h"
 #include "state.h"
 
 extern UART_HandleTypeDef huart2;

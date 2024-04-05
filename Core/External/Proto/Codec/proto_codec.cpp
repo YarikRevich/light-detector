@@ -21,6 +21,8 @@ int ProtoCodec::decode_request_container() {
     request_container.clear();
 
     if (request_container.deserialize(request_buffer) == ::EmbeddedProto::Error::NO_ERRORS) {
+
+
         State::get_request_container_sequence().add(request_container);
 
         return EXIT_SUCCESS;

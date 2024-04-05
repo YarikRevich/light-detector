@@ -29,11 +29,11 @@ def is_description_valid(src: str) -> bool:
     return src in VALID_DESCRIPTIONS
 
 
-def is_device_available(location: str) -> bool:
+def is_device_available(device: str) -> bool:
     """Checks if the given device is available."""
 
     for entity in list_ports.comports():
-        if entity.location == location:
+        if entity.device == device:
             return True
 
     return False

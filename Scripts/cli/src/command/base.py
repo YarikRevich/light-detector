@@ -13,7 +13,7 @@ class BaseCommand:
         GetAvailableDevicesCommand.handle()
 
     @staticmethod
-    def get_data(device: str, bound_rate: int, type: str, series: int = 1, export: str = None,
+    def get_data(device: str, baud_rate: int, type: str, series: int = 1, export: str = None,
                  figure: str = "scatter") -> None:
         """
         Returns sensor data of selected type. The available data types are 'raw', 'full', 'infrared', 'visible'.
@@ -21,22 +21,22 @@ class BaseCommand:
         'scatter' and 'bar'.
         """
 
-        GetDataCommand.handle(device, bound_rate, type, series, export, figure)
+        GetDataCommand.handle(device, baud_rate, type, series, export, figure)
 
     @staticmethod
-    def get_info(device: str, bound_rate: int, type: str) -> None:
+    def get_info(device: str, baud_rate: int, type: str) -> None:
         """
         Returns selected metadata info retrieved from the board.
         The available info types are 'gain', 'integral_time', 'processed_requests'
         """
 
-        GetInfoCommand.handle(device, bound_rate, type)
+        GetInfoCommand.handle(device, baud_rate, type)
 
     @staticmethod
-    def set_settings(device: str, bound_rate: int, type: str) -> None:
+    def set_settings(device: str, baud_rate: int, type: str) -> None:
         """
         Returns selected metadata info retrieved from the board.
         The available info types are 'gain', 'integral_time', 'processed_requests'
         """
 
-        GetInfoCommand.handle(device, bound_rate, type)
+        GetInfoCommand.handle(device, baud_rate, type)

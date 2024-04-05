@@ -5,7 +5,7 @@
 
 #include <cstdio>
 
-#define DEFAULT_REQUEST_BUFFER_SIZE 100
+#define DEFAULT_REQUEST_BUFFER_SIZE 6
 
 /**
  * Represents request buffer implementation for protocol buffers serialization.
@@ -19,12 +19,19 @@ public:
 
     ~RequestBuffer() override = default;
 
+//    /**
+//     * Retrieves raw buffer used for direct data injection.
+//     *
+//     * @return raw buffer reference.
+//     */
+//    uint8_t* get_raw_buffer();
+
     /**
      * Retrieves raw buffer used for direct data injection.
      *
      * @return raw buffer reference.
      */
-    uint8_t *get_raw_buffer();
+    void set_raw_buffer(uint8_t* src);
 
     /**
      * @see EmbeddedProto::ReadBufferInterface

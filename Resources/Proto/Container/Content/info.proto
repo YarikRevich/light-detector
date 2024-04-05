@@ -6,10 +6,11 @@ package light_detector;
 
 // Represents all the available info retrieval options, which can be modified via info bus.
 enum InfoType {
-    Gain = 0;
-    IntegralTime = 1;
-    ProcessedRequests = 2;
-    DeviceAvailable = 3;
+    InfoNone = 0; // Stub enum to handle serialization.
+    Gain = 1;
+    IntegralTime = 2;
+    ProcessedRequests = 3;
+    DeviceAvailable = 4;
 }
 
 // Represents info bus request content send from the client to the board.

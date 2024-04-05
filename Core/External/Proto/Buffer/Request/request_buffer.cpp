@@ -4,10 +4,15 @@ template<uint32_t BUFFER_SIZE>
 RequestBuffer<BUFFER_SIZE>::RequestBuffer() : index(0), size(0), bytes{0} {
 }
 
+//template<uint32_t BUFFER_SIZE>
+//uint8_t* RequestBuffer<BUFFER_SIZE>::get_raw_buffer() {
+//    return this->bytes[0];
+//}
+
 template<uint32_t BUFFER_SIZE>
-uint8_t * RequestBuffer<BUFFER_SIZE>::get_raw_buffer() {
-    return this->bytes[0];
-}
+void RequestBuffer<BUFFER_SIZE>::set_raw_buffer(uint8_t* src) {
+    this->bytes = src;
+};
 
 template<uint32_t BUFFER_SIZE>
 uint32_t RequestBuffer<BUFFER_SIZE>::get_size() const {

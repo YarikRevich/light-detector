@@ -25,10 +25,11 @@ namespace light_detector {
 
 enum class DataType : uint32_t
 {
-  Raw = 0,
-  Full = 1,
-  Infrared = 2,
-  Visible = 3
+  DataNone = 0,
+  Raw = 1,
+  Full = 2,
+  Infrared = 3,
+  Visible = 4
 };
 
 class DataBusRequestContent final: public ::EmbeddedProto::MessageInterface
