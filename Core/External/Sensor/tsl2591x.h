@@ -102,7 +102,7 @@ public:
      *
      * @return read full data.
      */
-    static uint32_t read_full();
+    static uint16_t read_full();
 
     /**
      * Reads infrared data from the sensor.
@@ -116,7 +116,7 @@ public:
      *
      * @return read visible data.
      */
-    static uint32_t read_visible();
+    static uint16_t read_visible();
 
     /**
      * Sets raw interruption threshold.

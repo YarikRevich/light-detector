@@ -43,10 +43,13 @@ uint16_t TSL2591X::read_lux() {
 
     uint16_t channel0 = read_channel0();
     uint16_t channel1 = read_channel1();
+
     disable();
 
     enable();
+
     write_byte(0xE7, 0x13);
+
     disable();
 
     uint16_t maxCounts;
@@ -101,10 +104,16 @@ uint16_t TSL2591X::read_lux() {
     return lux1;
 }
 
-uint32_t TSL2591X::read_full() {
-    uint32_t result;
+uint16_t TSL2591X::read_full() {
+    uint16_t result;
 
     enable();
+
+    uint8_t externalIntegralTime = get_integral_time();
+
+    for (uint8_t i = 0; i < externalIntegralTime + 2; i++) {
+        HAL_Delay(100);
+    }
 
     result = (read_channel1() << 16) | read_channel0();
 
@@ -118,6 +127,12 @@ uint16_t TSL2591X::read_infrared() {
 
     enable();
 
+    uint8_t externalIntegralTime = get_integral_time();
+
+    for (uint8_t i = 0; i < externalIntegralTime + 2; i++) {
+        HAL_Delay(100);
+    }
+
     result = read_channel0();
 
     disable();
@@ -125,8 +140,14 @@ uint16_t TSL2591X::read_infrared() {
     return result;
 }
 
-uint32_t TSL2591X::read_visible() {
+uint16_t TSL2591X::read_visible() {
     enable();
+
+    uint8_t externalIntegralTime = get_integral_time();
+
+    for (uint8_t i = 0; i < externalIntegralTime + 2; i++) {
+        HAL_Delay(100);
+    }
 
     uint16_t channel1 = read_channel1();
     uint16_t channel0 = read_channel0();
@@ -205,7 +226,7 @@ uint8_t TSL2591X::get_integral_time() {
     return read_byte(CONTROL_REGISTER) & 0x07;
 }
 
-void TSL2591X::set_integral_time(uint8_t src)  {
+void TSL2591X::set_integral_time(uint8_t src) {
     if (src < 0x06) {
         uint8_t control = read_byte(CONTROL_REGISTER);
         control &= 0xf8;
