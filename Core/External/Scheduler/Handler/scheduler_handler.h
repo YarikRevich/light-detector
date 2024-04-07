@@ -12,6 +12,7 @@
 #include "proto_helper.h"
 
 #include "indicator.h"
+#include "converter.h"
 #include "state.h"
 
 #define POLL_TIMEOUT (10000)
@@ -71,38 +72,30 @@ private:
     /**
      * Attempts to process data bus request content of raw data type response.
      *
-     * @param content - given data bus request content.
      * @return status of the data bus request content response processing.
      */
-    static int process_data_bus_request_content_of_raw_data_type_response(
-            const light_detector::RequestContainer& content);
+    static int process_data_bus_request_content_of_raw_data_type_response();
 
     /**
      * Attempts to process data bus request content of full data type response.
      *
-     * @param content - given data bus request content.
      * @return status of the data bus request content response processing.
      */
-    static int process_data_bus_request_content_of_full_data_type_response(
-            const light_detector::RequestContainer& content);
+    static int process_data_bus_request_content_of_full_data_type_response();
 
     /**
      * Attempts to process data bus request content of infrared data type response.
      *
-     * @param content - given data bus request content.
      * @return status of the data bus request content response processing.
      */
-    static int process_data_bus_request_content_of_infrared_data_type_response(
-            const light_detector::RequestContainer& content);
+    static int process_data_bus_request_content_of_infrared_data_type_response();
 
     /**
      * Attempts to process data bus request content of visible data type response.
      *
-     * @param content - given data bus request content.
      * @return status of the data bus request content response processing.
      */
-    static int process_data_bus_request_content_of_visible_data_type_response(
-            const light_detector::RequestContainer& content);
+    static int process_data_bus_request_content_of_visible_data_type_response();
 
     /**
      * Attempts to process info bus request content response.
@@ -115,11 +108,9 @@ private:
     /**
      * Attempts to process info bus request content of gain info type response.
      *
-     * @param content - given info bus request content.
      * @return status of the info bus request content response processing.
      */
-    static int process_info_bus_request_content_of_gain_info_type_response(
-            const light_detector::RequestContainer& content);
+    static int process_info_bus_request_content_of_gain_info_type_response();
 
     /**
      * Attempts to process info bus request content of integral time info type response.
@@ -127,26 +118,21 @@ private:
      * @param content - given info bus request content.
      * @return status of the info bus request content response processing.
      */
-    static int process_info_bus_request_content_of_integral_time_info_type_response(
-            const light_detector::RequestContainer& content);
+    static int process_info_bus_request_content_of_integral_time_info_type_response();
 
     /**
      * Attempts to process info bus request content of processed requests info type response.
      *
-     * @param content - given info bus request content.
      * @return status of the info bus request content response processing.
      */
-    static int process_info_bus_request_content_of_processed_requests_info_type_response(
-            const light_detector::RequestContainer& content);
+    static int process_info_bus_request_content_of_processed_requests_info_type_response();
 
     /**
      * Attempts to process info bus request content of device available info type response.
      *
-     * @param content - given info bus request content.
      * @return status of the info bus request content response processing.
      */
-    static int process_info_bus_request_content_of_device_available_info_type_response(
-            const light_detector::RequestContainer& content);
+    static int process_info_bus_request_content_of_device_available_info_type_response();
 
     /**
      * Attempts to process settings bus request content response.
@@ -159,11 +145,9 @@ private:
     /**
      * Attempts to process settings bus request content of reset settings type response.
      *
-     * @param content - given settings bus request content.
      * @return status of the settings bus request content response processing.
      */
-    static int process_settings_bus_request_content_of_reset_settings_type_response(
-            const light_detector::RequestContainer& content);
+    static int process_settings_bus_request_content_of_reset_settings_type_response();
 
     /**
      * Attempts to process settings bus request content of set gain settings type response.

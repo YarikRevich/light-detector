@@ -92,7 +92,7 @@ uint16_t TSL2591X::read_lux() {
         gain = 9876.0;
     }
 
-    uint16_t lux1 = (int) ((channel0 - (2 * channel1)) / (((100 * externalIntegralTime + 100) * gain) / LUX_DF));
+    int lux1 = (int) ((channel0 - (2 * channel1)) / (((100 * externalIntegralTime + 100) * gain) / LUX_DF));
 
     if (lux1 <= 0) {
         return 0;

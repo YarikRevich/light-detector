@@ -1,15 +1,17 @@
 import logging
-import time
 
 from serial import Serial
 from serial import SerialException
-from serial import EIGHTBITS, SEVENBITS
+from serial import EIGHTBITS
 
 from proto.Content import data_pb2 as DataBus
 from proto.Content import info_pb2 as InfoBus
 from proto.Content import settings_pb2 as SettingsBus
 from proto import request_pb2 as Request
 from proto import response_pb2 as Response
+
+from dto import DataTypeCompound
+from dto import RetrievedDataDto
 
 
 class Client:
@@ -18,14 +20,82 @@ class Client:
     # Represents a connection with serial device.
     connection: Serial
 
-    def __init__(self, device: str, baud_rate: int) -> None:
+    def __init__(self, device: str, baud_rate: int):
+        self.device = device
+        self.baud_rate = baud_rate
+
+    def __enter__(self) -> object:
         try:
-            self.connection = Serial(device, baud_rate, EIGHTBITS, timeout=1000, xonxoff=False)
+            self.connection = Serial(self.device, self.baud_rate, EIGHTBITS, timeout=1000, xonxoff=False)
+
+            return self
         except SerialException:
             logging.fatal("Given device is not available")
 
-    def send_data_bus_request_raw_data_type_content(self) -> None:
+    def send_data_bus_request_raw_data_type_content(self) -> RetrievedDataDto:
         """Sends request to the board via data bus to retrieve data of raw type."""
+
+        request_container = Request.RequestContainer()
+
+        data_bus_request = DataBus.DataBusRequestContent()
+        data_bus_request.dataType = DataBus.DataType.Raw
+
+        request_container.dataBus.CopyFrom(data_bus_request)
+
+        data_length = request_container.ByteSize().to_bytes(1, "big")
+        data = request_container.SerializeToString()
+
+        self.connection.write(data_length)
+        self.connection.write(data)
+
+        result_length_raw = self.connection.read(3)
+
+        result_length = int.from_bytes(result_length_raw, 'big')
+
+        result = self.connection.read(result_length)
+
+        response_container = Response.ResponseContainer()
+        response_container.ParseFromString(result)
+
+        return RetrievedDataDto(
+            response_container.dataBus.deviceId,
+            DataTypeCompound.RAW,
+            response_container.dataBus.value,
+            response_container.dataBus.nonce)
+
+    def send_data_bus_request_full_data_type_content(self) -> None:
+        """Sends request to the board via data bus to retrieve data of full type."""
+
+        request_container = Request.RequestContainer()
+
+        data_bus_request = DataBus.DataBusRequestContent()
+        data_bus_request.dataType = DataBus.DataType.Full
+
+        request_container.dataBus.CopyFrom(data_bus_request)
+
+        data_length = request_container.ByteSize().to_bytes(1, "big")
+        data = request_container.SerializeToString()
+
+        self.connection.write(data_length)
+        self.connection.write(data)
+
+        result_length_raw = self.connection.read(3)
+
+        result_length = int.from_bytes(result_length_raw, 'big')
+
+        result = self.connection.read(result_length)
+
+        response_container = Response.ResponseContainer()
+        response_container.ParseFromString(result)
+
+        return RetrievedDataDto(
+            response_container.dataBus.deviceId,
+            DataTypeCompound.FULL,
+            response_container.dataBus.value,
+            response_container.dataBus.nonce)
+
+    def send_data_bus_request_infrared_data_type_content(self) -> None:
+        """Sends request to the board via data bus to retrieve data of infrared type."""
 
         request_container = Request.RequestContainer()
 
@@ -37,79 +107,56 @@ class Client:
         data_length = request_container.ByteSize().to_bytes(1, "big")
         data = request_container.SerializeToString()
 
-        # r = Request.RequestContainer()
-        #
-        # r.ParseFromString(self.connection.read(6))
-
         self.connection.write(data_length)
         self.connection.write(data)
 
-        result_length = int(self.connection.read(1))
-        print(result_length)
+        result_length_raw = self.connection.read(3)
+
+        result_length = int.from_bytes(result_length_raw, 'big')
 
         result = self.connection.read(result_length)
 
-        print(result)
-        #
-        # r = Request.RequestContainer()
-        #
-        # r.ParseFromString(self.connection.readline(6))
-        #
-        # print(r)
+        response_container = Response.ResponseContainer()
+        response_container.ParseFromString(result)
 
-
-
-        # data_bus_request.DataType = data_pb2.DataType.Raw
-        # request = leds_pb2.LedStatus()
-        # if value[1] == '1':
-        #     status = leds_pb2.LedStatus.Led.ON
-        # elif value[1] == '0':
-        #     status = leds_pb2.LedStatus.Led.OFF
-        # else:
-        #     status = leds_pb2.LedStatus.Led.NO_CHANGE
-        #
-        # if value[0] == 'R':
-        #     request.LedRed = status
-        # if value[0] == 'O':
-        #     request.LedOrange = status
-        # if value[0] == 'B':
-        #     request.LedBlue = status
-        # if value[0] == 'G':
-        #     request.LedGreen = status
-        #
-        # data = request.SerializeToString()
-        # ser.write(len(data).to_bytes(1, 'big'))
-        # ser.write(data)
-        #
-        # length = ser.read()
-        # length = int.from_bytes(length, 'big')
-        # data = ser.read(length)
-        #
-        # led_status = leds_pb2.LedStatus()
-        # led_status.ParseFromString(data)
-        # print(led_status)
-
-        pass
-
-
-    def send_data_bus_request_full_data_type_content(self) -> None:
-        """Sends request to the board via data bus to retrieve data of full type."""
-
-        pass
-
-
-    def send_data_bus_request_infrared_data_type_content(self) -> None:
-        """Sends request to the board via data bus to retrieve data of infrared type."""
-
-        pass
-
+        return RetrievedDataDto(
+            response_container.dataBus.deviceId,
+            DataTypeCompound.INFRARED,
+            response_container.dataBus.value,
+            response_container.dataBus.nonce)
 
     def send_data_bus_request_visible_data_type_content(self) -> None:
         """Sends request to the board via data bus to retrieve data of visible type."""
 
-        pass
+        request_container = Request.RequestContainer()
 
-    def close(self):
+        data_bus_request = DataBus.DataBusRequestContent()
+        data_bus_request.dataType = DataBus.DataType.Visible
+
+        request_container.dataBus.CopyFrom(data_bus_request)
+
+        data_length = request_container.ByteSize().to_bytes(1, "big")
+        data = request_container.SerializeToString()
+
+        self.connection.write(data_length)
+        self.connection.write(data)
+
+        result_length_raw = self.connection.read(3)
+
+        result_length = int.from_bytes(result_length_raw, 'big')
+
+        result = self.connection.read(result_length)
+
+        response_container = Response.ResponseContainer()
+        response_container.ParseFromString(result)
+
+        return RetrievedDataDto(
+            response_container.dataBus.deviceId,
+            DataTypeCompound.VISIBLE,
+            response_container.dataBus.value,
+            response_container.dataBus.nonce)
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
         """Closes client connection."""
 
         self.connection.close()

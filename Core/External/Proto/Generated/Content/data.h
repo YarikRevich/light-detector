@@ -299,11 +299,11 @@ class DataBusResponseContent final: public ::EmbeddedProto::MessageInterface
 
     static constexpr char const* VALUE_NAME = "value";
     inline void clear_value() { value_.clear(); }
-    inline void set_value(const uint32_t& value) { value_ = value; }
-    inline void set_value(const uint32_t&& value) { value_ = value; }
-    inline uint32_t& mutable_value() { return value_.get(); }
-    inline const uint32_t& get_value() const { return value_.get(); }
-    inline uint32_t value() const { return value_.get(); }
+    inline void set_value(const int32_t& value) { value_ = value; }
+    inline void set_value(const int32_t&& value) { value_ = value; }
+    inline int32_t& mutable_value() { return value_.get(); }
+    inline const int32_t& get_value() const { return value_.get(); }
+    inline int32_t value() const { return value_.get(); }
 
     static constexpr char const* NONCE_NAME = "nonce";
     inline void clear_nonce() { nonce_.clear(); }
@@ -328,7 +328,7 @@ class DataBusResponseContent final: public ::EmbeddedProto::MessageInterface
         return_value = dataType_.serialize_with_id(static_cast<uint32_t>(FieldNumber::DATATYPE), buffer, false);
       }
 
-      if((0U != value_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
+      if((0 != value_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
       {
         return_value = value_.serialize_with_id(static_cast<uint32_t>(FieldNumber::VALUE), buffer, false);
       }
@@ -513,7 +513,7 @@ class DataBusResponseContent final: public ::EmbeddedProto::MessageInterface
 
       EmbeddedProto::uint32 deviceId_ = 0U;
       EmbeddedProto::enumeration<DataType> dataType_ = static_cast<DataType>(0);
-      EmbeddedProto::uint32 value_ = 0U;
+      EmbeddedProto::int32 value_ = 0;
       EmbeddedProto::uint32 nonce_ = 0U;
 
 };

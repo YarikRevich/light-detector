@@ -3,8 +3,6 @@
 
 int SchedulerHandler::handle_request() {
     if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_RXNE) == SET) {
-        //__HAL_UART_CLEAR_IT(&huart2, UART_CLEAR_NEF|UART_CLEAR_OREF);
-
         if (try_process_request_container() != EXIT_SUCCESS) {
             return EXIT_FAILURE;
         }
@@ -19,8 +17,6 @@ int SchedulerHandler::handle_response() {
     auto request_container_sequence = State::get_request_container_sequence();
 
     if (!request_container_sequence->is_empty()) {
-//        Indicator::toggle_action_success();
-
         return request_container_sequence->traverse_with_break(
                 [](const light_detector::RequestContainer &content) -> int {
                     return SchedulerHandler::try_process_response_container(content);
@@ -77,10 +73,12 @@ int SchedulerHandler::try_process_response_container(const light_detector::Reque
 int SchedulerHandler::try_transmit_response_container() {
     auto response_buffer = ProtoCodec::get_response_buffer();
 
+    auto conversion_result = Converter::convertUint32ToUint8(response_buffer->get_size());
+
     if (HAL_UART_Transmit(
             &huart2,
-            (uint8_t *) response_buffer->get_size(),
-            1,
+            conversion_result.data,
+            3,
             TRANSMIT_TIMEOUT) != HAL_OK) {
         return EXIT_FAILURE;
     }
@@ -93,6 +91,8 @@ int SchedulerHandler::try_transmit_response_container() {
         return EXIT_FAILURE;
     }
 
+    response_buffer->clear();
+
     return EXIT_SUCCESS;
 }
 
@@ -103,26 +103,23 @@ int SchedulerHandler::process_data_bus_request_content_response(
 
     if (ProtoHelper::is_data_bus_request_content_of_raw_data_type(data_bus_request_content)) {
 
-        return SchedulerHandler::process_data_bus_request_content_of_raw_data_type_response(content);
+        return SchedulerHandler::process_data_bus_request_content_of_raw_data_type_response();
     } else if (ProtoHelper::is_data_bus_request_content_of_full_data_type(data_bus_request_content)) {
 
-        return SchedulerHandler::process_data_bus_request_content_of_full_data_type_response(content);
+        return SchedulerHandler::process_data_bus_request_content_of_full_data_type_response();
     } else if (ProtoHelper::is_data_bus_request_content_of_infrared_data_type(data_bus_request_content)) {
 
-        return SchedulerHandler::process_data_bus_request_content_of_infrared_data_type_response(content);
+        return SchedulerHandler::process_data_bus_request_content_of_infrared_data_type_response();
     } else if (ProtoHelper::is_data_bus_request_content_of_visible_data_type(data_bus_request_content)) {
 
-        return SchedulerHandler::process_data_bus_request_content_of_visible_data_type_response(content);
+        return SchedulerHandler::process_data_bus_request_content_of_visible_data_type_response();
     }
 
     return EXIT_SUCCESS;
 }
 
-int SchedulerHandler::process_data_bus_request_content_of_raw_data_type_response(
-        const light_detector::RequestContainer &content) {
+int SchedulerHandler::process_data_bus_request_content_of_raw_data_type_response() {
     light_detector::ResponseContainer response_container;
-
-//    response_container.set_msgId(content.get_msgId());
 
     light_detector::DataBusResponseContent data_bus_response_content;
 
@@ -146,11 +143,8 @@ int SchedulerHandler::process_data_bus_request_content_of_raw_data_type_response
     return ProtoCodec::encode_response_container(response_container);
 }
 
-int SchedulerHandler::process_data_bus_request_content_of_full_data_type_response(
-        const light_detector::RequestContainer &content) {
+int SchedulerHandler::process_data_bus_request_content_of_full_data_type_response() {
     light_detector::ResponseContainer response_container;
-
-//    response_container.set_msgId(content.get_msgId());
 
     light_detector::DataBusResponseContent data_bus_response_content;
 
@@ -173,11 +167,8 @@ int SchedulerHandler::process_data_bus_request_content_of_full_data_type_respons
     return ProtoCodec::encode_response_container(response_container);
 }
 
-int SchedulerHandler::process_data_bus_request_content_of_infrared_data_type_response(
-        const light_detector::RequestContainer &content) {
+int SchedulerHandler::process_data_bus_request_content_of_infrared_data_type_response() {
     light_detector::ResponseContainer response_container;
-
-//    response_container.set_msgId(content.get_msgId());
 
     light_detector::DataBusResponseContent data_bus_response_content;
 
@@ -200,11 +191,8 @@ int SchedulerHandler::process_data_bus_request_content_of_infrared_data_type_res
     return ProtoCodec::encode_response_container(response_container);
 }
 
-int SchedulerHandler::process_data_bus_request_content_of_visible_data_type_response(
-        const light_detector::RequestContainer &content) {
+int SchedulerHandler::process_data_bus_request_content_of_visible_data_type_response() {
     light_detector::ResponseContainer response_container;
-
-//    response_container.set_msgId(content.get_msgId());
 
     light_detector::DataBusResponseContent data_bus_response_content;
 
@@ -234,26 +222,23 @@ int SchedulerHandler::process_info_bus_request_content_response(
 
     if (ProtoHelper::is_info_bus_request_content_of_gain_info_type(info_bus_request_content)) {
 
-        return process_info_bus_request_content_of_gain_info_type_response(content);
+        return process_info_bus_request_content_of_gain_info_type_response();
     } else if (ProtoHelper::is_info_bus_request_content_of_integral_time_info_type(info_bus_request_content)) {
 
-        return process_info_bus_request_content_of_integral_time_info_type_response(content);
+        return process_info_bus_request_content_of_integral_time_info_type_response();
     } else if (ProtoHelper::is_info_bus_request_content_of_processed_requests_info_type(info_bus_request_content)) {
 
-        return process_info_bus_request_content_of_processed_requests_info_type_response(content);
+        return process_info_bus_request_content_of_processed_requests_info_type_response();
     } else if (ProtoHelper::is_info_bus_request_content_of_device_available_info_type(info_bus_request_content)) {
 
-        return process_info_bus_request_content_of_device_available_info_type_response(content);
+        return process_info_bus_request_content_of_device_available_info_type_response();
     }
 
     return EXIT_SUCCESS;
 }
 
-int SchedulerHandler::process_info_bus_request_content_of_gain_info_type_response(
-        const light_detector::RequestContainer &content) {
+int SchedulerHandler::process_info_bus_request_content_of_gain_info_type_response() {
     light_detector::ResponseContainer response_container;
-
-//    response_container.set_msgId(content.get_msgId());
 
     light_detector::InfoBusResponseContent info_bus_response_content;
 
@@ -276,11 +261,8 @@ int SchedulerHandler::process_info_bus_request_content_of_gain_info_type_respons
     return ProtoCodec::encode_response_container(response_container);
 };
 
-int SchedulerHandler::process_info_bus_request_content_of_integral_time_info_type_response(
-        const light_detector::RequestContainer &content) {
+int SchedulerHandler::process_info_bus_request_content_of_integral_time_info_type_response() {
     light_detector::ResponseContainer response_container;
-
-//    response_container.set_msgId(content.get_msgId());
 
     light_detector::InfoBusResponseContent info_bus_response_content;
 
@@ -303,11 +285,8 @@ int SchedulerHandler::process_info_bus_request_content_of_integral_time_info_typ
     return ProtoCodec::encode_response_container(response_container);
 };
 
-int SchedulerHandler::process_info_bus_request_content_of_processed_requests_info_type_response(
-        const light_detector::RequestContainer &content) {
+int SchedulerHandler::process_info_bus_request_content_of_processed_requests_info_type_response() {
     light_detector::ResponseContainer response_container;
-
-//    response_container.set_msgId(content.get_msgId());
 
     light_detector::InfoBusResponseContent info_bus_response_content;
 
@@ -327,11 +306,8 @@ int SchedulerHandler::process_info_bus_request_content_of_processed_requests_inf
     return ProtoCodec::encode_response_container(response_container);
 };
 
-int SchedulerHandler::process_info_bus_request_content_of_device_available_info_type_response(
-        const light_detector::RequestContainer &content) {
+int SchedulerHandler::process_info_bus_request_content_of_device_available_info_type_response() {
     light_detector::ResponseContainer response_container;
-
-//    response_container.set_msgId(content.get_msgId());
 
     light_detector::InfoBusResponseContent info_bus_response_content;
 
@@ -359,7 +335,7 @@ int SchedulerHandler::process_settings_bus_request_content_response(
     if (ProtoHelper::is_settings_bus_request_content_of_reset_settings_type(
             settings_bus_request_content)) {
 
-        return SchedulerHandler::process_settings_bus_request_content_of_reset_settings_type_response(content);
+        return SchedulerHandler::process_settings_bus_request_content_of_reset_settings_type_response();
     } else if (ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type(
             settings_bus_request_content)) {
 
@@ -374,11 +350,8 @@ int SchedulerHandler::process_settings_bus_request_content_response(
     return EXIT_SUCCESS;
 }
 
-int SchedulerHandler::process_settings_bus_request_content_of_reset_settings_type_response(
-        const light_detector::RequestContainer &content) {
+int SchedulerHandler::process_settings_bus_request_content_of_reset_settings_type_response() {
     light_detector::ResponseContainer response_container;
-
-//    response_container.set_msgId(content.get_msgId());
 
     light_detector::SettingsBusResponseContent settings_bus_response_content;
 
@@ -407,8 +380,6 @@ int SchedulerHandler::process_settings_bus_request_content_of_set_gain_settings_
         const light_detector::RequestContainer &content) {
     light_detector::ResponseContainer response_container;
 
-//    response_container.set_msgId(content.get_msgId());
-
     light_detector::SettingsBusResponseContent settings_bus_response_content;
 
     settings_bus_response_content.set_settingsType(light_detector::SettingsType::SetGain);
@@ -435,8 +406,6 @@ int SchedulerHandler::process_settings_bus_request_content_of_set_gain_settings_
 int SchedulerHandler::process_settings_bus_request_content_of_set_integral_time_settings_type_response(
         const light_detector::RequestContainer &content) {
     light_detector::ResponseContainer response_container;
-
-//    response_container.set_msgId(content.get_msgId());
 
     light_detector::SettingsBusResponseContent settings_bus_response_content;
 

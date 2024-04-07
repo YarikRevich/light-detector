@@ -22,6 +22,6 @@ message DataBusRequestContent {
 message DataBusResponseContent {
     uint32 deviceId = 1;
     DataType dataType = 2;
-    uint32 value = 3;
+    int32 value = 3;
     uint32 nonce = 4;
 }

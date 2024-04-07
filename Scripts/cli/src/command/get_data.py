@@ -69,26 +69,26 @@ class GetDataCommand:
     def process_get_raw_data(device: str, baud_rate: int) -> RetrievedDataDto:
         """Processes request to retrieve 'raw' data from the device"""
 
-        client = Client(device, baud_rate)
-
-        client.send_data_bus_request_raw_data_type_content()
-
-        return None
+        with Client(device, baud_rate) as client:
+            return client.send_data_bus_request_raw_data_type_content()
 
     @staticmethod
     def process_get_full_data(device: str, baud_rate: int) -> RetrievedDataDto:
         """Processes request to retrieve 'full' data from the device"""
 
-        pass
+        with Client(device, baud_rate) as client:
+            return client.send_data_bus_request_full_data_type_content()
 
     @staticmethod
     def process_get_infrared_data(device: str, baud_rate: int) -> RetrievedDataDto:
         """Processes request to retrieve 'infrared' data from the device"""
 
-        pass
+        with Client(device, baud_rate) as client:
+            return client.send_data_bus_request_infrared_data_type_content()
 
     @staticmethod
     def process_get_visible_data(device: str, baud_rate: int) -> RetrievedDataDto:
         """Processes request to retrieve 'visible' data from the device"""
 
-        pass
+        with Client(device, baud_rate) as client:
+            return client.send_data_bus_request_visible_data_type_content()

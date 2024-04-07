@@ -3,7 +3,7 @@
 
 RequestBuffer ProtoCodec::request_buffer = RequestBuffer();
 
-ResponseBuffer ProtoCodec::response_buffer = ResponseBuffer();
+ResponseBuffer ProtoCodec::response_buffer = ResponseBuffer(100);
 
 light_detector::RequestContainer ProtoCodec::request_container =
         light_detector::RequestContainer();

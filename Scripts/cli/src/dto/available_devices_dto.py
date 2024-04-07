@@ -14,10 +14,3 @@ class AvailableDevicesDto:
         self.description = description
         self.manufacturer = manufacturer
         self.location = location
-
-
-class RetrievedDataDto:
-    """Represents dto used to hold the result of a series of 'get_data' command."""
-
-    def __init__(self):
-        pass

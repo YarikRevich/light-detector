@@ -5,13 +5,14 @@
 
 #include <cstdio>
 #include <cstring>
+#include <cstdlib>
 
 /**
  * Represents response buffer implementation for protocol buffers serialization.
  */
 class ResponseBuffer : public EmbeddedProto::WriteBufferInterface {
 public:
-    ResponseBuffer();
+    ResponseBuffer(uint32_t size);
 
     ~ResponseBuffer() override = default;
 
@@ -31,6 +32,11 @@ public:
      * @see EmbeddedProto::WriteBufferInterface
      */
     [[nodiscard]] uint32_t get_size() const override;
+
+//    /**
+//     * @see EmbeddedProto::WriteBufferInterface
+//     */
+//    [[nodiscard]] uint8_t get_size_small() const;
 
     /**
      * @see EmbeddedProto::WriteBufferInterface

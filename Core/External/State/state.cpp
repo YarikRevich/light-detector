@@ -4,7 +4,7 @@ bool State::device_configured = false;
 
 int State::processed_requests = 0;
 
-int State::current_response_nonce = 0;
+int State::current_response_nonce = 1;
 
 Mutex State::button_mutex = Mutex();
 
