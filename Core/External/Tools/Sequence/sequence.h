@@ -39,7 +39,7 @@ public:
      *
      * @param src - given value to be added to the sequence.
      */
-    void add(T src);
+    void add(const T& src);
 
     /**
      * Checks if the sequence is empty.

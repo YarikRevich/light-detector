@@ -21,7 +21,7 @@
 #ifndef __I2C_H__
 #define __I2C_H__
 
-#include "stm32l4xx_hal.h"
+#include "main.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,8 +38,6 @@ extern "C" {
 /* USER CODE END Private defines */
 
 void MX_I2C1_Init(void);
-
-void Error_Handler(void);
 
 /* USER CODE BEGIN Prototypes */
 

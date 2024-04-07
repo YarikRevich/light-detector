@@ -1,4 +1,5 @@
 #include "sequence.h"
+#include "indicator.h"
 
 template <typename T>
 int Sequence<T>::traverse_with_break(std::function<int(T)> callback) {
@@ -33,7 +34,7 @@ void Sequence<T>::traverse_with_skip(std::function<int(T)> callback) {
 }
 
 template <typename T>
-void Sequence<T>::add(T src) {
+void Sequence<T>::add(const T& src) {
     sequence.push(src);
 }
 

@@ -1,8 +1,6 @@
 #ifndef LIGHT_DETECTOR_SCHEDULER_H
 #define LIGHT_DETECTOR_SCHEDULER_H
 
-#include "tim.h"
-
 #include "scheduler_handler.h"
 #include "state.h"
 #include "indicator.h"
@@ -27,6 +25,11 @@ public:
      * Schedules device configuration action.
      */
     static void schedule_configuration();
+
+    /**
+     * Schedules UART receive poll action.
+     */
+    static void schedule_receive();
 };
 
 #endif //LIGHT_DETECTOR_SCHEDULER_H

@@ -6,14 +6,9 @@
 #include <cstdio>
 #include <cstring>
 
-#define DEFAULT_RESPONSE_BUFFER_SIZE 6
-
 /**
  * Represents response buffer implementation for protocol buffers serialization.
- *
- * @tparam BUFFER_SIZE - given size of the internal response buffer.
  */
-template<uint32_t BUFFER_SIZE>
 class ResponseBuffer : public EmbeddedProto::WriteBufferInterface {
 public:
     ResponseBuffer();
@@ -43,6 +38,13 @@ public:
     [[nodiscard]] uint32_t get_max_size() const override;
 
     /**
+     * Sets buffer max size.
+     *
+     * @param value - given buffer max size.
+     */
+    void set_max_size(uint32_t value);
+
+    /**
      * @see EmbeddedProto::WriteBufferInterface
      */
     [[nodiscard]] uint32_t get_available_size() const override;
@@ -61,12 +63,17 @@ private:
     /**
      * Represents amount of currently used bytes by buffer.
      */
-    uint32_t bytes_used;
+    uint32_t index;
+
+    /**
+     * Represents max size of the buffer.
+     */
+    uint32_t size;
 
     /**
      * Represents current buffer data.
      */
-    uint8_t *bytes[BUFFER_SIZE];
+    uint8_t *bytes;
 };
 
 #endif //LIGHT_DETECTOR_RESPONSE_BUFFER_H

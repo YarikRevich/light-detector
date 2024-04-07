@@ -17,7 +17,7 @@ from proto.Content import info_pb2 as Content_dot_info__pb2
 from proto.Content import settings_pb2 as Content_dot_settings__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rrequest.proto\x12\x0elight_detector\x1a\x12\x43ontent/data.proto\x1a\x12\x43ontent/info.proto\x1a\x16\x43ontent/settings.proto\"\xe2\x01\n\x10RequestContainer\x12\r\n\x05msgId\x18\x01 \x01(\r\x12\x38\n\x07\x64\x61taBus\x18\x02 \x01(\x0b\x32%.light_detector.DataBusRequestContentH\x00\x12\x38\n\x07infoBus\x18\x03 \x01(\x0b\x32%.light_detector.InfoBusRequestContentH\x00\x12@\n\x0bsettingsBus\x18\x04 \x01(\x0b\x32).light_detector.SettingsBusRequestContentH\x00\x42\t\n\x07\x63ontentb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rrequest.proto\x12\x0elight_detector\x1a\x12\x43ontent/data.proto\x1a\x12\x43ontent/info.proto\x1a\x16\x43ontent/settings.proto\"\xd3\x01\n\x10RequestContainer\x12\x38\n\x07\x64\x61taBus\x18\x01 \x01(\x0b\x32%.light_detector.DataBusRequestContentH\x00\x12\x38\n\x07infoBus\x18\x02 \x01(\x0b\x32%.light_detector.InfoBusRequestContentH\x00\x12@\n\x0bsettingsBus\x18\x03 \x01(\x0b\x32).light_detector.SettingsBusRequestContentH\x00\x42\t\n\x07\x63ontentb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -25,5 +25,5 @@ _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'request_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _globals['_REQUESTCONTAINER']._serialized_start=98
-  _globals['_REQUESTCONTAINER']._serialized_end=324
+  _globals['_REQUESTCONTAINER']._serialized_end=309
 # @@protoc_insertion_point(module_scope)

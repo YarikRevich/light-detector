@@ -14,6 +14,9 @@
 #include "indicator.h"
 #include "state.h"
 
+#define POLL_TIMEOUT (10000)
+#define TRANSMIT_TIMEOUT (10000)
+
 extern UART_HandleTypeDef huart2;
 
 /**

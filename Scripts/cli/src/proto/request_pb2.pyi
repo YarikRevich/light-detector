@@ -8,13 +8,11 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class RequestContainer(_message.Message):
-    __slots__ = ("msgId", "dataBus", "infoBus", "settingsBus")
-    MSGID_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ("dataBus", "infoBus", "settingsBus")
     DATABUS_FIELD_NUMBER: _ClassVar[int]
     INFOBUS_FIELD_NUMBER: _ClassVar[int]
     SETTINGSBUS_FIELD_NUMBER: _ClassVar[int]
-    msgId: int
     dataBus: _data_pb2.DataBusRequestContent
     infoBus: _info_pb2.InfoBusRequestContent
     settingsBus: _settings_pb2.SettingsBusRequestContent
-    def __init__(self, msgId: _Optional[int] = ..., dataBus: _Optional[_Union[_data_pb2.DataBusRequestContent, _Mapping]] = ..., infoBus: _Optional[_Union[_info_pb2.InfoBusRequestContent, _Mapping]] = ..., settingsBus: _Optional[_Union[_settings_pb2.SettingsBusRequestContent, _Mapping]] = ...) -> None: ...
+    def __init__(self, dataBus: _Optional[_Union[_data_pb2.DataBusRequestContent, _Mapping]] = ..., infoBus: _Optional[_Union[_info_pb2.InfoBusRequestContent, _Mapping]] = ..., settingsBus: _Optional[_Union[_settings_pb2.SettingsBusRequestContent, _Mapping]] = ...) -> None: ...

@@ -3,6 +3,8 @@
 
 int SchedulerHandler::handle_request() {
     if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_RXNE) == SET) {
+        //__HAL_UART_CLEAR_IT(&huart2, UART_CLEAR_NEF|UART_CLEAR_OREF);
+
         if (try_process_request_container() != EXIT_SUCCESS) {
             return EXIT_FAILURE;
         }
@@ -16,8 +18,10 @@ int SchedulerHandler::handle_request() {
 int SchedulerHandler::handle_response() {
     auto request_container_sequence = State::get_request_container_sequence();
 
-    if (!request_container_sequence.is_empty()) {
-        return request_container_sequence.traverse_with_break(
+    if (!request_container_sequence->is_empty()) {
+//        Indicator::toggle_action_success();
+
+        return request_container_sequence->traverse_with_break(
                 [](const light_detector::RequestContainer &content) -> int {
                     return SchedulerHandler::try_process_response_container(content);
                 });
@@ -29,33 +33,27 @@ int SchedulerHandler::handle_response() {
 int SchedulerHandler::try_process_request_container() {
     auto request_buffer = ProtoCodec::get_request_buffer();
 
-//    uint8_t test[100] = {0, 0, 0, 0, 0, 0};
+    uint8_t max_size;
 
-    HAL_UART_Receive(
-            &huart2, &request_buffer.get_raw_buffer()[0], 100, 100000);
+    if (HAL_UART_Receive(
+            &huart2, &max_size, 1, POLL_TIMEOUT) != HAL_OK) {
+        return EXIT_FAILURE;
+    }
 
-//    request_buffer.get_raw_buffer()[0] = test[0];
-//    request_buffer.get_raw_buffer()[1] = test[1];
-//    request_buffer.get_raw_buffer()[2] = test[2];
-//    request_buffer.get_raw_buffer()[3] = test[3];
-//    request_buffer.get_raw_buffer()[4] = test[4];
-//    request_buffer.get_raw_buffer()[5] = test[5];
+    request_buffer->set_max_size(max_size);
 
-//    if (request_buffer.get_raw_buffer()[0] != 1 && request_buffer.get_raw_buffer()[4] != 1) {
-//        Indicator::toggle_action_success();
-//    }
+    uint8_t raw_buffer[max_size];
 
-//    HAL_UART_Receive(
-//            &huart2, request_buffer.get_raw_buffer(), request_buffer.get_size(), 100000);
+    if (HAL_UART_Receive(&huart2, raw_buffer, max_size, POLL_TIMEOUT) != HAL_OK) {
+        return EXIT_FAILURE;
+    }
+
+    request_buffer->set_raw_buffer(raw_buffer);
 
     return ProtoCodec::decode_request_container();
 }
 
 int SchedulerHandler::try_process_response_container(const light_detector::RequestContainer &content) {
-    if (content.msgId() == 1) {
-        Indicator::toggle_action_success();
-    }
-
     if (ProtoHelper::is_data_bus_request_container(content)) {
 
         if (SchedulerHandler::process_data_bus_request_content_response(content) != EXIT_SUCCESS) {
@@ -79,8 +77,21 @@ int SchedulerHandler::try_process_response_container(const light_detector::Reque
 int SchedulerHandler::try_transmit_response_container() {
     auto response_buffer = ProtoCodec::get_response_buffer();
 
-    HAL_UART_Transmit(
-            &huart2, response_buffer.get_raw_buffer(), response_buffer.get_size(), 1000);
+    if (HAL_UART_Transmit(
+            &huart2,
+            (uint8_t *) response_buffer->get_size(),
+            1,
+            TRANSMIT_TIMEOUT) != HAL_OK) {
+        return EXIT_FAILURE;
+    }
+
+    if (HAL_UART_Transmit(
+            &huart2,
+            response_buffer->get_raw_buffer(),
+            response_buffer->get_size(),
+            TRANSMIT_TIMEOUT) != HAL_OK) {
+        return EXIT_FAILURE;
+    }
 
     return EXIT_SUCCESS;
 }
@@ -111,7 +122,7 @@ int SchedulerHandler::process_data_bus_request_content_of_raw_data_type_response
         const light_detector::RequestContainer &content) {
     light_detector::ResponseContainer response_container;
 
-    response_container.set_msgId(content.get_msgId());
+//    response_container.set_msgId(content.get_msgId());
 
     light_detector::DataBusResponseContent data_bus_response_content;
 
@@ -139,7 +150,7 @@ int SchedulerHandler::process_data_bus_request_content_of_full_data_type_respons
         const light_detector::RequestContainer &content) {
     light_detector::ResponseContainer response_container;
 
-    response_container.set_msgId(content.get_msgId());
+//    response_container.set_msgId(content.get_msgId());
 
     light_detector::DataBusResponseContent data_bus_response_content;
 
@@ -166,7 +177,7 @@ int SchedulerHandler::process_data_bus_request_content_of_infrared_data_type_res
         const light_detector::RequestContainer &content) {
     light_detector::ResponseContainer response_container;
 
-    response_container.set_msgId(content.get_msgId());
+//    response_container.set_msgId(content.get_msgId());
 
     light_detector::DataBusResponseContent data_bus_response_content;
 
@@ -193,7 +204,7 @@ int SchedulerHandler::process_data_bus_request_content_of_visible_data_type_resp
         const light_detector::RequestContainer &content) {
     light_detector::ResponseContainer response_container;
 
-    response_container.set_msgId(content.get_msgId());
+//    response_container.set_msgId(content.get_msgId());
 
     light_detector::DataBusResponseContent data_bus_response_content;
 
@@ -242,7 +253,7 @@ int SchedulerHandler::process_info_bus_request_content_of_gain_info_type_respons
         const light_detector::RequestContainer &content) {
     light_detector::ResponseContainer response_container;
 
-    response_container.set_msgId(content.get_msgId());
+//    response_container.set_msgId(content.get_msgId());
 
     light_detector::InfoBusResponseContent info_bus_response_content;
 
@@ -269,7 +280,7 @@ int SchedulerHandler::process_info_bus_request_content_of_integral_time_info_typ
         const light_detector::RequestContainer &content) {
     light_detector::ResponseContainer response_container;
 
-    response_container.set_msgId(content.get_msgId());
+//    response_container.set_msgId(content.get_msgId());
 
     light_detector::InfoBusResponseContent info_bus_response_content;
 
@@ -296,7 +307,7 @@ int SchedulerHandler::process_info_bus_request_content_of_processed_requests_inf
         const light_detector::RequestContainer &content) {
     light_detector::ResponseContainer response_container;
 
-    response_container.set_msgId(content.get_msgId());
+//    response_container.set_msgId(content.get_msgId());
 
     light_detector::InfoBusResponseContent info_bus_response_content;
 
@@ -320,7 +331,7 @@ int SchedulerHandler::process_info_bus_request_content_of_device_available_info_
         const light_detector::RequestContainer &content) {
     light_detector::ResponseContainer response_container;
 
-    response_container.set_msgId(content.get_msgId());
+//    response_container.set_msgId(content.get_msgId());
 
     light_detector::InfoBusResponseContent info_bus_response_content;
 
@@ -367,7 +378,7 @@ int SchedulerHandler::process_settings_bus_request_content_of_reset_settings_typ
         const light_detector::RequestContainer &content) {
     light_detector::ResponseContainer response_container;
 
-    response_container.set_msgId(content.get_msgId());
+//    response_container.set_msgId(content.get_msgId());
 
     light_detector::SettingsBusResponseContent settings_bus_response_content;
 
@@ -396,7 +407,7 @@ int SchedulerHandler::process_settings_bus_request_content_of_set_gain_settings_
         const light_detector::RequestContainer &content) {
     light_detector::ResponseContainer response_container;
 
-    response_container.set_msgId(content.get_msgId());
+//    response_container.set_msgId(content.get_msgId());
 
     light_detector::SettingsBusResponseContent settings_bus_response_content;
 
@@ -425,7 +436,7 @@ int SchedulerHandler::process_settings_bus_request_content_of_set_integral_time_
         const light_detector::RequestContainer &content) {
     light_detector::ResponseContainer response_container;
 
-    response_container.set_msgId(content.get_msgId());
+//    response_container.set_msgId(content.get_msgId());
 
     light_detector::SettingsBusResponseContent settings_bus_response_content;
 

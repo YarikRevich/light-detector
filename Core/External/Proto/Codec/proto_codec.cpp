@@ -1,33 +1,31 @@
 #include "proto_codec.h"
+#include "indicator.h"
 
-RequestBuffer<DEFAULT_REQUEST_BUFFER_SIZE> ProtoCodec::request_buffer =
-        RequestBuffer<DEFAULT_REQUEST_BUFFER_SIZE>();
+RequestBuffer ProtoCodec::request_buffer = RequestBuffer();
 
-ResponseBuffer<DEFAULT_RESPONSE_BUFFER_SIZE> ProtoCodec::response_buffer =
-        ResponseBuffer<DEFAULT_RESPONSE_BUFFER_SIZE>();
+ResponseBuffer ProtoCodec::response_buffer = ResponseBuffer();
 
 light_detector::RequestContainer ProtoCodec::request_container =
         light_detector::RequestContainer();
 
-RequestBuffer<DEFAULT_REQUEST_BUFFER_SIZE>& ProtoCodec::get_request_buffer() {
-    return request_buffer;
+RequestBuffer* ProtoCodec::get_request_buffer() {
+    return &request_buffer;
 }
 
-ResponseBuffer<DEFAULT_RESPONSE_BUFFER_SIZE>& ProtoCodec::get_response_buffer() {
-    return response_buffer;
+ResponseBuffer* ProtoCodec::get_response_buffer() {
+    return &response_buffer;
 }
 
 int ProtoCodec::decode_request_container() {
     request_container.clear();
 
     if (request_container.deserialize(request_buffer) == ::EmbeddedProto::Error::NO_ERRORS) {
+        State::get_request_container_sequence()->add(request_container);
 
-
-        State::get_request_container_sequence().add(request_container);
+        request_buffer.clear();
 
         return EXIT_SUCCESS;
     }
-
 
     return EXIT_FAILURE;
 }

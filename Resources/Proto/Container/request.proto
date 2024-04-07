@@ -10,10 +10,9 @@ import "Content/settings.proto";
 
 // Represents request container sent from the client to the board.
 message RequestContainer {
-    uint32 msgId = 1;
     oneof content {
-        DataBusRequestContent dataBus = 2;
-        InfoBusRequestContent infoBus = 3;
-        SettingsBusRequestContent settingsBus = 4;
+        DataBusRequestContent dataBus = 1;
+        InfoBusRequestContent infoBus = 2;
+        SettingsBusRequestContent settingsBus = 3;
     }
 }

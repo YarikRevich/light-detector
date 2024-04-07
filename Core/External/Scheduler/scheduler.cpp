@@ -1,13 +1,7 @@
 #include "scheduler.h"
 
 void Scheduler::schedule_tick() {
-    State::get_task_sequence().add([]() -> int {
-        if (SchedulerHandler::handle_request() != EXIT_SUCCESS) {
-            Indicator::toggle_invalid_request();
-
-            return EXIT_FAILURE;
-        }
-
+    State::get_task_sequence()->add([]() -> int {
         if (SchedulerHandler::handle_response() != EXIT_SUCCESS) {
             Indicator::toggle_invalid_response();
 
@@ -19,7 +13,7 @@ void Scheduler::schedule_tick() {
 }
 
 void Scheduler::schedule_status_check() {
-    State::get_task_sequence().add([]() -> int {
+    State::get_task_sequence()->add([]() -> int {
         if (State::is_device_configured() && TSL2591X::is_available()) {
             Indicator::toggle_action_success();
         } else {
@@ -33,7 +27,7 @@ void Scheduler::schedule_status_check() {
 }
 
 void Scheduler::schedule_configuration() {
-    State::get_task_sequence().add([]() -> int {
+    State::get_task_sequence()->add([]() -> int {
         if (TSL2591X::is_available()) {
             TSL2591X::init();
 
@@ -41,13 +35,23 @@ void Scheduler::schedule_configuration() {
 
             Indicator::toggle_initialization_success();
 
-            HAL_TIM_Base_Start_IT(&htim16);
-
             return EXIT_SUCCESS;
         } else {
             Indicator::toggle_initialization_failure();
 
             return EXIT_FAILURE;
         }
+    });
+}
+
+void Scheduler::schedule_receive() {
+    State::get_task_sequence()->add([]() -> int {
+        if (SchedulerHandler::handle_request() != EXIT_SUCCESS) {
+//            Indicator::toggle_invalid_request();
+
+            return EXIT_FAILURE;
+        }
+
+        return EXIT_SUCCESS;
     });
 }

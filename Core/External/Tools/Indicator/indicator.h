@@ -14,6 +14,11 @@ public:
     static void toggle_initialization_success();
 
     /**
+     * Indicated initialization process success.
+     */
+    static void toggle_n(uint8_t n);
+
+    /**
      * Indicated initialization process failure.
      */
     static void toggle_initialization_failure();

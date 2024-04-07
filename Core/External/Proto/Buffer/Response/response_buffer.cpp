@@ -1,52 +1,46 @@
 #include "response_buffer.h"
 
-template<uint32_t BUFFER_SIZE>
-ResponseBuffer<BUFFER_SIZE>::ResponseBuffer() : bytes_used(0), bytes{0} {
+ResponseBuffer::ResponseBuffer() : index(0), size(0), bytes{nullptr} {
 }
 
-template<uint32_t BUFFER_SIZE>
-uint8_t *ResponseBuffer<BUFFER_SIZE>::get_raw_buffer() {
-    return bytes[0];
+uint8_t *ResponseBuffer::get_raw_buffer() {
+    return bytes;
 }
 
-template<uint32_t BUFFER_SIZE>
-void ResponseBuffer<BUFFER_SIZE>::clear() {
-    bytes_used = 0;
+void ResponseBuffer::clear() {
+    index = 0;
 }
 
-template<uint32_t BUFFER_SIZE>
-uint32_t ResponseBuffer<BUFFER_SIZE>::get_size() const {
-    return bytes_used;
+uint32_t ResponseBuffer::get_size() const {
+    return index;
 }
 
-template<uint32_t BUFFER_SIZE>
-uint32_t ResponseBuffer<BUFFER_SIZE>::get_max_size() const {
-    return BUFFER_SIZE;
+uint32_t ResponseBuffer::get_max_size() const {
+    return size;
 }
 
-template<uint32_t BUFFER_SIZE>
-uint32_t ResponseBuffer<BUFFER_SIZE>::get_available_size() const {
-    return -bytes_used;
+void ResponseBuffer::set_max_size(uint32_t value) {
+    this->size = value;
 }
 
-template<uint32_t BUFFER_SIZE>
-bool ResponseBuffer<BUFFER_SIZE>::push(const uint8_t byte) {
-    bool result = BUFFER_SIZE > bytes_used;
+uint32_t ResponseBuffer::get_available_size() const {
+    return -index;
+}
+
+bool ResponseBuffer::push(const uint8_t byte) {
+    bool result = size > index;
     if (result) {
-        (*bytes[bytes_used]) = byte;
-        ++bytes_used;
+        bytes[index] = byte;
+        ++index;
     }
     return result;
 }
 
-template<uint32_t BUFFER_SIZE>
-bool ResponseBuffer<BUFFER_SIZE>::push(const uint8_t *src, const uint32_t length) {
-    bool result = BUFFER_SIZE >= (bytes_used + length);
+bool ResponseBuffer::push(const uint8_t *src, const uint32_t length) {
+    bool result = size >= (index + length);
     if (result) {
-        memcpy(bytes + bytes_used, src, length);
-        bytes_used += length;
+        memcpy(bytes + index, src, length);
+        index += length;
     }
     return result;
 }
-
-template class ResponseBuffer<DEFAULT_RESPONSE_BUFFER_SIZE>;

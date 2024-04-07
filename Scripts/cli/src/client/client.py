@@ -3,6 +3,7 @@ import time
 
 from serial import Serial
 from serial import SerialException
+from serial import EIGHTBITS, SEVENBITS
 
 from proto.Content import data_pb2 as DataBus
 from proto.Content import info_pb2 as InfoBus
@@ -19,7 +20,7 @@ class Client:
 
     def __init__(self, device: str, baud_rate: int) -> None:
         try:
-            self.connection = Serial(device, baud_rate, timeout=10, xonxoff=False)
+            self.connection = Serial(device, baud_rate, EIGHTBITS, timeout=1000, xonxoff=False)
         except SerialException:
             logging.fatal("Given device is not available")
 
@@ -27,41 +28,36 @@ class Client:
         """Sends request to the board via data bus to retrieve data of raw type."""
 
         request_container = Request.RequestContainer()
-        request_container.msgId = 1
 
         data_bus_request = DataBus.DataBusRequestContent()
-        data_bus_request.dataType = DataBus.DataType.Raw
+        data_bus_request.dataType = DataBus.DataType.Infrared
 
         request_container.dataBus.CopyFrom(data_bus_request)
 
-        # print(dir(request_container.ByteSize))
+        data_length = request_container.ByteSize().to_bytes(1, "big")
+        data = request_container.SerializeToString()
 
-
-
-        # print(len(request_container.SerializeToString()))
+        # r = Request.RequestContainer()
         #
-        # print(request_container.SerializeToString())
+        # r.ParseFromString(self.connection.read(6))
 
-        # self.connection.write("itworks".encode("ascii"))
+        self.connection.write(data_length)
+        self.connection.write(data)
 
-        self.connection.write(request_container.SerializeToString())
+        result_length = int(self.connection.read(1))
+        print(result_length)
 
-        # print(self.connection.read())
+        result = self.connection.read(result_length)
 
-        self.connection.close()
-
-
-
-
-
-
-
-        # data_bus_request.dataType = data_pb2.Raw
-
-        # print(bytes(data_bus_request))
+        print(result)
         #
-        # # print(dir(data_bus_request))
-        # print(len(data_bus_request.SerializeToString()))
+        # r = Request.RequestContainer()
+        #
+        # r.ParseFromString(self.connection.readline(6))
+        #
+        # print(r)
+
+
 
         # data_bus_request.DataType = data_pb2.DataType.Raw
         # request = leds_pb2.LedStatus()
@@ -96,31 +92,24 @@ class Client:
         pass
 
 
-def send_data_bus_request_full_data_type_content(self) -> None:
-    """Sends request to the board via data bus to retrieve data of full type."""
+    def send_data_bus_request_full_data_type_content(self) -> None:
+        """Sends request to the board via data bus to retrieve data of full type."""
 
-    pass
-
-
-def send_data_bus_request_infrared_data_type_content(self) -> None:
-    """Sends request to the board via data bus to retrieve data of infrared type."""
-
-    pass
+        pass
 
 
-def send_data_bus_request_visible_data_type_content(self) -> None:
-    """Sends request to the board via data bus to retrieve data of visible type."""
+    def send_data_bus_request_infrared_data_type_content(self) -> None:
+        """Sends request to the board via data bus to retrieve data of infrared type."""
 
-    pass
+        pass
 
-    # """bit rate and bit amount per image"""
-    #
-    #
-    # ser = Serial("COM7", 9600)
-    # with open("/dev/COM7", "rb") as ser:
-    #     while True:
-    #         bs = ser.read(2048)
-    #         print(repr(bs))
-    #
-    # for entity in list_ports.comports():
-    #     print(entity.name, entity.device, entity.description, entity.manufacturer)
+
+    def send_data_bus_request_visible_data_type_content(self) -> None:
+        """Sends request to the board via data bus to retrieve data of visible type."""
+
+        pass
+
+    def close(self):
+        """Closes client connection."""
+
+        self.connection.close()

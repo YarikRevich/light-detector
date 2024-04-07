@@ -22,14 +22,14 @@ public:
      *
      * @return common instance of request buffer.
      */
-    static RequestBuffer<DEFAULT_REQUEST_BUFFER_SIZE>& get_request_buffer();
+    static RequestBuffer* get_request_buffer();
 
     /**
      * Retrieves common response buffer instance.
      *
      * @return common instance of response buffer.
      */
-    static ResponseBuffer<DEFAULT_RESPONSE_BUFFER_SIZE>& get_response_buffer();
+    static ResponseBuffer* get_response_buffer();
 
     /**
      * Attempts to decode request container, looking for raw data from request buffer. If the decoding is
@@ -51,12 +51,12 @@ private:
     /**
      * Represents common instance of request buffer.
      */
-    static RequestBuffer<DEFAULT_REQUEST_BUFFER_SIZE> request_buffer;
+    static RequestBuffer request_buffer;
 
     /**
      * Represents common instance of response buffer.
      */
-    static ResponseBuffer<DEFAULT_RESPONSE_BUFFER_SIZE> response_buffer;
+    static ResponseBuffer response_buffer;
 
     /**
      * Represents common request container instance.

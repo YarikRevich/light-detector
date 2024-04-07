@@ -32,7 +32,6 @@ class ResponseContainer final: public ::EmbeddedProto::MessageInterface
     ResponseContainer() = default;
     ResponseContainer(const ResponseContainer& rhs )
     {
-      set_msgId(rhs.get_msgId());
       if(rhs.get_which_content() != which_content_)
       {
         // First delete the old object in the oneof.
@@ -61,7 +60,6 @@ class ResponseContainer final: public ::EmbeddedProto::MessageInterface
 
     ResponseContainer(const ResponseContainer&& rhs ) noexcept
     {
-      set_msgId(rhs.get_msgId());
       if(rhs.get_which_content() != which_content_)
       {
         // First delete the old object in the oneof.
@@ -93,15 +91,13 @@ class ResponseContainer final: public ::EmbeddedProto::MessageInterface
     enum class FieldNumber : uint32_t
     {
       NOT_SET = 0,
-      MSGID = 1,
-      DATABUS = 2,
-      INFOBUS = 3,
-      SETTINGSBUS = 4
+      DATABUS = 1,
+      INFOBUS = 2,
+      SETTINGSBUS = 3
     };
 
     ResponseContainer& operator=(const ResponseContainer& rhs)
     {
-      set_msgId(rhs.get_msgId());
       if(rhs.get_which_content() != which_content_)
       {
         // First delete the old object in the oneof.
@@ -131,7 +127,6 @@ class ResponseContainer final: public ::EmbeddedProto::MessageInterface
 
     ResponseContainer& operator=(const ResponseContainer&& rhs) noexcept
     {
-      set_msgId(rhs.get_msgId());
       if(rhs.get_which_content() != which_content_)
       {
         // First delete the old object in the oneof.
@@ -158,14 +153,6 @@ class ResponseContainer final: public ::EmbeddedProto::MessageInterface
 
       return *this;
     }
-
-    static constexpr char const* MSGID_NAME = "msgId";
-    inline void clear_msgId() { msgId_.clear(); }
-    inline void set_msgId(const uint32_t& value) { msgId_ = value; }
-    inline void set_msgId(const uint32_t&& value) { msgId_ = value; }
-    inline uint32_t& mutable_msgId() { return msgId_.get(); }
-    inline const uint32_t& get_msgId() const { return msgId_.get(); }
-    inline uint32_t msgId() const { return msgId_.get(); }
 
     FieldNumber get_which_content() const { return which_content_; }
 
@@ -294,11 +281,6 @@ class ResponseContainer final: public ::EmbeddedProto::MessageInterface
     {
       ::EmbeddedProto::Error return_value = ::EmbeddedProto::Error::NO_ERRORS;
 
-      if((0U != msgId_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
-      {
-        return_value = msgId_.serialize_with_id(static_cast<uint32_t>(FieldNumber::MSGID), buffer, false);
-      }
-
       switch(which_content_)
       {
         case FieldNumber::DATABUS:
@@ -342,10 +324,6 @@ class ResponseContainer final: public ::EmbeddedProto::MessageInterface
         id_tag = static_cast<FieldNumber>(id_number);
         switch(id_tag)
         {
-          case FieldNumber::MSGID:
-            return_value = msgId_.deserialize_check_type(buffer, wire_type);
-            break;
-
           case FieldNumber::DATABUS:
           case FieldNumber::INFOBUS:
           case FieldNumber::SETTINGSBUS:
@@ -381,7 +359,6 @@ class ResponseContainer final: public ::EmbeddedProto::MessageInterface
 
     void clear() override
     {
-      clear_msgId();
       clear_content();
 
     }
@@ -391,9 +368,6 @@ class ResponseContainer final: public ::EmbeddedProto::MessageInterface
       char const* name = nullptr;
       switch(fieldNumber)
       {
-        case FieldNumber::MSGID:
-          name = MSGID_NAME;
-          break;
         case FieldNumber::DATABUS:
           name = DATABUS_NAME;
           break;
@@ -463,8 +437,7 @@ class ResponseContainer final: public ::EmbeddedProto::MessageInterface
         left_chars.size -= n_chars_used;
       }
 
-      left_chars = msgId_.to_string(left_chars, indent_level + 2, MSGID_NAME, true);
-      left_chars = to_string_content(left_chars, indent_level + 2, false);
+      left_chars = to_string_content(left_chars, indent_level + 2, true);
   
       if( 0 == indent_level) 
       {
@@ -489,7 +462,6 @@ class ResponseContainer final: public ::EmbeddedProto::MessageInterface
   private:
 
 
-      EmbeddedProto::uint32 msgId_ = 0U;
 
       FieldNumber which_content_ = FieldNumber::NOT_SET;
       union content
