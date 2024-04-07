@@ -1,3 +1,5 @@
+import os
+
 from serial.tools import list_ports
 
 # Represents STM32 board manufacturer name.
@@ -41,5 +43,11 @@ def is_device_available(device: str) -> bool:
 
 def is_export_valid(src: str) -> bool:
     """Checks if the given export path is valid and can be used for diagram generation."""
+
+    return not os.path.isfile(src)
+
+
+def generate_export() -> str:
+    """Generates random export location."""
 
     pass

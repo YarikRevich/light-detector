@@ -5,3 +5,6 @@ from .retrieved_data_dto import RetrievedDataDto
 
 from .retrieved_info_dto import InfoTypeCompound
 from .retrieved_info_dto import RetrievedInfoDto
+
+from .set_settings_dto import SettingsTypeCompound
+from .set_settings_dto import SetSettingsDto

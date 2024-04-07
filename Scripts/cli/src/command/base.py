@@ -13,7 +13,7 @@ class BaseCommand:
         GetAvailableDevicesCommand.handle()
 
     @staticmethod
-    def get_data(device: str, baud_rate: int, type: str, series: int = 1, export: str = None,
+    def get_data(device: str, baud_rate: int, type: str, series: int = 1, export: str = None, generate: bool = False,
                  figure: str = "scatter") -> None:
         """
         Returns sensor data of selected type. The available data types are 'raw', 'full', 'infrared', 'visible'.
@@ -21,7 +21,7 @@ class BaseCommand:
         'scatter' and 'bar'.
         """
 
-        GetDataCommand.handle(device, baud_rate, type, series, export, figure)
+        GetDataCommand.handle(device, baud_rate, type, series, export, generate, figure)
 
     @staticmethod
     def get_info(device: str, baud_rate: int, type: str) -> None:

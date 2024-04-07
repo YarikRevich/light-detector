@@ -19,7 +19,7 @@ class GetDataCommand:
     VISIBLE_TYPE: str = "visible"
 
     @staticmethod
-    def handle(device: str, baud_rate: int, type: str, series: int, export: str, figure: str):
+    def handle(device: str, baud_rate: int, type: str, series: int, export: str, generate: bool, figure: str):
         """Handles the execution of command wrapper."""
 
         if not is_device_available(device):
@@ -28,7 +28,7 @@ class GetDataCommand:
 
         data: list[RetrievedDataDto] = []
 
-        for i in range(series):
+        for _ in range(series):
             match type:
                 case GetDataCommand.RAW_TYPE:
                     data.append(GetDataCommand.process_get_raw_data(device, baud_rate))
@@ -50,20 +50,23 @@ class GetDataCommand:
         logging.info("Data has been successfully retrieved.")
 
         if is_export_valid(export):
-            figure = Visualizer(export, data)
+            visualizer = Visualizer(export, data)
 
             match figure:
                 case Visualizer.SCATTER_FIGURE:
-                    figure.select_scatter()
+                    visualizer.select_scatter()
 
                 case Visualizer.BAR_FIGURE:
-                    figure.select_bar()
+                    visualizer.select_bar()
+
+                case Visualizer.PLOT_FIGURE:
+                    visualizer.select_plot()
 
                 case _:
                     logging.error("Given figure type is not valid.")
                     return
 
-            figure.save()
+            visualizer.save()
 
     @staticmethod
     def process_get_raw_data(device: str, baud_rate: int) -> RetrievedDataDto:
