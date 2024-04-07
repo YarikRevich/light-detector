@@ -113,32 +113,15 @@ int main(void) {
 
     Scheduler::schedule_configuration();
 
+    State::get_task_sequence()->traverse_until_succeed([](const std::function<int()> &callback) -> int {
+        return callback();
+    });
+
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while (1) {
-//        if (!State::is_device_configured()) {
-//            if (TSL2591X::is_available()) {
-//                TSL2591X::init();
-//
-//                State::set_device_configured(true);
-//
-//                Indicator::toggle_initialization_success();
-//            } else {
-//                Indicator::toggle_initialization_failure();
-//            }
-//        }
-//        uint8_t te[2];
-//
-//        HAL_UART_Receive(&huart2, te, 2, 2000);
-//
-//        if (te[1] == 2) {
-//            Indicator::toggle_action_success();
-//        }
-
-        Scheduler::schedule_receive();
-
         Scheduler::schedule_tick();
 
         State::get_task_sequence()->traverse_with_skip([](const std::function<int()> &callback) -> int {

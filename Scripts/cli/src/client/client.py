@@ -156,6 +156,10 @@ class Client:
             response_container.dataBus.value,
             response_container.dataBus.nonce)
 
+
+    def send_info_bus_request_raw_data_type_content(self) -> RetrievedDataDto:
+        """Sends request to the board via data bus to retrieve data of raw type."""
+
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Closes client connection."""
 

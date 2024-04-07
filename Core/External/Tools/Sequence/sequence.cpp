@@ -34,6 +34,17 @@ void Sequence<T>::traverse_with_skip(std::function<int(T)> callback) {
 }
 
 template <typename T>
+void Sequence<T>::traverse_until_succeed(std::function<int(T)> callback) {
+    while (!sequence.empty()) {
+        if (callback(sequence.front()) != EXIT_SUCCESS) {
+            continue;
+        }
+
+        sequence.pop();
+    }
+};
+
+template <typename T>
 void Sequence<T>::add(const T& src) {
     sequence.push(src);
 }

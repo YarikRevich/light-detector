@@ -129,6 +129,7 @@ int SchedulerHandler::process_data_bus_request_content_of_raw_data_type_response
         data_bus_response_content.set_deviceId(TSL2591X::get_device_id());
 
         data_bus_response_content.set_value(TSL2591X::read_lux());
+
         TSL2591X::invoke_lux_interrupt(LUX_LOW, LUX_HIGH);
     } else {
         data_bus_response_content.set_deviceId(0);
@@ -152,6 +153,8 @@ int SchedulerHandler::process_data_bus_request_content_of_full_data_type_respons
 
     if (TSL2591X::is_available()) {
         data_bus_response_content.set_deviceId(TSL2591X::get_device_id());
+
+        TSL2591X::invoke_lux_interrupt(LUX_LOW, LUX_HIGH);
 
         data_bus_response_content.set_value(TSL2591X::read_full());
     } else {
@@ -177,6 +180,8 @@ int SchedulerHandler::process_data_bus_request_content_of_infrared_data_type_res
     if (TSL2591X::is_available()) {
         data_bus_response_content.set_deviceId(TSL2591X::get_device_id());
 
+        TSL2591X::invoke_lux_interrupt(LUX_LOW, LUX_HIGH);
+
         data_bus_response_content.set_value(TSL2591X::read_infrared());
     } else {
         data_bus_response_content.set_deviceId(0);
@@ -200,6 +205,8 @@ int SchedulerHandler::process_data_bus_request_content_of_visible_data_type_resp
 
     if (TSL2591X::is_available()) {
         data_bus_response_content.set_deviceId(TSL2591X::get_device_id());
+
+        TSL2591X::invoke_lux_interrupt(LUX_LOW, LUX_HIGH);
 
         data_bus_response_content.set_value(TSL2591X::read_visible());
     } else {

@@ -12,7 +12,7 @@
 class Scheduler {
 public:
     /**
-     * Schedules external timer tick action.
+     * Schedules external loop tick action.
      */
     static void schedule_tick();
 
@@ -25,11 +25,6 @@ public:
      * Schedules device configuration action.
      */
     static void schedule_configuration();
-
-    /**
-     * Schedules UART receive poll action.
-     */
-    static void schedule_receive();
 };
 
 #endif //LIGHT_DETECTOR_SCHEDULER_H
