@@ -13,10 +13,10 @@ from tools import print_output
 class GetDataCommand:
     """Represents 'get_data' command."""
 
-    RAW_TYPE = "raw"
-    FULL_TYPE = "full"
-    INFRARED_TYPE = "infrared"
-    VISIBLE_TYPE = "visible"
+    RAW_TYPE: str = "raw"
+    FULL_TYPE: str = "full"
+    INFRARED_TYPE: str = "infrared"
+    VISIBLE_TYPE: str = "visible"
 
     @staticmethod
     def handle(device: str, baud_rate: int, type: str, series: int, export: str, figure: str):

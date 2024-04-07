@@ -11,7 +11,7 @@ class DataTypeCompound(Enum):
 
 
 class RetrievedDataDto:
-    """Represents dto used to hold the result of a series of 'get_data' command."""
+    """Represents dto used to hold the result of a 'get_data' command."""
 
     # Represents remote device identification number.
     device_id: int

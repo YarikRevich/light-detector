@@ -12,6 +12,8 @@ from proto import response_pb2 as Response
 
 from dto import DataTypeCompound
 from dto import RetrievedDataDto
+from dto import InfoTypeCompound
+from dto import RetrievedInfoDto
 
 
 class Client:
@@ -156,9 +158,129 @@ class Client:
             response_container.dataBus.value,
             response_container.dataBus.nonce)
 
+    def send_info_bus_request_gain_info_type_content(self) -> RetrievedDataDto:
+        """Sends request to the board via info bus to retrieve info of gain type."""
 
-    def send_info_bus_request_raw_data_type_content(self) -> RetrievedDataDto:
-        """Sends request to the board via data bus to retrieve data of raw type."""
+        request_container = Request.RequestContainer()
+
+        info_bus_request = InfoBus.InfoBusRequestContent()
+        info_bus_request.infoType = InfoBus.InfoType.Gain
+
+        request_container.infoBus.CopyFrom(info_bus_request)
+
+        data_length = request_container.ByteSize().to_bytes(1, "big")
+        data = request_container.SerializeToString()
+
+        self.connection.write(data_length)
+        self.connection.write(data)
+
+        result_length_raw = self.connection.read(3)
+
+        result_length = int.from_bytes(result_length_raw, 'big')
+
+        result = self.connection.read(result_length)
+
+        response_container = Response.ResponseContainer()
+        response_container.ParseFromString(result)
+
+        return RetrievedDataDto(
+            response_container.infoBus.deviceId,
+            InfoTypeCompound.GAIN,
+            response_container.infoBus.value,
+            response_container.infoBus.nonce)
+
+    def send_info_bus_request_integral_time_info_type_content(self) -> RetrievedDataDto:
+        """Sends request to the board via info bus to retrieve info of integral time type."""
+
+        request_container = Request.RequestContainer()
+
+        info_bus_request = InfoBus.InfoBusRequestContent()
+        info_bus_request.infoType = InfoBus.InfoType.IntegralTime
+
+        request_container.infoBus.CopyFrom(info_bus_request)
+
+        data_length = request_container.ByteSize().to_bytes(1, "big")
+        data = request_container.SerializeToString()
+
+        self.connection.write(data_length)
+        self.connection.write(data)
+
+        result_length_raw = self.connection.read(3)
+
+        result_length = int.from_bytes(result_length_raw, 'big')
+
+        result = self.connection.read(result_length)
+
+        response_container = Response.ResponseContainer()
+        response_container.ParseFromString(result)
+
+        return RetrievedDataDto(
+            response_container.infoBus.deviceId,
+            InfoTypeCompound.INTEGRAL_TIME,
+            response_container.infoBus.value,
+            response_container.infoBus.nonce)
+
+    def send_info_bus_request_processed_requests_info_type_content(self) -> RetrievedDataDto:
+        """Sends request to the board via info bus to retrieve info of processed requests time type."""
+
+        request_container = Request.RequestContainer()
+
+        info_bus_request = InfoBus.InfoBusRequestContent()
+        info_bus_request.infoType = InfoBus.InfoType.ProcessedRequests
+
+        request_container.infoBus.CopyFrom(info_bus_request)
+
+        data_length = request_container.ByteSize().to_bytes(1, "big")
+        data = request_container.SerializeToString()
+
+        self.connection.write(data_length)
+        self.connection.write(data)
+
+        result_length_raw = self.connection.read(3)
+
+        result_length = int.from_bytes(result_length_raw, 'big')
+
+        result = self.connection.read(result_length)
+
+        response_container = Response.ResponseContainer()
+        response_container.ParseFromString(result)
+
+        return RetrievedDataDto(
+            response_container.infoBus.deviceId,
+            InfoTypeCompound.PROCESSED_REQUESTS,
+            response_container.infoBus.value,
+            response_container.infoBus.nonce)
+
+    def send_info_bus_request_device_available_info_type_content(self) -> RetrievedDataDto:
+        """Sends request to the board via info bus to retrieve info of device available time type."""
+
+        request_container = Request.RequestContainer()
+
+        info_bus_request = InfoBus.InfoBusRequestContent()
+        info_bus_request.infoType = InfoBus.InfoType.DeviceAvailable
+
+        request_container.infoBus.CopyFrom(info_bus_request)
+
+        data_length = request_container.ByteSize().to_bytes(1, "big")
+        data = request_container.SerializeToString()
+
+        self.connection.write(data_length)
+        self.connection.write(data)
+
+        result_length_raw = self.connection.read(3)
+
+        result_length = int.from_bytes(result_length_raw, 'big')
+
+        result = self.connection.read(result_length)
+
+        response_container = Response.ResponseContainer()
+        response_container.ParseFromString(result)
+
+        return RetrievedDataDto(
+            response_container.infoBus.deviceId,
+            InfoTypeCompound.DEVICE_AVAILABLE,
+            response_container.infoBus.value,
+            response_container.infoBus.nonce)
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Closes client connection."""
