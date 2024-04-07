@@ -14,11 +14,6 @@ public:
     static void toggle_initialization_success();
 
     /**
-     * Indicated initialization process success.
-     */
-    static void toggle_n(uint8_t n);
-
-    /**
      * Indicated initialization process failure.
      */
     static void toggle_initialization_failure();
@@ -27,11 +22,6 @@ public:
      * Indicated operation action success.
      */
     static void toggle_action_success();
-
-    /**
-     * Indicated operation action failure.
-     */
-    static void toggle_action_failure();
 
     /**
      * Indicated invalid incoming request.

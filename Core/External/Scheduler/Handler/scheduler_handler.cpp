@@ -340,17 +340,25 @@ int SchedulerHandler::process_settings_bus_request_content_response(
     if (ProtoHelper::is_settings_bus_request_content_of_reset_settings_type(
             settings_bus_request_content)) {
 
-        return SchedulerHandler::process_settings_bus_request_content_of_reset_settings_type_response();
+        if (SchedulerHandler::process_settings_bus_request_content_of_reset_settings_type_response() != EXIT_SUCCESS) {
+            return EXIT_FAILURE;
+        }
     } else if (ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type(
             settings_bus_request_content)) {
 
-        return SchedulerHandler::process_settings_bus_request_content_of_set_gain_settings_type_response(content);
+        if (SchedulerHandler::process_settings_bus_request_content_of_set_gain_settings_type_response(content) != EXIT_SUCCESS) {
+            return EXIT_FAILURE;
+        }
     } else if (ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type(
             settings_bus_request_content)) {
 
-        return SchedulerHandler::process_settings_bus_request_content_of_set_integral_time_settings_type_response(
-                content);
+         if (SchedulerHandler::process_settings_bus_request_content_of_set_integral_time_settings_type_response(
+                content) != EXIT_SUCCESS) {
+             return EXIT_FAILURE;
+         }
     }
+
+    Indicator::toggle_action_success();
 
     return EXIT_SUCCESS;
 }
@@ -392,7 +400,19 @@ int SchedulerHandler::process_settings_bus_request_content_of_set_gain_settings_
     if (TSL2591X::is_available()) {
         settings_bus_response_content.set_deviceId(TSL2591X::get_device_id());
 
-        TSL2591X::set_gain(content.get_settingsBus().get_value());
+        if (ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type_of_low_type(
+                content.settingsBus())) {
+            TSL2591X::set_gain(LOW_AGAIN);
+        } else if (ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type_of_medium_type(
+                content.settingsBus())) {
+            TSL2591X::set_gain(MEDIUM_AGAIN);
+        } else if (ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type_of_high_type(
+                content.settingsBus())) {
+            TSL2591X::set_gain(HIGH_AGAIN);
+        } else if (ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type_of_max_type(
+                content.settingsBus())) {
+            TSL2591X::set_gain(MAX_AGAIN);
+        }
 
         settings_bus_response_content.set_result(true);
     } else {
@@ -419,7 +439,25 @@ int SchedulerHandler::process_settings_bus_request_content_of_set_integral_time_
     if (TSL2591X::is_available()) {
         settings_bus_response_content.set_deviceId(TSL2591X::get_device_id());
 
-        TSL2591X::set_integral_time(content.get_settingsBus().get_value());
+        if (ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_first_type(
+                content.settingsBus())) {
+            TSL2591X::set_integral_time(ATIME_100MS);
+        } else if (ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_second_type(
+                content.settingsBus())) {
+            TSL2591X::set_integral_time(ATIME_200MS);
+        } else if (ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_third_type(
+                content.settingsBus())) {
+            TSL2591X::set_integral_time(ATIME_300MS);
+        } else if (ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_forth_type(
+                content.settingsBus())) {
+            TSL2591X::set_integral_time(ATIME_400MS);
+        } else if (ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_fifth_type(
+                content.settingsBus())) {
+            TSL2591X::set_integral_time(ATIME_500MS);
+        } else if (ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_sixth_type(
+                content.settingsBus())) {
+            TSL2591X::set_integral_time(ATIME_600MS);
+        }
 
         settings_bus_response_content.set_result(true);
     } else {

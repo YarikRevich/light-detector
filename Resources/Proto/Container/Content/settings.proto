@@ -15,21 +15,21 @@ enum SettingsType {
 // Represents all the available set grain value presets, which can be used with settings bus.
 enum SetGrainSettingType {
     SetGrainSettingNone = 0; // Stub enum to handle serialization.
-    LOW = 1;
-    MEDIUM = 2;
-    HIGH = 3;
-    MAX = 4;
+    Low = 1;
+    Medium = 2;
+    High = 3;
+    Max = 4;
 }
 
 // Represents all the available set integral time value presets, which can be used with settings bus.
 enum SetIntegralTimeSettingType {
     SetIntegralTimeSettingNone = 0; // Stub enum to handle serialization.
-    100MS = 1;
-    200MS = 2;
-    300MS = 3;
-    400MS = 4;
-    500MS = 5;
-    600MS = 6;
+    First = 1;
+    Second = 2;
+    Third = 3;
+    Forth = 4;
+    Fifth = 5;
+    Sixth = 6;
 }
 
 // Represents settings bus request content send from the client to the board.

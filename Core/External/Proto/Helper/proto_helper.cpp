@@ -75,7 +75,57 @@ bool ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type(
     return content.settingsType() == light_detector::SettingsType::SetGain;
 }
 
+bool ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type_of_low_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.get_setGainValue() == light_detector::SetGrainSettingType::Low;
+}
+
+bool ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type_of_medium_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.get_setGainValue() == light_detector::SetGrainSettingType::Medium;
+}
+
+bool ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type_of_high_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.get_setGainValue() == light_detector::SetGrainSettingType::High;
+}
+
+bool ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type_of_max_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.get_setGainValue() == light_detector::SetGrainSettingType::Max;
+}
+
 bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type(
         const light_detector::SettingsBusRequestContent &content) {
     return content.settingsType() == light_detector::SettingsType::SetIntegralTime;
+}
+
+bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_first_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.get_setIntegralTimeValue() == light_detector::SetIntegralTimeSettingType::First;
+}
+
+bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_second_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.get_setIntegralTimeValue() == light_detector::SetIntegralTimeSettingType::Second;
+}
+
+bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_third_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.get_setIntegralTimeValue() == light_detector::SetIntegralTimeSettingType::Third;
+}
+
+bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_forth_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.get_setIntegralTimeValue() == light_detector::SetIntegralTimeSettingType::Forth;
+}
+
+bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_fifth_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.get_setIntegralTimeValue() == light_detector::SetIntegralTimeSettingType::Fifth;
+}
+
+bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_sixth_type(
+        const light_detector::SettingsBusRequestContent &content) {
+    return content.get_setIntegralTimeValue() == light_detector::SetIntegralTimeSettingType::Sixth;
 }

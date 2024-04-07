@@ -149,12 +149,102 @@ public:
             const light_detector::SettingsBusRequestContent &content);
 
     /**
+     * Checks if the given settings bus request content of set gain settings type of low type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_set_gain_settings_type_of_low_type(
+            const light_detector::SettingsBusRequestContent &content);
+
+    /**
+     * Checks if the given settings bus request content of set gain settings type of medium type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_set_gain_settings_type_of_medium_type(
+            const light_detector::SettingsBusRequestContent &content);
+
+    /**
+     * Checks if the given settings bus request content of set gain settings type of high type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_set_gain_settings_type_of_high_type(
+            const light_detector::SettingsBusRequestContent &content);
+
+    /**
+     * Checks if the given settings bus request content of set gain settings type of max type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_set_gain_settings_type_of_max_type(
+            const light_detector::SettingsBusRequestContent &content);
+
+    /**
      * Checks if the given settings bus request content of set integral time settings type.
      *
      * @param content - given settings bus request content.
      * @return result of the check.
      */
     static bool is_settings_bus_request_content_of_set_integral_time_settings_type(
+            const light_detector::SettingsBusRequestContent &content);
+
+    /**
+     * Checks if the given settings bus request content set integral time of settings type of first type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_set_integral_time_settings_type_of_first_type(
+            const light_detector::SettingsBusRequestContent &content);
+
+    /**
+     * Checks if the given settings bus request content set integral time of settings type of second type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_set_integral_time_settings_type_of_second_type(
+            const light_detector::SettingsBusRequestContent &content);
+
+    /**
+     * Checks if the given settings bus request content set integral time of settings type of third type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_set_integral_time_settings_type_of_third_type(
+            const light_detector::SettingsBusRequestContent &content);
+
+    /**
+     * Checks if the given settings bus request content set integral time of settings type of forth type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_set_integral_time_settings_type_of_forth_type(
+            const light_detector::SettingsBusRequestContent &content);
+
+    /**
+     * Checks if the given settings bus request content set integral time of settings type of fifth type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_set_integral_time_settings_type_of_fifth_type(
+            const light_detector::SettingsBusRequestContent &content);
+
+    /**
+     * Checks if the given settings bus request content set integral time of settings type of sixth type.
+     *
+     * @param content - given settings bus request content.
+     * @return result of the check.
+     */
+    static bool is_settings_bus_request_content_of_set_integral_time_settings_type_of_sixth_type(
             const light_detector::SettingsBusRequestContent &content);
 };
 

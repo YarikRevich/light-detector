@@ -31,6 +31,26 @@ enum class SettingsType : uint32_t
   SetIntegralTime = 3
 };
 
+enum class SetGrainSettingType : uint32_t
+{
+  SetGrainSettingNone = 0,
+  Low = 1,
+  Medium = 2,
+  High = 3,
+  Max = 4
+};
+
+enum class SetIntegralTimeSettingType : uint32_t
+{
+  SetIntegralTimeSettingNone = 0,
+  First = 1,
+  Second = 2,
+  Third = 3,
+  Forth = 4,
+  Fifth = 5,
+  Sixth = 6
+};
+
 class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
 {
   public:
@@ -38,13 +58,24 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
     SettingsBusRequestContent(const SettingsBusRequestContent& rhs )
     {
       set_settingsType(rhs.get_settingsType());
-      if(rhs.has_value())
+      if(rhs.get_which_value() != which_value_)
       {
-        set_value(rhs.get_value());
-      }
-      else
-      {
+        // First delete the old object in the oneof.
         clear_value();
+      }
+
+      switch(rhs.get_which_value())
+      {
+        case FieldNumber::SETGAINVALUE:
+          set_setGainValue(rhs.get_setGainValue());
+          break;
+
+        case FieldNumber::SETINTEGRALTIMEVALUE:
+          set_setIntegralTimeValue(rhs.get_setIntegralTimeValue());
+          break;
+
+        default:
+          break;
       }
 
     }
@@ -52,13 +83,24 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
     SettingsBusRequestContent(const SettingsBusRequestContent&& rhs ) noexcept
     {
       set_settingsType(rhs.get_settingsType());
-      if(rhs.has_value())
+      if(rhs.get_which_value() != which_value_)
       {
-        set_value(rhs.get_value());
-      }
-      else
-      {
+        // First delete the old object in the oneof.
         clear_value();
+      }
+
+      switch(rhs.get_which_value())
+      {
+        case FieldNumber::SETGAINVALUE:
+          set_setGainValue(rhs.get_setGainValue());
+          break;
+
+        case FieldNumber::SETINTEGRALTIMEVALUE:
+          set_setIntegralTimeValue(rhs.get_setIntegralTimeValue());
+          break;
+
+        default:
+          break;
       }
 
     }
@@ -69,19 +111,31 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
     {
       NOT_SET = 0,
       SETTINGSTYPE = 1,
-      VALUE = 2
+      SETGAINVALUE = 2,
+      SETINTEGRALTIMEVALUE = 3
     };
 
     SettingsBusRequestContent& operator=(const SettingsBusRequestContent& rhs)
     {
       set_settingsType(rhs.get_settingsType());
-      if(rhs.has_value())
+      if(rhs.get_which_value() != which_value_)
       {
-        set_value(rhs.get_value());
-      }
-      else
-      {
+        // First delete the old object in the oneof.
         clear_value();
+      }
+
+      switch(rhs.get_which_value())
+      {
+        case FieldNumber::SETGAINVALUE:
+          set_setGainValue(rhs.get_setGainValue());
+          break;
+
+        case FieldNumber::SETINTEGRALTIMEVALUE:
+          set_setIntegralTimeValue(rhs.get_setIntegralTimeValue());
+          break;
+
+        default:
+          break;
       }
 
       return *this;
@@ -90,15 +144,26 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
     SettingsBusRequestContent& operator=(const SettingsBusRequestContent&& rhs) noexcept
     {
       set_settingsType(rhs.get_settingsType());
-      if(rhs.has_value())
+      if(rhs.get_which_value() != which_value_)
       {
-        set_value(rhs.get_value());
-      }
-      else
-      {
+        // First delete the old object in the oneof.
         clear_value();
       }
-      
+
+      switch(rhs.get_which_value())
+      {
+        case FieldNumber::SETGAINVALUE:
+          set_setGainValue(rhs.get_setGainValue());
+          break;
+
+        case FieldNumber::SETINTEGRALTIMEVALUE:
+          set_setIntegralTimeValue(rhs.get_setIntegralTimeValue());
+          break;
+
+        default:
+          break;
+      }
+
       return *this;
     }
 
@@ -109,33 +174,71 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
     inline const SettingsType& get_settingsType() const { return settingsType_.get(); }
     inline SettingsType settingsType() const { return settingsType_.get(); }
 
-    static constexpr char const* VALUE_NAME = "value";
-    inline bool has_value() const
+    FieldNumber get_which_value() const { return which_value_; }
+
+    static constexpr char const* SETGAINVALUE_NAME = "setGainValue";
+    inline bool has_setGainValue() const
     {
-      return 0 != (presence::mask(presence::fields::VALUE) & presence_[presence::index(presence::fields::VALUE)]);
+      return FieldNumber::SETGAINVALUE == which_value_;
     }
-    inline void clear_value()
+    inline void clear_setGainValue()
     {
-      presence_[presence::index(presence::fields::VALUE)] &= ~(presence::mask(presence::fields::VALUE));
-      value_.clear();
+      if(FieldNumber::SETGAINVALUE == which_value_)
+      {
+        which_value_ = FieldNumber::NOT_SET;
+        value_.setGainValue_.clear();
+      }
     }
-    inline void set_value(const int32_t& value)
+    inline void set_setGainValue(const SetGrainSettingType& value)
     {
-      presence_[presence::index(presence::fields::VALUE)] |= presence::mask(presence::fields::VALUE);
-      value_ = value;
+      if(FieldNumber::SETGAINVALUE != which_value_)
+      {
+        init_value(FieldNumber::SETGAINVALUE);
+      }
+      value_.setGainValue_ = value;
     }
-    inline void set_value(const int32_t&& value)
+    inline void set_setGainValue(const SetGrainSettingType&& value)
     {
-      presence_[presence::index(presence::fields::VALUE)] |= presence::mask(presence::fields::VALUE);
-      value_ = value;
+      if(FieldNumber::SETGAINVALUE != which_value_)
+      {
+        init_value(FieldNumber::SETGAINVALUE);
+      }
+      value_.setGainValue_ = value;
     }
-    inline int32_t& mutable_value()
+    inline const SetGrainSettingType& get_setGainValue() const { return value_.setGainValue_.get(); }
+    inline SetGrainSettingType setGainValue() const { return value_.setGainValue_.get(); }
+
+    static constexpr char const* SETINTEGRALTIMEVALUE_NAME = "setIntegralTimeValue";
+    inline bool has_setIntegralTimeValue() const
     {
-      presence_[presence::index(presence::fields::VALUE)] |= presence::mask(presence::fields::VALUE);
-      return value_.get();
+      return FieldNumber::SETINTEGRALTIMEVALUE == which_value_;
     }
-    inline const int32_t& get_value() const { return value_.get(); }
-    inline int32_t value() const { return value_.get(); }
+    inline void clear_setIntegralTimeValue()
+    {
+      if(FieldNumber::SETINTEGRALTIMEVALUE == which_value_)
+      {
+        which_value_ = FieldNumber::NOT_SET;
+        value_.setIntegralTimeValue_.clear();
+      }
+    }
+    inline void set_setIntegralTimeValue(const SetIntegralTimeSettingType& value)
+    {
+      if(FieldNumber::SETINTEGRALTIMEVALUE != which_value_)
+      {
+        init_value(FieldNumber::SETINTEGRALTIMEVALUE);
+      }
+      value_.setIntegralTimeValue_ = value;
+    }
+    inline void set_setIntegralTimeValue(const SetIntegralTimeSettingType&& value)
+    {
+      if(FieldNumber::SETINTEGRALTIMEVALUE != which_value_)
+      {
+        init_value(FieldNumber::SETINTEGRALTIMEVALUE);
+      }
+      value_.setIntegralTimeValue_ = value;
+    }
+    inline const SetIntegralTimeSettingType& get_setIntegralTimeValue() const { return value_.setIntegralTimeValue_.get(); }
+    inline SetIntegralTimeSettingType setIntegralTimeValue() const { return value_.setIntegralTimeValue_.get(); }
 
 
     ::EmbeddedProto::Error serialize(::EmbeddedProto::WriteBufferInterface& buffer) const override
@@ -147,9 +250,24 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
         return_value = settingsType_.serialize_with_id(static_cast<uint32_t>(FieldNumber::SETTINGSTYPE), buffer, false);
       }
 
-      if(has_value() && (::EmbeddedProto::Error::NO_ERRORS == return_value))
+      switch(which_value_)
       {
-        return_value = value_.serialize_with_id(static_cast<uint32_t>(FieldNumber::VALUE), buffer, true);
+        case FieldNumber::SETGAINVALUE:
+          if(has_setGainValue() && (::EmbeddedProto::Error::NO_ERRORS == return_value))
+          {
+            return_value = value_.setGainValue_.serialize_with_id(static_cast<uint32_t>(FieldNumber::SETGAINVALUE), buffer, true);
+          }
+          break;
+
+        case FieldNumber::SETINTEGRALTIMEVALUE:
+          if(has_setIntegralTimeValue() && (::EmbeddedProto::Error::NO_ERRORS == return_value))
+          {
+            return_value = value_.setIntegralTimeValue_.serialize_with_id(static_cast<uint32_t>(FieldNumber::SETINTEGRALTIMEVALUE), buffer, true);
+          }
+          break;
+
+        default:
+          break;
       }
 
       return return_value;
@@ -172,9 +290,9 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
             return_value = settingsType_.deserialize_check_type(buffer, wire_type);
             break;
 
-          case FieldNumber::VALUE:
-            presence_[presence::index(presence::fields::VALUE)] |= presence::mask(presence::fields::VALUE);
-            return_value = value_.deserialize_check_type(buffer, wire_type);
+          case FieldNumber::SETGAINVALUE:
+          case FieldNumber::SETINTEGRALTIMEVALUE:
+            return_value = deserialize_value(id_tag, buffer, wire_type);
             break;
 
           case FieldNumber::NOT_SET:
@@ -219,8 +337,11 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
         case FieldNumber::SETTINGSTYPE:
           name = SETTINGSTYPE_NAME;
           break;
-        case FieldNumber::VALUE:
-          name = VALUE_NAME;
+        case FieldNumber::SETGAINVALUE:
+          name = SETGAINVALUE_NAME;
+          break;
+        case FieldNumber::SETINTEGRALTIMEVALUE:
+          name = SETINTEGRALTIMEVALUE_NAME;
           break;
         default:
           name = "Invalid FieldNumber";
@@ -283,7 +404,7 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
       }
 
       left_chars = settingsType_.to_string(left_chars, indent_level + 2, SETTINGSTYPE_NAME, true);
-      left_chars = value_.to_string(left_chars, indent_level + 2, VALUE_NAME, false);
+      left_chars = to_string_value(left_chars, indent_level + 2, false);
   
       if( 0 == indent_level) 
       {
@@ -307,44 +428,97 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
 
   private:
 
-      // Define constants for tracking the presence of fields.
-      // Use a struct to scope the variables from user fields as namespaces are not allowed within classes.
-      struct presence
-      {
-        // An enumeration with all the fields for which presence has to be tracked.
-        enum class fields : uint32_t
-        {
-          VALUE
-        };
-
-        // The number of fields for which presence has to be tracked.
-        static constexpr uint32_t N_FIELDS = 1;
-
-        // Which type are we using to track presence.
-        using TYPE = uint32_t;
-
-        // How many bits are there in the presence type.
-        static constexpr uint32_t N_BITS = std::numeric_limits<TYPE>::digits;
-
-        // How many variables of TYPE do we need to bit mask all presence fields.
-        static constexpr uint32_t SIZE = (N_FIELDS / N_BITS) + ((N_FIELDS % N_BITS) > 0 ? 1 : 0);
-
-        // Obtain the index of a given field in the presence array.
-        static constexpr uint32_t index(const fields& field) { return static_cast<uint32_t>(field) / N_BITS; }
-
-        // Obtain the bit mask for the given field assuming we are at the correct index in the presence array.
-        static constexpr TYPE mask(const fields& field)
-        {
-          return static_cast<uint32_t>(0x01) << (static_cast<uint32_t>(field) % N_BITS);
-        }
-      };
-
-      // Create an array in which the presence flags are stored.
-      typename presence::TYPE presence_[presence::SIZE] = {0};
 
       EmbeddedProto::enumeration<SettingsType> settingsType_ = static_cast<SettingsType>(0);
-      EmbeddedProto::int32 value_ = 0;
 
+      FieldNumber which_value_ = FieldNumber::NOT_SET;
+      union value
+      {
+        value() {}
+        ~value() {}
+        EmbeddedProto::enumeration<SetGrainSettingType> setGainValue_;
+        EmbeddedProto::enumeration<SetIntegralTimeSettingType> setIntegralTimeValue_;
+      };
+      value value_;
+
+      void init_value(const FieldNumber field_id)
+      {
+        if(FieldNumber::NOT_SET != which_value_)
+        {
+          // First delete the old object in the oneof.
+          clear_value();
+        }
+
+         which_value_ = field_id;
+      }
+
+      void clear_value()
+      {
+        switch(which_value_)
+        {
+          case FieldNumber::SETGAINVALUE:
+      	    value_.setGainValue_ = static_cast<SetGrainSettingType>(0);
+            break;
+          case FieldNumber::SETINTEGRALTIMEVALUE:
+      	    value_.setIntegralTimeValue_ = static_cast<SetIntegralTimeSettingType>(0);
+            break;
+          default:
+            break;
+        }
+        which_value_ = FieldNumber::NOT_SET;
+      }
+
+      ::EmbeddedProto::Error deserialize_value(const FieldNumber field_id, 
+                                    ::EmbeddedProto::ReadBufferInterface& buffer,
+                                    const ::EmbeddedProto::WireFormatter::WireType wire_type)
+      {
+        ::EmbeddedProto::Error return_value = ::EmbeddedProto::Error::NO_ERRORS;
+        
+        if(field_id != which_value_)
+        {
+          init_value(field_id);
+        }
+
+        switch(which_value_)
+        {
+          case FieldNumber::SETGAINVALUE:
+            return_value = value_.setGainValue_.deserialize_check_type(buffer, wire_type);
+            break;
+          case FieldNumber::SETINTEGRALTIMEVALUE:
+            return_value = value_.setIntegralTimeValue_.deserialize_check_type(buffer, wire_type);
+            break;
+          default:
+            break;
+        }
+
+        if(::EmbeddedProto::Error::NO_ERRORS != return_value)
+        {
+          clear_value();
+        }
+        return return_value;
+      }
+
+#ifdef MSG_TO_STRING 
+      ::EmbeddedProto::string_view to_string_value(::EmbeddedProto::string_view& str, const uint32_t indent_level, const bool first_field) const
+      {
+        ::EmbeddedProto::string_view left_chars = str;
+
+        switch(which_value_)
+        {
+          case FieldNumber::SETGAINVALUE:
+            left_chars = value_.setGainValue_.to_string(left_chars, indent_level, SETGAINVALUE_NAME, first_field);
+            break;
+          case FieldNumber::SETINTEGRALTIMEVALUE:
+            left_chars = value_.setIntegralTimeValue_.to_string(left_chars, indent_level, SETINTEGRALTIMEVALUE_NAME, first_field);
+            break;
+          default:
+            break;
+        }
+
+        return left_chars;
+      }
+
+#endif // End of MSG_TO_STRING
 };
 
 class SettingsBusResponseContent final: public ::EmbeddedProto::MessageInterface
