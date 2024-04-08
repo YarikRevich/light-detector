@@ -6,8 +6,13 @@ from dto import RetrievedDataDto
 class Visualizer:
     """Represents visualizer used to create figures from the given values."""
 
+    # Represents 'scatter' type of plot.
     SCATTER_FIGURE = "scatter"
+
+    # Represents 'bar' type of plot.
     BAR_FIGURE = "bar"
+
+    # Represents 'plot' type of plot.
     PLOT_FIGURE = "plot"
 
     # Represents a path where generated visualization will be saved.

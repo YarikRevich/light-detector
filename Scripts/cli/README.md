@@ -32,6 +32,11 @@ make install
 
 # Use cases
 
+Most of the commands given below require **baud rate**. It is important to be the exact-supported value,
+otherwise requests will be ignored(in the given examples baud rate is equal to **9600**).
+
+## Get available devices
+
 The example below shows how to retrieve a set of all available devices, which can be used to perform other operations.
 ```shell
 $ light-detector-cli get_available_devices
@@ -44,10 +49,14 @@ $ light-detector-cli get_available_devices
 ]
 ```
 
-The examples below show all the possible ways to retrieve metadata information from the board. Baud rate is important to be the exact-supported value,
-otherwise requests will be ignored.
+## Get info
 
-The next example shows how to the value of gain metadata information from the board.
+The examples below show all the possible ways to retrieve metadata information from the board. Baud rate is important to be the exact-supported value,
+otherwise requests will be ignored(in the given examples baud rate is equal to **9600**).
+
+### Gain
+
+The next example shows how to retrieve the value of gain metadata information from the board.
 ```shell
 $ light-detector-cli get_info --device="/dev/cu.usbmodem1203" --baud_rate="9600" --type="gain"
 
@@ -64,7 +73,9 @@ Available **gain** values:
 * 32 - high
 * 48 - max
 
-The next example shows how to the value of integral time metadata information from the board. 
+### Integral time
+
+The next example shows how to retrieve the value of integral time metadata information from the board. 
 ```shell
 $ light-detector-cli get_info --device="/dev/cu.usbmodem1203" --baud_rate="9600" --type="integral_time"
 
@@ -82,3 +93,94 @@ Available **integral time** values:
 * 3 - 400ms
 * 4 - 500ms
 * 5 - 600ms
+
+### Processed requests
+
+The next example shows how to retrieve the value of processed requests(amount of successful incoming requests, different from nonce) metadata information from the board.
+```shell
+$ light-detector-cli get_info --device="/dev/cu.usbmodem1203" --baud_rate="9600" --type="processed_requests"
+
+instance(RetrievedInfoDto):
+  data_type: <InfoTypeCompound.PROCESSED_REQUESTS: 'ProcessedRequests'>,
+  device_id: 1,
+  nonce: 6,
+  value: 20
+```
+
+### Device available
+
+The next example shows how to retrieve the value of device available metadata information from the board.
+```shell
+$ light-detector-cli get_info --device="/dev/cu.usbmodem1203" --baud_rate="9600" --type="device_available"
+
+instance(RetrievedInfoDto):
+  data_type: <InfoTypeCompound.DEVICE_AVAILABLE: 'DeviceAvailable'>,
+  device_id: 1,
+  nonce: 7,
+  value: 1
+```
+
+Available **device available** values:
+* 1 - device available
+* 0 - device is not available
+
+## Get data
+
+The examples below show all the possible ways to retrieve data information from the board.
+
+```shell
+$ light-detector-cli get_data --device="/dev/cu.usbmodem1203" --baud_rate="9600" --type="raw"
+
+[
+  instance(RetrievedDataDto):
+    data_type: <DataTypeCompound.RAW: 'Raw'>,
+    device_id: 1,
+    nonce: 4,
+    value: 121
+]
+```
+
+In the same way other types of data can be retrieved, all the available data types are given below:
+* raw
+* full
+* infrared
+* visible
+
+It's also possible to have a series of measurements, in order to archive that it's important to add **series** parameter.
+
+```shell
+$ light-detector-cli get_data --device="/dev/cu.usbmodem1203" --baud_rate="9600" --type="raw" --series=4
+
+[
+  instance(RetrievedDataDto):
+    data_type: <DataTypeCompound.RAW: 'Raw'>,
+    device_id: 1,
+    nonce: 26,
+    value: 51
+  instance(RetrievedDataDto):
+    data_type: <DataTypeCompound.RAW: 'Raw'>,
+    device_id: 1,
+    nonce: 27,
+    value: 80
+  instance(RetrievedDataDto):
+    data_type: <DataTypeCompound.RAW: 'Raw'>,
+    device_id: 1,
+    nonce: 28,
+    value: 97
+  instance(RetrievedDataDto):
+    data_type: <DataTypeCompound.RAW: 'Raw'>,
+    device_id: 1,
+    nonce: 29,
+    value: 41
+]
+```
+
+Having a series of measurements it becomes possible to create a diagram to more easily observe output changes. In
+order to do that it's needed to add **export**(describes a location of output diagram file) and **figure**(describes a type of the diagram) 
+parameters.
+
+```shell
+$ light-detector-cli get_data --device="/dev/cu.usbmodem1203" --baud_rate="9600" --type="raw" --series=4 --export="./output" --figure="plot"
+
+...
+```

@@ -49,7 +49,7 @@ class GetDataCommand:
         print_output(data)
         logging.info("Data has been successfully retrieved.")
 
-        if is_export_valid(export):
+        if series > 1 and is_export_valid(export):
             visualizer = Visualizer(export, data)
 
             match figure:

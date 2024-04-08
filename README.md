@@ -6,12 +6,14 @@
 
 ## General Information
 
-A driver-like application, which allows to communicate with TSL2591X light sensor with the help of CLI, based on STM32L476RG embedded system.
+A driver-like application, which allows to communicate with **TSL2591X** light sensor, based on **STM32L476RG** embedded system.
 
 Includes following features:
 * Retrieve latest sensor data(**raw**, **full**, **infrared**, **visible**)
 * Retrieve meta information from the internal board state
 * Modify settings for the light sensor.
+
+![](./Docs/Examples/high-level-design.png)
 
 ## Setup
 
@@ -19,14 +21,10 @@ All setup related operations are processed via **Makefile** placed in the root d
 
 First of all connect your board to the serial port.
 
-In order to build IOC project it's required to execute the following command. It uses **CubeMX CLI** to generate **ELF** upload file:
-```shell
-make build
-```
+In order to build **IOC** project it's required to **CubeMX** to generate **ELF** upload it with the help of
+**STM Programmer**.
 
-Built **ELF** file is intended to be used for manual upload via **STM Programmer**.
-
-If **ProtocolBuffers** files need to be regenerated it's required to execute the following command:
+> If **ProtocolBuffers** files need to be regenerated it's required to execute the following command:
 ```shell
 make generate
 ```
@@ -36,5 +34,3 @@ make generate
 ### CLI
 
 Detailed documentation can be found [here](./Scripts/cli/README.md)
-
-# Use cases
