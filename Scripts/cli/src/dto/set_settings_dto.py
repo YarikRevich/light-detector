@@ -5,8 +5,16 @@ class SettingsTypeCompound(Enum):
     """Represents settings compound used to represent result settings type."""
 
     RESET = 'Reset'
-    SET_GAIN = 'SetGain'
-    SET_INTEGRAL_TIME = 'SetIntegralTime'
+    SET_GAIN_LOW = 'SetGainLow'
+    SET_GAIN_MEDIUM = 'SetGainMedium'
+    SET_GAIN_HIGH = 'SetGainHigh'
+    SET_GAIN_MAX = 'SetGainMax'
+    SET_INTEGRAL_TIME_FIRST = 'SetIntegralTimeFirst'
+    SET_INTEGRAL_TIME_SECOND = 'SetIntegralTimeSecond'
+    SET_INTEGRAL_TIME_THIRD = 'SetIntegralTimeThird'
+    SET_INTEGRAL_TIME_FORTH = 'SetIntegralTimeForth'
+    SET_INTEGRAL_TIME_FIFTH = 'SetIntegralTimeFifth'
+    SET_INTEGRAL_TIME_SIXTH = 'SetIntegralTimeSixth'
 
 
 class SetSettingsDto:

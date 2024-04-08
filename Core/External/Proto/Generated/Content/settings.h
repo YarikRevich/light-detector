@@ -27,28 +27,16 @@ enum class SettingsType : uint32_t
 {
   SettingsNone = 0,
   Reset = 1,
-  SetGain = 2,
-  SetIntegralTime = 3
-};
-
-enum class SetGrainSettingType : uint32_t
-{
-  SetGrainSettingNone = 0,
-  Low = 1,
-  Medium = 2,
-  High = 3,
-  Max = 4
-};
-
-enum class SetIntegralTimeSettingType : uint32_t
-{
-  SetIntegralTimeSettingNone = 0,
-  First = 1,
-  Second = 2,
-  Third = 3,
-  Forth = 4,
-  Fifth = 5,
-  Sixth = 6
+  SetGainLow = 2,
+  SetGainMedium = 3,
+  SetGainHigh = 4,
+  SetGainMax = 5,
+  SetIntegralTimeFirst = 6,
+  SetIntegralTimeSecond = 7,
+  SetIntegralTimeThird = 8,
+  SetIntegralTimeForth = 9,
+  SetIntegralTimeFifth = 10,
+  SetIntegralTimeSixth = 11
 };
 
 class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
@@ -58,51 +46,11 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
     SettingsBusRequestContent(const SettingsBusRequestContent& rhs )
     {
       set_settingsType(rhs.get_settingsType());
-      if(rhs.get_which_value() != which_value_)
-      {
-        // First delete the old object in the oneof.
-        clear_value();
-      }
-
-      switch(rhs.get_which_value())
-      {
-        case FieldNumber::SETGAINVALUE:
-          set_setGainValue(rhs.get_setGainValue());
-          break;
-
-        case FieldNumber::SETINTEGRALTIMEVALUE:
-          set_setIntegralTimeValue(rhs.get_setIntegralTimeValue());
-          break;
-
-        default:
-          break;
-      }
-
     }
 
     SettingsBusRequestContent(const SettingsBusRequestContent&& rhs ) noexcept
     {
       set_settingsType(rhs.get_settingsType());
-      if(rhs.get_which_value() != which_value_)
-      {
-        // First delete the old object in the oneof.
-        clear_value();
-      }
-
-      switch(rhs.get_which_value())
-      {
-        case FieldNumber::SETGAINVALUE:
-          set_setGainValue(rhs.get_setGainValue());
-          break;
-
-        case FieldNumber::SETINTEGRALTIMEVALUE:
-          set_setIntegralTimeValue(rhs.get_setIntegralTimeValue());
-          break;
-
-        default:
-          break;
-      }
-
     }
 
     ~SettingsBusRequestContent() override = default;
@@ -110,60 +58,18 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
     enum class FieldNumber : uint32_t
     {
       NOT_SET = 0,
-      SETTINGSTYPE = 1,
-      SETGAINVALUE = 2,
-      SETINTEGRALTIMEVALUE = 3
+      SETTINGSTYPE = 1
     };
 
     SettingsBusRequestContent& operator=(const SettingsBusRequestContent& rhs)
     {
       set_settingsType(rhs.get_settingsType());
-      if(rhs.get_which_value() != which_value_)
-      {
-        // First delete the old object in the oneof.
-        clear_value();
-      }
-
-      switch(rhs.get_which_value())
-      {
-        case FieldNumber::SETGAINVALUE:
-          set_setGainValue(rhs.get_setGainValue());
-          break;
-
-        case FieldNumber::SETINTEGRALTIMEVALUE:
-          set_setIntegralTimeValue(rhs.get_setIntegralTimeValue());
-          break;
-
-        default:
-          break;
-      }
-
       return *this;
     }
 
     SettingsBusRequestContent& operator=(const SettingsBusRequestContent&& rhs) noexcept
     {
       set_settingsType(rhs.get_settingsType());
-      if(rhs.get_which_value() != which_value_)
-      {
-        // First delete the old object in the oneof.
-        clear_value();
-      }
-
-      switch(rhs.get_which_value())
-      {
-        case FieldNumber::SETGAINVALUE:
-          set_setGainValue(rhs.get_setGainValue());
-          break;
-
-        case FieldNumber::SETINTEGRALTIMEVALUE:
-          set_setIntegralTimeValue(rhs.get_setIntegralTimeValue());
-          break;
-
-        default:
-          break;
-      }
-
       return *this;
     }
 
@@ -174,72 +80,6 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
     inline const SettingsType& get_settingsType() const { return settingsType_.get(); }
     inline SettingsType settingsType() const { return settingsType_.get(); }
 
-    FieldNumber get_which_value() const { return which_value_; }
-
-    static constexpr char const* SETGAINVALUE_NAME = "setGainValue";
-    inline bool has_setGainValue() const
-    {
-      return FieldNumber::SETGAINVALUE == which_value_;
-    }
-    inline void clear_setGainValue()
-    {
-      if(FieldNumber::SETGAINVALUE == which_value_)
-      {
-        which_value_ = FieldNumber::NOT_SET;
-        value_.setGainValue_.clear();
-      }
-    }
-    inline void set_setGainValue(const SetGrainSettingType& value)
-    {
-      if(FieldNumber::SETGAINVALUE != which_value_)
-      {
-        init_value(FieldNumber::SETGAINVALUE);
-      }
-      value_.setGainValue_ = value;
-    }
-    inline void set_setGainValue(const SetGrainSettingType&& value)
-    {
-      if(FieldNumber::SETGAINVALUE != which_value_)
-      {
-        init_value(FieldNumber::SETGAINVALUE);
-      }
-      value_.setGainValue_ = value;
-    }
-    inline const SetGrainSettingType& get_setGainValue() const { return value_.setGainValue_.get(); }
-    inline SetGrainSettingType setGainValue() const { return value_.setGainValue_.get(); }
-
-    static constexpr char const* SETINTEGRALTIMEVALUE_NAME = "setIntegralTimeValue";
-    inline bool has_setIntegralTimeValue() const
-    {
-      return FieldNumber::SETINTEGRALTIMEVALUE == which_value_;
-    }
-    inline void clear_setIntegralTimeValue()
-    {
-      if(FieldNumber::SETINTEGRALTIMEVALUE == which_value_)
-      {
-        which_value_ = FieldNumber::NOT_SET;
-        value_.setIntegralTimeValue_.clear();
-      }
-    }
-    inline void set_setIntegralTimeValue(const SetIntegralTimeSettingType& value)
-    {
-      if(FieldNumber::SETINTEGRALTIMEVALUE != which_value_)
-      {
-        init_value(FieldNumber::SETINTEGRALTIMEVALUE);
-      }
-      value_.setIntegralTimeValue_ = value;
-    }
-    inline void set_setIntegralTimeValue(const SetIntegralTimeSettingType&& value)
-    {
-      if(FieldNumber::SETINTEGRALTIMEVALUE != which_value_)
-      {
-        init_value(FieldNumber::SETINTEGRALTIMEVALUE);
-      }
-      value_.setIntegralTimeValue_ = value;
-    }
-    inline const SetIntegralTimeSettingType& get_setIntegralTimeValue() const { return value_.setIntegralTimeValue_.get(); }
-    inline SetIntegralTimeSettingType setIntegralTimeValue() const { return value_.setIntegralTimeValue_.get(); }
-
 
     ::EmbeddedProto::Error serialize(::EmbeddedProto::WriteBufferInterface& buffer) const override
     {
@@ -248,26 +88,6 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
       if((static_cast<SettingsType>(0) != settingsType_.get()) && (::EmbeddedProto::Error::NO_ERRORS == return_value))
       {
         return_value = settingsType_.serialize_with_id(static_cast<uint32_t>(FieldNumber::SETTINGSTYPE), buffer, false);
-      }
-
-      switch(which_value_)
-      {
-        case FieldNumber::SETGAINVALUE:
-          if(has_setGainValue() && (::EmbeddedProto::Error::NO_ERRORS == return_value))
-          {
-            return_value = value_.setGainValue_.serialize_with_id(static_cast<uint32_t>(FieldNumber::SETGAINVALUE), buffer, true);
-          }
-          break;
-
-        case FieldNumber::SETINTEGRALTIMEVALUE:
-          if(has_setIntegralTimeValue() && (::EmbeddedProto::Error::NO_ERRORS == return_value))
-          {
-            return_value = value_.setIntegralTimeValue_.serialize_with_id(static_cast<uint32_t>(FieldNumber::SETINTEGRALTIMEVALUE), buffer, true);
-          }
-          break;
-
-        default:
-          break;
       }
 
       return return_value;
@@ -288,11 +108,6 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
         {
           case FieldNumber::SETTINGSTYPE:
             return_value = settingsType_.deserialize_check_type(buffer, wire_type);
-            break;
-
-          case FieldNumber::SETGAINVALUE:
-          case FieldNumber::SETINTEGRALTIMEVALUE:
-            return_value = deserialize_value(id_tag, buffer, wire_type);
             break;
 
           case FieldNumber::NOT_SET:
@@ -325,7 +140,6 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
     void clear() override
     {
       clear_settingsType();
-      clear_value();
 
     }
 
@@ -336,12 +150,6 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
       {
         case FieldNumber::SETTINGSTYPE:
           name = SETTINGSTYPE_NAME;
-          break;
-        case FieldNumber::SETGAINVALUE:
-          name = SETGAINVALUE_NAME;
-          break;
-        case FieldNumber::SETINTEGRALTIMEVALUE:
-          name = SETINTEGRALTIMEVALUE_NAME;
           break;
         default:
           name = "Invalid FieldNumber";
@@ -404,7 +212,6 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
       }
 
       left_chars = settingsType_.to_string(left_chars, indent_level + 2, SETTINGSTYPE_NAME, true);
-      left_chars = to_string_value(left_chars, indent_level + 2, false);
   
       if( 0 == indent_level) 
       {
@@ -431,94 +238,6 @@ class SettingsBusRequestContent final: public ::EmbeddedProto::MessageInterface
 
       EmbeddedProto::enumeration<SettingsType> settingsType_ = static_cast<SettingsType>(0);
 
-      FieldNumber which_value_ = FieldNumber::NOT_SET;
-      union value
-      {
-        value() {}
-        ~value() {}
-        EmbeddedProto::enumeration<SetGrainSettingType> setGainValue_;
-        EmbeddedProto::enumeration<SetIntegralTimeSettingType> setIntegralTimeValue_;
-      };
-      value value_;
-
-      void init_value(const FieldNumber field_id)
-      {
-        if(FieldNumber::NOT_SET != which_value_)
-        {
-          // First delete the old object in the oneof.
-          clear_value();
-        }
-
-         which_value_ = field_id;
-      }
-
-      void clear_value()
-      {
-        switch(which_value_)
-        {
-          case FieldNumber::SETGAINVALUE:
-      	    value_.setGainValue_ = static_cast<SetGrainSettingType>(0);
-            break;
-          case FieldNumber::SETINTEGRALTIMEVALUE:
-      	    value_.setIntegralTimeValue_ = static_cast<SetIntegralTimeSettingType>(0);
-            break;
-          default:
-            break;
-        }
-        which_value_ = FieldNumber::NOT_SET;
-      }
-
-      ::EmbeddedProto::Error deserialize_value(const FieldNumber field_id, 
-                                    ::EmbeddedProto::ReadBufferInterface& buffer,
-                                    const ::EmbeddedProto::WireFormatter::WireType wire_type)
-      {
-        ::EmbeddedProto::Error return_value = ::EmbeddedProto::Error::NO_ERRORS;
-        
-        if(field_id != which_value_)
-        {
-          init_value(field_id);
-        }
-
-        switch(which_value_)
-        {
-          case FieldNumber::SETGAINVALUE:
-            return_value = value_.setGainValue_.deserialize_check_type(buffer, wire_type);
-            break;
-          case FieldNumber::SETINTEGRALTIMEVALUE:
-            return_value = value_.setIntegralTimeValue_.deserialize_check_type(buffer, wire_type);
-            break;
-          default:
-            break;
-        }
-
-        if(::EmbeddedProto::Error::NO_ERRORS != return_value)
-        {
-          clear_value();
-        }
-        return return_value;
-      }
-
-#ifdef MSG_TO_STRING 
-      ::EmbeddedProto::string_view to_string_value(::EmbeddedProto::string_view& str, const uint32_t indent_level, const bool first_field) const
-      {
-        ::EmbeddedProto::string_view left_chars = str;
-
-        switch(which_value_)
-        {
-          case FieldNumber::SETGAINVALUE:
-            left_chars = value_.setGainValue_.to_string(left_chars, indent_level, SETGAINVALUE_NAME, first_field);
-            break;
-          case FieldNumber::SETINTEGRALTIMEVALUE:
-            left_chars = value_.setIntegralTimeValue_.to_string(left_chars, indent_level, SETINTEGRALTIMEVALUE_NAME, first_field);
-            break;
-          default:
-            break;
-        }
-
-        return left_chars;
-      }
-
-#endif // End of MSG_TO_STRING
 };
 
 class SettingsBusResponseContent final: public ::EmbeddedProto::MessageInterface

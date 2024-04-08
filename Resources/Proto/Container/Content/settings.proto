@@ -8,37 +8,23 @@ package light_detector;
 enum SettingsType {
     SettingsNone = 0; // Stub enum to handle serialization.
     Reset = 1;
-    SetGain = 2;
-    SetIntegralTime = 3;
-}
 
-// Represents all the available set grain value presets, which can be used with settings bus.
-enum SetGrainSettingType {
-    SetGrainSettingNone = 0; // Stub enum to handle serialization.
-    Low = 1;
-    Medium = 2;
-    High = 3;
-    Max = 4;
-}
+    SetGainLow = 2; // Represents different options for SetGain type.
+    SetGainMedium = 3;
+    SetGainHigh = 4;
+    SetGainMax = 5;
 
-// Represents all the available set integral time value presets, which can be used with settings bus.
-enum SetIntegralTimeSettingType {
-    SetIntegralTimeSettingNone = 0; // Stub enum to handle serialization.
-    First = 1;
-    Second = 2;
-    Third = 3;
-    Forth = 4;
-    Fifth = 5;
-    Sixth = 6;
+    SetIntegralTimeFirst = 6; // Represents different options for SetIntegralTime type.
+    SetIntegralTimeSecond = 7;
+    SetIntegralTimeThird = 8;
+    SetIntegralTimeForth = 9;
+    SetIntegralTimeFifth = 10;
+    SetIntegralTimeSixth = 11;
 }
 
 // Represents settings bus request content send from the client to the board.
 message SettingsBusRequestContent {
     SettingsType settingsType = 1;
-    oneof value {
-        SetGrainSettingType setGainValue = 2;
-        SetIntegralTimeSettingType setIntegralTimeValue = 3;
-    }
 }
 
 // Represents settings bus response content send to the client from the board.

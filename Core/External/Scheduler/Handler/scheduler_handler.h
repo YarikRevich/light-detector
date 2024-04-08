@@ -150,22 +150,74 @@ private:
     static int process_settings_bus_request_content_of_reset_settings_type_response();
 
     /**
-     * Attempts to process settings bus request content of set gain settings type response.
+     * Attempts to process settings bus request content of set gain low settings type response.
      *
-     * @param content - given settings bus request content.
      * @return status of the settings bus request content response processing.
      */
-    static int process_settings_bus_request_content_of_set_gain_settings_type_response(
-            const light_detector::RequestContainer& content);
+    static int process_settings_bus_request_content_of_set_gain_low_settings_type_response();
 
     /**
-     * Attempts to process settings bus request content of set integral time settings type response.
+     * Attempts to process settings bus request content of set gain medium settings type response.
      *
-     * @param content - given settings bus request content.
      * @return status of the settings bus request content response processing.
      */
-    static int process_settings_bus_request_content_of_set_integral_time_settings_type_response(
-            const light_detector::RequestContainer& content);
+    static int process_settings_bus_request_content_of_set_gain_medium_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set gain high settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_gain_high_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set gain max settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_gain_max_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set integral time first settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_integral_time_first_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set integral time second settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_integral_time_second_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set integral time third settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_integral_time_third_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set integral time forth settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_integral_time_forth_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set integral time fifth settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_integral_time_fifth_settings_type_response();
+
+    /**
+     * Attempts to process settings bus request content of set integral time sixth settings type response.
+     *
+     * @return status of the settings bus request content response processing.
+     */
+    static int process_settings_bus_request_content_of_set_integral_time_sixth_settings_type_response();
 };
 
 #endif //LIGHT_DETECTOR_SCHEDULER_HANDLER_H

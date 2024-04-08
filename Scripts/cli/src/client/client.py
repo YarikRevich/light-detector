@@ -135,55 +135,51 @@ class Client:
 
         return response_container
 
-    def send_info_bus_request_gain_info_type_content(self) -> RetrievedDataDto:
+    def send_info_bus_request_gain_info_type_content(self) -> RetrievedInfoDto:
         """Sends request to the board via info bus to retrieve info of gain type."""
 
         data = self.__send_info_bus_request_content(InfoBus.InfoType.Gain)
 
-        return RetrievedDataDto(
+        return RetrievedInfoDto(
             data.infoBus.deviceId,
             InfoTypeCompound.GAIN,
             data.infoBus.value,
             data.infoBus.nonce)
 
-    def send_info_bus_request_integral_time_info_type_content(self) -> RetrievedDataDto:
+    def send_info_bus_request_integral_time_info_type_content(self) -> RetrievedInfoDto:
         """Sends request to the board via info bus to retrieve info of integral time type."""
 
         data = self.__send_info_bus_request_content(InfoBus.InfoType.IntegralTime)
 
-        return RetrievedDataDto(
+        return RetrievedInfoDto(
             data.infoBus.deviceId,
             InfoTypeCompound.INTEGRAL_TIME,
             data.infoBus.value,
             data.infoBus.nonce)
 
-    def send_info_bus_request_processed_requests_info_type_content(self) -> RetrievedDataDto:
+    def send_info_bus_request_processed_requests_info_type_content(self) -> RetrievedInfoDto:
         """Sends request to the board via info bus to retrieve info of processed requests time type."""
 
         data = self.__send_info_bus_request_content(InfoBus.InfoType.ProcessedRequests)
 
-        return RetrievedDataDto(
+        return RetrievedInfoDto(
             data.infoBus.deviceId,
             InfoTypeCompound.PROCESSED_REQUESTS,
             data.infoBus.value,
             data.infoBus.nonce)
 
-    def send_info_bus_request_device_available_info_type_content(self) -> RetrievedDataDto:
+    def send_info_bus_request_device_available_info_type_content(self) -> RetrievedInfoDto:
         """Sends request to the board via info bus to retrieve info of device available time type."""
 
         data = self.__send_info_bus_request_content(InfoBus.InfoType.DeviceAvailable)
 
-        return RetrievedDataDto(
+        return RetrievedInfoDto(
             data.infoBus.deviceId,
             InfoTypeCompound.DEVICE_AVAILABLE,
             data.infoBus.value,
             data.infoBus.nonce)
 
-    def __send_settings_bus_request_content(
-            self,
-            type: SettingsBus.SettingsType,
-            value: Union[None, Union[SettingsBus.SetGrainSettingType, SettingsBus.SetIntegralTimeSettingType]] = None) -> (
-            Response.ResponseContainer):
+    def __send_settings_bus_request_content(self, type: SettingsBus.SettingsType) -> Response.ResponseContainer:
         """Sends request to the board via settings bus to set settings."""
 
         request_container = Request.RequestContainer()
@@ -191,19 +187,10 @@ class Client:
         settings_bus_request = SettingsBus.SettingsBusRequestContent()
         settings_bus_request.settingsType = type
 
-        match type:
-            case SettingsBus.SettingsType.SetGain:
-                settings_bus_request.setGainValue = value
-
-            case SettingsBus.SettingsType.SetIntegralTime:
-                settings_bus_request.setIntegralTimeValue = value
-
         request_container.settingsBus.CopyFrom(settings_bus_request)
 
         data_length = request_container.ByteSize().to_bytes(1, "big")
         data = request_container.SerializeToString()
-
-        print(request_container)
 
         self.connection.write(data_length)
         self.connection.write(data)
@@ -234,11 +221,11 @@ class Client:
         """Sends request to the board via settings bus to set setting of set gain low type."""
 
         data = self.__send_settings_bus_request_content(
-            SettingsBus.SettingsType.SetGain, SettingsBus.SetGrainSettingType.Low)
+            SettingsBus.SettingsType.SetGainLow)
 
         return SetSettingsDto(
             data.settingsBus.deviceId,
-            SettingsTypeCompound.SET_GAIN,
+            SettingsTypeCompound.SET_GAIN_LOW,
             data.settingsBus.result,
             data.settingsBus.nonce)
 
@@ -246,11 +233,11 @@ class Client:
         """Sends request to the board via settings bus to set setting of set gain medium type."""
 
         data = self.__send_settings_bus_request_content(
-            SettingsBus.SettingsType.SetGain, SettingsBus.SetGrainSettingType.Medium)
+            SettingsBus.SettingsType.SetGainMedium)
 
         return SetSettingsDto(
             data.settingsBus.deviceId,
-            SettingsTypeCompound.SET_GAIN,
+            SettingsTypeCompound.SET_GAIN_MEDIUM,
             data.settingsBus.result,
             data.settingsBus.nonce)
 
@@ -258,11 +245,11 @@ class Client:
         """Sends request to the board via settings bus to set setting of set gain high type."""
 
         data = self.__send_settings_bus_request_content(
-            SettingsBus.SettingsType.SetGain, SettingsBus.SetGrainSettingType.High)
+            SettingsBus.SettingsType.SetGainHigh)
 
         return SetSettingsDto(
             data.settingsBus.deviceId,
-            SettingsTypeCompound.SET_GAIN,
+            SettingsTypeCompound.SET_GAIN_HIGH,
             data.settingsBus.result,
             data.settingsBus.nonce)
 
@@ -270,11 +257,11 @@ class Client:
         """Sends request to the board via settings bus to set setting of set gain max type."""
 
         data = self.__send_settings_bus_request_content(
-            SettingsBus.SettingsType.SetGain, SettingsBus.SetGrainSettingType.Max)
+            SettingsBus.SettingsType.SetGainMax)
 
         return SetSettingsDto(
             data.settingsBus.deviceId,
-            SettingsTypeCompound.SET_GAIN,
+            SettingsTypeCompound.SET_GAIN_MAX,
             data.settingsBus.result,
             data.settingsBus.nonce)
 
@@ -282,11 +269,11 @@ class Client:
         """Sends request to the board via settings bus to set setting of set integral time first type."""
 
         data = self.__send_settings_bus_request_content(
-            SettingsBus.SettingsType.SetIntegralTime, SettingsBus.SetIntegralTimeSettingType.First)
+            SettingsBus.SettingsType.SetIntegralTimeFirst)
 
         return SetSettingsDto(
             data.settingsBus.deviceId,
-            SettingsTypeCompound.SET_INTEGRAL_TIME,
+            SettingsTypeCompound.SET_INTEGRAL_TIME_FIRST,
             data.settingsBus.result,
             data.settingsBus.nonce)
 
@@ -294,11 +281,11 @@ class Client:
         """Sends request to the board via settings bus to set setting of set integral time second type."""
 
         data = self.__send_settings_bus_request_content(
-            SettingsBus.SettingsType.SetIntegralTime, SettingsBus.SetIntegralTimeSettingType.Second)
+            SettingsBus.SettingsType.SetIntegralTimeSecond)
 
         return SetSettingsDto(
             data.settingsBus.deviceId,
-            SettingsTypeCompound.SET_INTEGRAL_TIME,
+            SettingsTypeCompound.SET_INTEGRAL_TIME_SECOND,
             data.settingsBus.result,
             data.settingsBus.nonce)
 
@@ -306,11 +293,11 @@ class Client:
         """Sends request to the board via settings bus to set setting of set integral time third type."""
 
         data = self.__send_settings_bus_request_content(
-            SettingsBus.SettingsType.SetIntegralTime, SettingsBus.SetIntegralTimeSettingType.Third)
+            SettingsBus.SettingsType.SetIntegralTimeThird)
 
         return SetSettingsDto(
             data.settingsBus.deviceId,
-            SettingsTypeCompound.SET_INTEGRAL_TIME,
+            SettingsTypeCompound.SET_INTEGRAL_TIME_THIRD,
             data.settingsBus.result,
             data.settingsBus.nonce)
 
@@ -318,11 +305,11 @@ class Client:
         """Sends request to the board via settings bus to set setting of set integral time forth type."""
 
         data = self.__send_settings_bus_request_content(
-            SettingsBus.SettingsType.SetIntegralTime, SettingsBus.SetIntegralTimeSettingType.Forth)
+            SettingsBus.SettingsType.SetIntegralTimeForth)
 
         return SetSettingsDto(
             data.settingsBus.deviceId,
-            SettingsTypeCompound.SET_INTEGRAL_TIME,
+            SettingsTypeCompound.SET_INTEGRAL_TIME_FORTH,
             data.settingsBus.result,
             data.settingsBus.nonce)
 
@@ -330,11 +317,11 @@ class Client:
         """Sends request to the board via settings bus to set setting of set integral time fifth type."""
 
         data = self.__send_settings_bus_request_content(
-            SettingsBus.SettingsType.SetIntegralTime, SettingsBus.SetIntegralTimeSettingType.Fifth)
+            SettingsBus.SettingsType.SetIntegralTimeFifth)
 
         return SetSettingsDto(
             data.settingsBus.deviceId,
-            SettingsTypeCompound.SET_INTEGRAL_TIME,
+            SettingsTypeCompound.SET_INTEGRAL_TIME_FIFTH,
             data.settingsBus.result,
             data.settingsBus.nonce)
 
@@ -342,11 +329,11 @@ class Client:
         """Sends request to the board via settings bus to set setting of set integral time sixth type."""
 
         data = self.__send_settings_bus_request_content(
-            SettingsBus.SettingsType.SetIntegralTime, SettingsBus.SetIntegralTimeSettingType.Sixth)
+            SettingsBus.SettingsType.SetIntegralTimeSixth)
 
         return SetSettingsDto(
             data.settingsBus.deviceId,
-            SettingsTypeCompound.SET_INTEGRAL_TIME,
+            SettingsTypeCompound.SET_INTEGRAL_TIME_SIXTH,
             data.settingsBus.result,
             data.settingsBus.nonce)
 

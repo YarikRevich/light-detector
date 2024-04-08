@@ -72,60 +72,68 @@ bool ProtoHelper::is_settings_bus_request_content_of_reset_settings_type(
 
 bool ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type(
         const light_detector::SettingsBusRequestContent &content) {
-    return content.settingsType() == light_detector::SettingsType::SetGain;
+    return is_settings_bus_request_content_of_set_gain_settings_type_of_low_type(content) ||
+            is_settings_bus_request_content_of_set_gain_settings_type_of_medium_type(content) ||
+            is_settings_bus_request_content_of_set_gain_settings_type_of_high_type(content) ||
+            is_settings_bus_request_content_of_set_gain_settings_type_of_max_type(content);
 }
 
 bool ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type_of_low_type(
         const light_detector::SettingsBusRequestContent &content) {
-    return content.get_setGainValue() == light_detector::SetGrainSettingType::Low;
+    return content.settingsType() == light_detector::SettingsType::SetGainLow;
 }
 
 bool ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type_of_medium_type(
         const light_detector::SettingsBusRequestContent &content) {
-    return content.get_setGainValue() == light_detector::SetGrainSettingType::Medium;
+    return content.settingsType() == light_detector::SettingsType::SetGainMedium;
 }
 
 bool ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type_of_high_type(
         const light_detector::SettingsBusRequestContent &content) {
-    return content.get_setGainValue() == light_detector::SetGrainSettingType::High;
+    return content.settingsType() == light_detector::SettingsType::SetGainHigh;
 }
 
 bool ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type_of_max_type(
         const light_detector::SettingsBusRequestContent &content) {
-    return content.get_setGainValue() == light_detector::SetGrainSettingType::Max;
+    return content.settingsType() == light_detector::SettingsType::SetGainMax;
 }
 
 bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type(
         const light_detector::SettingsBusRequestContent &content) {
-    return content.settingsType() == light_detector::SettingsType::SetIntegralTime;
+    return ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_first_type(content) ||
+            ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_second_type(content) ||
+            ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_third_type(content) ||
+            ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_forth_type(content) ||
+            ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_fifth_type(content) ||
+            ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_sixth_type(content);
 }
 
 bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_first_type(
         const light_detector::SettingsBusRequestContent &content) {
-    return content.get_setIntegralTimeValue() == light_detector::SetIntegralTimeSettingType::First;
+    return content.settingsType() == light_detector::SettingsType::SetIntegralTimeFirst;
 }
 
 bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_second_type(
         const light_detector::SettingsBusRequestContent &content) {
-    return content.get_setIntegralTimeValue() == light_detector::SetIntegralTimeSettingType::Second;
+    return content.settingsType() == light_detector::SettingsType::SetIntegralTimeSecond;
 }
 
 bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_third_type(
         const light_detector::SettingsBusRequestContent &content) {
-    return content.get_setIntegralTimeValue() == light_detector::SetIntegralTimeSettingType::Third;
+    return content.settingsType() == light_detector::SettingsType::SetIntegralTimeThird;
 }
 
 bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_forth_type(
         const light_detector::SettingsBusRequestContent &content) {
-    return content.get_setIntegralTimeValue() == light_detector::SetIntegralTimeSettingType::Forth;
+    return content.settingsType() == light_detector::SettingsType::SetIntegralTimeForth;
 }
 
 bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_fifth_type(
         const light_detector::SettingsBusRequestContent &content) {
-    return content.get_setIntegralTimeValue() == light_detector::SetIntegralTimeSettingType::Fifth;
+    return content.settingsType() == light_detector::SettingsType::SetIntegralTimeFifth;
 }
 
 bool ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_sixth_type(
         const light_detector::SettingsBusRequestContent &content) {
-    return content.get_setIntegralTimeValue() == light_detector::SetIntegralTimeSettingType::Sixth;
+    return content.settingsType() == light_detector::SettingsType::SetIntegralTimeSixth;
 }

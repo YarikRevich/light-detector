@@ -17,6 +17,8 @@ Includes following features:
 
 All setup related operations are processed via **Makefile** placed in the root directory.
 
+First of all connect your board to the serial port.
+
 In order to build IOC project it's required to execute the following command. It uses **CubeMX CLI** to generate **ELF** upload file:
 ```shell
 make build

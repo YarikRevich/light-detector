@@ -31,7 +31,8 @@ class BaseCommand:
     def get_info(device: str, baud_rate: int, type: str) -> None:
         """
         Returns selected metadata info retrieved from the board.
-        The available info types are 'gain', 'integral_time', 'processed_requests'
+        The available info types are 'gain'('0'(low), '16'(medium), '32'(high), '48'(max)),
+        'integral_time'('0'(100ms), '1'(200ms), '2'(300ms), '3'(400ms), '4'(500ms), '5'(600ms)), 'processed_requests'
         """
 
         GetInfoCommand.handle(device, baud_rate, type)

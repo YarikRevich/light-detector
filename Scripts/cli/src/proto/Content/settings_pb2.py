@@ -14,21 +14,17 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16\x43ontent/settings.proto\x12\x0elight_detector\"\xe1\x01\n\x19SettingsBusRequestContent\x12\x32\n\x0csettingsType\x18\x01 \x01(\x0e\x32\x1c.light_detector.SettingsType\x12;\n\x0csetGainValue\x18\x02 \x01(\x0e\x32#.light_detector.SetGrainSettingTypeH\x00\x12J\n\x14setIntegralTimeValue\x18\x03 \x01(\x0e\x32*.light_detector.SetIntegralTimeSettingTypeH\x00\x42\x07\n\x05value\"\x81\x01\n\x1aSettingsBusResponseContent\x12\x10\n\x08\x64\x65viceId\x18\x01 \x01(\r\x12\x32\n\x0csettingsType\x18\x02 \x01(\x0e\x32\x1c.light_detector.SettingsType\x12\x0e\n\x06result\x18\x03 \x01(\x08\x12\r\n\x05nonce\x18\x04 \x01(\r*M\n\x0cSettingsType\x12\x10\n\x0cSettingsNone\x10\x00\x12\t\n\x05Reset\x10\x01\x12\x0b\n\x07SetGain\x10\x02\x12\x13\n\x0fSetIntegralTime\x10\x03*V\n\x13SetGrainSettingType\x12\x17\n\x13SetGrainSettingNone\x10\x00\x12\x07\n\x03Low\x10\x01\x12\n\n\x06Medium\x10\x02\x12\x08\n\x04High\x10\x03\x12\x07\n\x03Max\x10\x04*\x7f\n\x1aSetIntegralTimeSettingType\x12\x1e\n\x1aSetIntegralTimeSettingNone\x10\x00\x12\t\n\x05\x46irst\x10\x01\x12\n\n\x06Second\x10\x02\x12\t\n\x05Third\x10\x03\x12\t\n\x05\x46orth\x10\x04\x12\t\n\x05\x46ifth\x10\x05\x12\t\n\x05Sixth\x10\x06\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x16\x43ontent/settings.proto\x12\x0elight_detector\"O\n\x19SettingsBusRequestContent\x12\x32\n\x0csettingsType\x18\x01 \x01(\x0e\x32\x1c.light_detector.SettingsType\"\x81\x01\n\x1aSettingsBusResponseContent\x12\x10\n\x08\x64\x65viceId\x18\x01 \x01(\r\x12\x32\n\x0csettingsType\x18\x02 \x01(\x0e\x32\x1c.light_detector.SettingsType\x12\x0e\n\x06result\x18\x03 \x01(\x08\x12\r\n\x05nonce\x18\x04 \x01(\r*\x8c\x02\n\x0cSettingsType\x12\x10\n\x0cSettingsNone\x10\x00\x12\t\n\x05Reset\x10\x01\x12\x0e\n\nSetGainLow\x10\x02\x12\x11\n\rSetGainMedium\x10\x03\x12\x0f\n\x0bSetGainHigh\x10\x04\x12\x0e\n\nSetGainMax\x10\x05\x12\x18\n\x14SetIntegralTimeFirst\x10\x06\x12\x19\n\x15SetIntegralTimeSecond\x10\x07\x12\x18\n\x14SetIntegralTimeThird\x10\x08\x12\x18\n\x14SetIntegralTimeForth\x10\t\x12\x18\n\x14SetIntegralTimeFifth\x10\n\x12\x18\n\x14SetIntegralTimeSixth\x10\x0b\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'Content.settings_pb2', _globals)
 if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
-  _globals['_SETTINGSTYPE']._serialized_start=402
-  _globals['_SETTINGSTYPE']._serialized_end=479
-  _globals['_SETGRAINSETTINGTYPE']._serialized_start=481
-  _globals['_SETGRAINSETTINGTYPE']._serialized_end=567
-  _globals['_SETINTEGRALTIMESETTINGTYPE']._serialized_start=569
-  _globals['_SETINTEGRALTIMESETTINGTYPE']._serialized_end=696
-  _globals['_SETTINGSBUSREQUESTCONTENT']._serialized_start=43
-  _globals['_SETTINGSBUSREQUESTCONTENT']._serialized_end=268
-  _globals['_SETTINGSBUSRESPONSECONTENT']._serialized_start=271
-  _globals['_SETTINGSBUSRESPONSECONTENT']._serialized_end=400
+  _globals['_SETTINGSTYPE']._serialized_start=256
+  _globals['_SETTINGSTYPE']._serialized_end=524
+  _globals['_SETTINGSBUSREQUESTCONTENT']._serialized_start=42
+  _globals['_SETTINGSBUSREQUESTCONTENT']._serialized_end=121
+  _globals['_SETTINGSBUSRESPONSECONTENT']._serialized_start=124
+  _globals['_SETTINGSBUSRESPONSECONTENT']._serialized_end=253
 # @@protoc_insertion_point(module_scope)
