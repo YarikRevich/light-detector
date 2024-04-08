@@ -4,16 +4,37 @@ from enum import Enum
 class SettingsTypeCompound(Enum):
     """Represents settings compound used to represent result settings type."""
 
+    # Represents 'reset' setting type.
     RESET = 'Reset'
+
+    # Represents 'set_gain' setting type with 'low' value.
     SET_GAIN_LOW = 'SetGainLow'
+
+    # Represents 'set_gain' setting type with 'medium' value.
     SET_GAIN_MEDIUM = 'SetGainMedium'
+
+    # Represents 'set_gain' setting type with 'high' value.
     SET_GAIN_HIGH = 'SetGainHigh'
+
+    # Represents 'set_gain' setting type with 'max' value.
     SET_GAIN_MAX = 'SetGainMax'
+
+    # Represents 'set_integral_time' setting type with 'first' value.
     SET_INTEGRAL_TIME_FIRST = 'SetIntegralTimeFirst'
+
+    # Represents 'set_integral_time' setting type with 'second' value.
     SET_INTEGRAL_TIME_SECOND = 'SetIntegralTimeSecond'
+
+    # Represents 'set_integral_time' setting type with 'third' value.
     SET_INTEGRAL_TIME_THIRD = 'SetIntegralTimeThird'
+
+    # Represents 'set_integral_time' setting type with 'forth' value.
     SET_INTEGRAL_TIME_FORTH = 'SetIntegralTimeForth'
+
+    # Represents 'set_integral_time' setting type with 'fifth' value.
     SET_INTEGRAL_TIME_FIFTH = 'SetIntegralTimeFifth'
+
+    # Represents 'set_integral_time' setting type with 'sixth' value.
     SET_INTEGRAL_TIME_SIXTH = 'SetIntegralTimeSixth'
 
 

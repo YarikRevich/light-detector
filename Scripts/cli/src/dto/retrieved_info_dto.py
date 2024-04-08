@@ -4,9 +4,16 @@ from enum import Enum
 class InfoTypeCompound(Enum):
     """Represents info compound used to represent result info type."""
 
+    # Represents 'gain' info type.
     GAIN = 'Gain'
+
+    # Represents 'integral_time' info type.
     INTEGRAL_TIME = 'IntegralTime'
+
+    # Represents 'processed_requests' info type.
     PROCESSED_REQUESTS = 'ProcessedRequests'
+
+    # Represents 'device_available' info type.
     DEVICE_AVAILABLE = 'DeviceAvailable'
 
 

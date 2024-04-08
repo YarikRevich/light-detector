@@ -4,9 +4,16 @@ from enum import Enum
 class DataTypeCompound(Enum):
     """Represents data compound used to represent result data type."""
 
+    # Represents 'raw' data type.
     RAW = 'Raw'
+
+    # Represents 'full' data type.
     FULL = 'Full'
+
+    # Represents 'infrared' data type.
     INFRARED = 'Infrared'
+
+    # Represents 'visible' data type.
     VISIBLE = 'Visible'
 
 
