@@ -182,7 +182,7 @@ class Client:
     def __send_settings_bus_request_content(
             self,
             type: SettingsBus.SettingsType,
-            value: Union[None, SettingsTypeCompound] = None) -> (
+            value: Union[None, Union[SettingsBus.SetGrainSettingType, SettingsBus.SetIntegralTimeSettingType]] = None) -> (
             Response.ResponseContainer):
         """Sends request to the board via settings bus to set settings."""
 
@@ -191,17 +191,19 @@ class Client:
         settings_bus_request = SettingsBus.SettingsBusRequestContent()
         settings_bus_request.settingsType = type
 
-        match SettingsTypeCompound:
-            case SettingsTypeCompound.SET_GAIN:
+        match type:
+            case SettingsBus.SettingsType.SetGain:
                 settings_bus_request.setGainValue = value
 
-            case SettingsTypeCompound.SET_INTEGRAL_TIME:
+            case SettingsBus.SettingsType.SetIntegralTime:
                 settings_bus_request.setIntegralTimeValue = value
 
         request_container.settingsBus.CopyFrom(settings_bus_request)
 
         data_length = request_container.ByteSize().to_bytes(1, "big")
         data = request_container.SerializeToString()
+
+        print(request_container)
 
         self.connection.write(data_length)
         self.connection.write(data)
@@ -340,7 +342,7 @@ class Client:
         """Sends request to the board via settings bus to set setting of set integral time sixth type."""
 
         data = self.__send_settings_bus_request_content(
-            SettingsBus.SettingsType.SetIntegralTime, SettingsTypeCompound.SET_INTEGRAL_TIME)
+            SettingsBus.SettingsType.SetIntegralTime, SettingsBus.SetIntegralTimeSettingType.Sixth)
 
         return SetSettingsDto(
             data.settingsBus.deviceId,

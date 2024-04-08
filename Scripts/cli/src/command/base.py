@@ -37,7 +37,7 @@ class BaseCommand:
         GetInfoCommand.handle(device, baud_rate, type)
 
     @staticmethod
-    def set_settings(device: str, baud_rate: int, type: str, value: Optional[str]) -> None:
+    def set_settings(device: str, baud_rate: int, type: str, value: Optional[str] = None) -> None:
         """
         Sets given settings to the board.
         The available settings types are 'reset', 'set_gain'(with values 'low', 'medium', 'high', 'max'),

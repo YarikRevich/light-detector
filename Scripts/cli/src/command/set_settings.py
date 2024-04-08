@@ -50,7 +50,7 @@ class SetSettingsCommand:
     SET_INTEGRAL_TIME_SIXTH_VALUE_TYPE: str = "sixth"
 
     @staticmethod
-    def handle(device: str, baud_rate: int, type: str, value: Optional[str]) -> None:
+    def handle(device: str, baud_rate: int, type: str, value: Optional[str] = None) -> None:
         """Handles the execution of command wrapper."""
 
         if not is_device_available(device):
@@ -123,7 +123,7 @@ class SetSettingsCommand:
         """Processes request to set 'reset' setting to the device."""
 
         with Client(device, baud_rate) as client:
-            return client.send_info_bus_request_gain_info_type_content()
+            return client.send_settings_bus_request_reset_settings_type_content()
 
     @staticmethod
     def process_set_gain_low_settings(device: str, baud_rate: int) -> SetSettingsDto:

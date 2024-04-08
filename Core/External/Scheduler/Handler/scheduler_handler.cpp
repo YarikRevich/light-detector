@@ -412,6 +412,8 @@ int SchedulerHandler::process_settings_bus_request_content_of_set_gain_settings_
         } else if (ProtoHelper::is_settings_bus_request_content_of_set_gain_settings_type_of_max_type(
                 content.settingsBus())) {
             TSL2591X::set_gain(MAX_AGAIN);
+        } else {
+            return EXIT_FAILURE;
         }
 
         settings_bus_response_content.set_result(true);
@@ -457,6 +459,8 @@ int SchedulerHandler::process_settings_bus_request_content_of_set_integral_time_
         } else if (ProtoHelper::is_settings_bus_request_content_of_set_integral_time_settings_type_of_sixth_type(
                 content.settingsBus())) {
             TSL2591X::set_integral_time(ATIME_600MS);
+        } else {
+            return EXIT_FAILURE;
         }
 
         settings_bus_response_content.set_result(true);
