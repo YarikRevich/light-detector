@@ -37,16 +37,16 @@ void Indicator::toggle_action_failure() {
 };
 
 void Indicator::toggle_invalid_request() {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 2; i++) {
         HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-        HAL_Delay(500);
+        HAL_Delay(400);
     }
 
     HAL_Delay(1000);
 }
 
 void Indicator::toggle_invalid_response() {
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 2; i++) {
         HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
         HAL_Delay(900);
     }

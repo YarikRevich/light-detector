@@ -1,52 +1,48 @@
 #include "response_buffer.h"
 
-template<uint32_t BUFFER_SIZE>
-ResponseBuffer<BUFFER_SIZE>::ResponseBuffer() : bytes_used(0), bytes{0} {
+ResponseBuffer::ResponseBuffer(uint32_t size) : index(0) {
+    set_max_size(size);
 }
 
-template<uint32_t BUFFER_SIZE>
-uint8_t *ResponseBuffer<BUFFER_SIZE>::get_raw_buffer() {
-    return bytes[0];
+uint8_t *ResponseBuffer::get_raw_buffer() {
+    return this->bytes;
 }
 
-template<uint32_t BUFFER_SIZE>
-void ResponseBuffer<BUFFER_SIZE>::clear() {
-    bytes_used = 0;
+void ResponseBuffer::clear() {
+    this->index = 0;
 }
 
-template<uint32_t BUFFER_SIZE>
-uint32_t ResponseBuffer<BUFFER_SIZE>::get_size() const {
-    return bytes_used;
+uint32_t ResponseBuffer::get_size() const {
+    return this->index;
 }
 
-template<uint32_t BUFFER_SIZE>
-uint32_t ResponseBuffer<BUFFER_SIZE>::get_max_size() const {
-    return BUFFER_SIZE;
+uint32_t ResponseBuffer::get_max_size() const {
+    return this->size;
 }
 
-template<uint32_t BUFFER_SIZE>
-uint32_t ResponseBuffer<BUFFER_SIZE>::get_available_size() const {
-    return -bytes_used;
+void ResponseBuffer::set_max_size(uint32_t value) {
+    this->size = value;
+    this->bytes = (uint8_t *) malloc(sizeof(uint8_t) * value);
 }
 
-template<uint32_t BUFFER_SIZE>
-bool ResponseBuffer<BUFFER_SIZE>::push(const uint8_t byte) {
-    bool result = BUFFER_SIZE > bytes_used;
+uint32_t ResponseBuffer::get_available_size() const {
+    return -this->index;
+}
+
+bool ResponseBuffer::push(const uint8_t byte) {
+    bool result = this->size > this->index;
     if (result) {
-        (*bytes[bytes_used]) = byte;
-        ++bytes_used;
+        this->bytes[this->index] = byte;
+        ++this->index;
     }
     return result;
 }
 
-template<uint32_t BUFFER_SIZE>
-bool ResponseBuffer<BUFFER_SIZE>::push(const uint8_t *src, const uint32_t length) {
-    bool result = BUFFER_SIZE >= (bytes_used + length);
+bool ResponseBuffer::push(const uint8_t *src, const uint32_t length) {
+    bool result = this->size >= (this->index + length);
     if (result) {
-        memcpy(bytes + bytes_used, src, length);
-        bytes_used += length;
+        memcpy(this->bytes + this->index, src, length);
+        this->index += length;
     }
     return result;
 }
-
-template class ResponseBuffer<DEFAULT_RESPONSE_BUFFER_SIZE>;

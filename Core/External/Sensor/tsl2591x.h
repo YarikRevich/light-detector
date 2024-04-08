@@ -79,13 +79,6 @@ public:
     static bool is_available();
 
     /**
-     * Checks if the device has already been configured.
-     *
-     * @return result of the check.
-     */
-    static bool is_configured();
-
-    /**
      * Retrieves device id of the sensor.
      *
      * @return read device id.
@@ -93,17 +86,7 @@ public:
     static bool get_device_id();
 
     /**
-     * Enables the sensor.
-     */
-    static void enable();
-
-    /**
-     * Disables the sensor.
-     */
-    static void disable();
-
-    /**
-     * Resets light sensor to the default state.
+     * Resets light sensor to the default state, initializing device with default settings.
      */
     static void reset();
 
@@ -119,7 +102,7 @@ public:
      *
      * @return read full data.
      */
-    static uint32_t read_full();
+    static uint16_t read_full();
 
     /**
      * Reads infrared data from the sensor.
@@ -133,7 +116,7 @@ public:
      *
      * @return read visible data.
      */
-    static uint32_t read_visible();
+    static uint16_t read_visible();
 
     /**
      * Sets raw interruption threshold.
@@ -159,17 +142,36 @@ public:
     static uint8_t get_integral_time();
 
     /**
+    * Sets integral time option to the sensor.
+    *
+    * @param src - given value to be set.
+    */
+    static void set_integral_time(uint8_t src);
+
+    /**
     * Retrieves the value of gain option from the sensor.
     *
     * @return retrieved value.
     */
     static uint8_t get_gain();
 
+    /**
+     * Sets the value of gain option to the sensor.
+     *
+     * @param src - given value to be set.
+     */
+    static void set_gain(uint8_t src);
+
 private:
     /**
-     * Indicated that the device has already been initialized.
+     * Enables the sensor.
      */
-    static bool initialized;
+    static void enable();
+
+    /**
+     * Disables the sensor.
+     */
+    static void disable();
 
     /**
     * Reads value from the zero channel.
@@ -184,20 +186,6 @@ private:
      * @return read value.
      */
     static uint16_t read_channel1();
-
-    /**
-     * Sets integral time option to the sensor.
-     *
-     * @param src - given value to be set.
-     */
-    static void set_integral_time(uint8_t src);
-
-    /**
-     * Sets the value of gain option to the sensor.
-     *
-     * @param src - given value to be set.
-     */
-    static void set_gain(uint8_t src);
 
     /**
      * Reads combined command by bytes using I2C bone.

@@ -1,36 +1,39 @@
 #include "request_buffer.h"
 
-template<uint32_t BUFFER_SIZE>
-RequestBuffer<BUFFER_SIZE>::RequestBuffer() : index(0), size(0), bytes{0} {
+RequestBuffer::RequestBuffer() : index(0), size(0), bytes{nullptr} {
 }
 
-template<uint32_t BUFFER_SIZE>
-uint8_t * RequestBuffer<BUFFER_SIZE>::get_raw_buffer() {
-    return this->bytes[0];
+void RequestBuffer::set_raw_buffer(uint8_t* src) {
+    this->bytes = src;
+};
+
+void RequestBuffer::clear() {
+    this->index = 0;
 }
 
-template<uint32_t BUFFER_SIZE>
-uint32_t RequestBuffer<BUFFER_SIZE>::get_size() const {
+uint32_t RequestBuffer::get_size() const {
     return index;
 }
 
-template<uint32_t BUFFER_SIZE>
-uint32_t RequestBuffer<BUFFER_SIZE>::get_max_size() const {
+uint32_t RequestBuffer::get_max_size() const {
     return size;
 }
 
-template<uint32_t BUFFER_SIZE>
-bool RequestBuffer<BUFFER_SIZE>::peek(uint8_t &byte) const {
+void RequestBuffer::set_max_size(uint32_t value) {
+    this->size = value;
+}
+
+bool RequestBuffer::peek(uint8_t &byte) const {
     bool result = this->index < this->size;
     if (result) {
-        byte = *this->bytes[this->index];
+        byte = this->bytes[this->index];
     }
 
     return result;
 }
 
-template<uint32_t BUFFER_SIZE>
-bool RequestBuffer<BUFFER_SIZE>::advance() {
+
+bool RequestBuffer::advance() {
     const bool result = this->index < this->size;
     if (result) {
         ++this->index;
@@ -38,8 +41,7 @@ bool RequestBuffer<BUFFER_SIZE>::advance() {
     return result;
 }
 
-template<uint32_t BUFFER_SIZE>
-bool RequestBuffer<BUFFER_SIZE>::advance(const uint32_t src) {
+bool RequestBuffer::advance(const uint32_t src) {
     this->index += src;
     const bool result = this->index < this->size;
     if (result) {
@@ -49,15 +51,12 @@ bool RequestBuffer<BUFFER_SIZE>::advance(const uint32_t src) {
     return result;
 }
 
-template<uint32_t BUFFER_SIZE>
-bool RequestBuffer<BUFFER_SIZE>::pop(uint8_t &byte) {
+bool RequestBuffer::pop(uint8_t &byte) {
     bool result = this->index < this->size;
     if (result) {
-        byte = *this->bytes[this->index];
+        byte = this->bytes[this->index];
         ++this->index;
     }
 
     return result;
 }
-
-template class RequestBuffer<DEFAULT_REQUEST_BUFFER_SIZE>;

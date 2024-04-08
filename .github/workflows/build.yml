@@ -11,4 +11,4 @@ jobs:
         - uses: xanderhendriks/action-build-stm32cubeide@v10.0
           with:
             project-path: '.'
-            project-target: './Debug'
+            project-target: '.'

@@ -13,11 +13,30 @@
 class State {
 public:
     /**
+     * Checks if the device is configured.
+     *
+     * @return result of the check.
+     */
+    static bool is_device_configured();
+
+    /**
+     * Sets device configured mode with the given value.
+     *
+     * @param value - value of the configure mode.
+     */
+    static void set_device_configured(bool value);
+
+    /**
      * Retrieves amount of processed events.
      *
      * @return amount of processed events.
      */
-    static int get_amount_of_processed_requests();
+    static int get_processed_requests();
+
+    /**
+     * Increases amount of processed events.
+     */
+    static void increase_processed_requests();
 
     /**
      * Allocates new response nonce.
@@ -38,20 +57,25 @@ public:
      *
      * @return retrieved task sequence.
      */
-    static Sequence<std::function<int()>>& get_task_sequence();
+    static Sequence<std::function<int()>>* get_task_sequence();
 
     /**
      * Retrieves request container sequence.
      *
      * @return retrieved request container sequence.
      */
-    static Sequence<light_detector::RequestContainer>& get_request_container_sequence();
+    static Sequence<light_detector::RequestContainer>* get_request_container_sequence();
 
 private:
     /**
+     * Represents device configured mode.
+     */
+    static bool device_configured;
+
+    /**
      * Represents amount of processed incoming requests.
      */
-    static int amount_of_processed_requests;
+    static int processed_requests;
 
     /**
      * Represents current(latest) response nonce.

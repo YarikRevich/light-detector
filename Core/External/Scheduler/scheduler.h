@@ -12,7 +12,7 @@
 class Scheduler {
 public:
     /**
-     * Schedules external timer tick action.
+     * Schedules external loop tick action.
      */
     static void schedule_tick();
 
@@ -20,6 +20,11 @@ public:
      * Schedules external button status check action.
      */
     static void schedule_status_check();
+
+    /**
+     * Schedules device configuration action.
+     */
+    static void schedule_configuration();
 };
 
 #endif //LIGHT_DETECTOR_SCHEDULER_H

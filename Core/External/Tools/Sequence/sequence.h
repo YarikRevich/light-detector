@@ -35,11 +35,19 @@ public:
     void traverse_with_skip(std::function<int(T)> callback);
 
     /**
+     * Iterates over all available content and removes it from the sequence. If error occurs, then the execution
+     * continues until all the operations are successful.
+     *
+     * @param callback - given callback to be called for each iteration.
+     */
+    void traverse_until_succeed(std::function<int(T)> callback);
+
+    /**
      * Adds new value to the sequence.
      *
      * @param src - given value to be added to the sequence.
      */
-    void add(T src);
+    void add(const T& src);
 
     /**
      * Checks if the sequence is empty.

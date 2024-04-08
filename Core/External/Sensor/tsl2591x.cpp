@@ -1,7 +1,5 @@
 #include "tsl2591x.h"
 
-bool TSL2591X::initialized = false;
-
 void TSL2591X::init() {
     enable();
 
@@ -10,16 +8,10 @@ void TSL2591X::init() {
     write_byte(PERSIST_REGISTER, 0x01);
 
     disable();
-
-    initialized = true;
 }
 
 bool TSL2591X::is_available() {
     return HAL_I2C_IsDeviceReady(&hi2c1, TSL2591X_ADDRESS, 1u, 10u) == HAL_OK;
-}
-
-bool TSL2591X::is_configured() {
-    return initialized;
 }
 
 bool TSL2591X::get_device_id() {
@@ -36,6 +28,8 @@ void TSL2591X::disable() {
 
 void TSL2591X::reset() {
     write_byte(CONTROL_REGISTER, SRESET);
+
+    init();
 }
 
 uint16_t TSL2591X::read_lux() {
@@ -49,10 +43,13 @@ uint16_t TSL2591X::read_lux() {
 
     uint16_t channel0 = read_channel0();
     uint16_t channel1 = read_channel1();
+
     disable();
 
     enable();
+
     write_byte(0xE7, 0x13);
+
     disable();
 
     uint16_t maxCounts;
@@ -98,7 +95,7 @@ uint16_t TSL2591X::read_lux() {
         gain = 9876.0;
     }
 
-    uint16_t lux1 = (int) ((channel0 - (2 * channel1)) / (((100 * externalIntegralTime + 100) * gain) / LUX_DF));
+    int lux1 = (int) ((channel0 - (2 * channel1)) / (((100 * externalIntegralTime + 100) * gain) / LUX_DF));
 
     if (lux1 <= 0) {
         return 0;
@@ -107,10 +104,16 @@ uint16_t TSL2591X::read_lux() {
     return lux1;
 }
 
-uint32_t TSL2591X::read_full() {
-    uint32_t result;
+uint16_t TSL2591X::read_full() {
+    uint16_t result;
 
     enable();
+
+    uint8_t externalIntegralTime = get_integral_time();
+
+    for (uint8_t i = 0; i < externalIntegralTime + 2; i++) {
+        HAL_Delay(100);
+    }
 
     result = (read_channel1() << 16) | read_channel0();
 
@@ -124,6 +127,12 @@ uint16_t TSL2591X::read_infrared() {
 
     enable();
 
+    uint8_t externalIntegralTime = get_integral_time();
+
+    for (uint8_t i = 0; i < externalIntegralTime + 2; i++) {
+        HAL_Delay(100);
+    }
+
     result = read_channel0();
 
     disable();
@@ -131,8 +140,14 @@ uint16_t TSL2591X::read_infrared() {
     return result;
 }
 
-uint32_t TSL2591X::read_visible() {
+uint16_t TSL2591X::read_visible() {
     enable();
+
+    uint8_t externalIntegralTime = get_integral_time();
+
+    for (uint8_t i = 0; i < externalIntegralTime + 2; i++) {
+        HAL_Delay(100);
+    }
 
     uint16_t channel1 = read_channel1();
     uint16_t channel0 = read_channel0();
@@ -211,7 +226,7 @@ uint8_t TSL2591X::get_integral_time() {
     return read_byte(CONTROL_REGISTER) & 0x07;
 }
 
-void TSL2591X::set_integral_time(uint8_t src)  {
+void TSL2591X::set_integral_time(uint8_t src) {
     if (src < 0x06) {
         uint8_t control = read_byte(CONTROL_REGISTER);
         control &= 0xf8;

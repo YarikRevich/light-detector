@@ -6,17 +6,25 @@ package light_detector;
 
 // Represents all the available settings options, which can be modified via settings bus.
 enum SettingsType {
-    Enable = 0;
-    Disable = 1;
-    Reset = 2;
-    SetGain = 3;
-    SetIntegralTime = 4;
+    SettingsNone = 0; // Stub enum to handle serialization.
+    Reset = 1;
+
+    SetGainLow = 2; // Represents different options for SetGain type.
+    SetGainMedium = 3;
+    SetGainHigh = 4;
+    SetGainMax = 5;
+
+    SetIntegralTimeFirst = 6; // Represents different options for SetIntegralTime type.
+    SetIntegralTimeSecond = 7;
+    SetIntegralTimeThird = 8;
+    SetIntegralTimeForth = 9;
+    SetIntegralTimeFifth = 10;
+    SetIntegralTimeSixth = 11;
 }
 
 // Represents settings bus request content send from the client to the board.
 message SettingsBusRequestContent {
     SettingsType settingsType = 1;
-    optional int32 value = 2;
 }
 
 // Represents settings bus response content send to the client from the board.
