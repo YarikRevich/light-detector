@@ -19,7 +19,7 @@ class GetDataCommand:
     VISIBLE_TYPE: str = "visible"
 
     @staticmethod
-    def handle(device: str, baud_rate: int, type: str, series: int, export: str, generate: bool, figure: str):
+    def handle(device: str, baud_rate: int, type: str, series: int, export: str, generate: bool, figure: str) -> None:
         """Handles the execution of command wrapper."""
 
         if not is_device_available(device):

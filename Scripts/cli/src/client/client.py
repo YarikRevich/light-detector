@@ -1,4 +1,5 @@
 import logging
+from typing import Union
 
 from serial import Serial
 from serial import SerialException
@@ -14,6 +15,8 @@ from dto import DataTypeCompound
 from dto import RetrievedDataDto
 from dto import InfoTypeCompound
 from dto import RetrievedInfoDto
+from dto import SettingsTypeCompound
+from dto import SetSettingsDto
 
 
 class Client:
@@ -34,13 +37,13 @@ class Client:
         except SerialException:
             logging.fatal("Given device is not available")
 
-    def send_data_bus_request_raw_data_type_content(self) -> RetrievedDataDto:
-        """Sends request to the board via data bus to retrieve data of raw type."""
+    def __send_data_bus_request_content(self, type: DataBus.DataType) -> Response.ResponseContainer:
+        """Sends request to the board via data bus to retrieve data."""
 
         request_container = Request.RequestContainer()
 
         data_bus_request = DataBus.DataBusRequestContent()
-        data_bus_request.dataType = DataBus.DataType.Raw
+        data_bus_request.dataType = type
 
         request_container.dataBus.CopyFrom(data_bus_request)
 
@@ -59,83 +62,61 @@ class Client:
         response_container = Response.ResponseContainer()
         response_container.ParseFromString(result)
 
+        return response_container
+
+    def send_data_bus_request_raw_data_type_content(self) -> RetrievedDataDto:
+        """Sends request to the board via data bus to retrieve data of raw type."""
+
+        data = self.__send_data_bus_request_content(DataBus.DataType.Raw)
+
         return RetrievedDataDto(
-            response_container.dataBus.deviceId,
+            data.dataBus.deviceId,
             DataTypeCompound.RAW,
-            response_container.dataBus.value,
-            response_container.dataBus.nonce)
+            data.dataBus.value,
+            data.dataBus.nonce)
 
     def send_data_bus_request_full_data_type_content(self) -> None:
         """Sends request to the board via data bus to retrieve data of full type."""
 
-        request_container = Request.RequestContainer()
-
-        data_bus_request = DataBus.DataBusRequestContent()
-        data_bus_request.dataType = DataBus.DataType.Full
-
-        request_container.dataBus.CopyFrom(data_bus_request)
-
-        data_length = request_container.ByteSize().to_bytes(1, "big")
-        data = request_container.SerializeToString()
-
-        self.connection.write(data_length)
-        self.connection.write(data)
-
-        result_length_raw = self.connection.read(3)
-
-        result_length = int.from_bytes(result_length_raw, 'big')
-
-        result = self.connection.read(result_length)
-
-        response_container = Response.ResponseContainer()
-        response_container.ParseFromString(result)
+        data = self.__send_data_bus_request_content(DataBus.DataType.Full)
 
         return RetrievedDataDto(
-            response_container.dataBus.deviceId,
+            data.dataBus.deviceId,
             DataTypeCompound.FULL,
-            response_container.dataBus.value,
-            response_container.dataBus.nonce)
+            data.dataBus.value,
+            data.dataBus.nonce)
 
     def send_data_bus_request_infrared_data_type_content(self) -> None:
         """Sends request to the board via data bus to retrieve data of infrared type."""
 
-        request_container = Request.RequestContainer()
-
-        data_bus_request = DataBus.DataBusRequestContent()
-        data_bus_request.dataType = DataBus.DataType.Infrared
-
-        request_container.dataBus.CopyFrom(data_bus_request)
-
-        data_length = request_container.ByteSize().to_bytes(1, "big")
-        data = request_container.SerializeToString()
-
-        self.connection.write(data_length)
-        self.connection.write(data)
-
-        result_length_raw = self.connection.read(3)
-
-        result_length = int.from_bytes(result_length_raw, 'big')
-
-        result = self.connection.read(result_length)
-
-        response_container = Response.ResponseContainer()
-        response_container.ParseFromString(result)
+        data = self.__send_data_bus_request_content(DataBus.DataType.Infrared)
 
         return RetrievedDataDto(
-            response_container.dataBus.deviceId,
+            data.dataBus.deviceId,
             DataTypeCompound.INFRARED,
-            response_container.dataBus.value,
-            response_container.dataBus.nonce)
+            data.dataBus.value,
+            data.dataBus.nonce)
 
     def send_data_bus_request_visible_data_type_content(self) -> None:
         """Sends request to the board via data bus to retrieve data of visible type."""
 
+        data = self.__send_data_bus_request_content(DataBus.DataType.Visible)
+
+        return RetrievedDataDto(
+            data.dataBus.deviceId,
+            DataTypeCompound.VISIBLE,
+            data.dataBus.value,
+            data.dataBus.nonce)
+
+    def __send_info_bus_request_content(self, type: InfoBus.InfoType) -> Response.ResponseContainer:
+        """Sends request to the board via info bus to retrieve info."""
+
         request_container = Request.RequestContainer()
 
-        data_bus_request = DataBus.DataBusRequestContent()
-        data_bus_request.dataType = DataBus.DataType.Visible
+        info_bus_request = InfoBus.InfoBusRequestContent()
+        info_bus_request.infoType = type
 
-        request_container.dataBus.CopyFrom(data_bus_request)
+        request_container.infoBus.CopyFrom(info_bus_request)
 
         data_length = request_container.ByteSize().to_bytes(1, "big")
         data = request_container.SerializeToString()
@@ -152,114 +133,72 @@ class Client:
         response_container = Response.ResponseContainer()
         response_container.ParseFromString(result)
 
-        return RetrievedDataDto(
-            response_container.dataBus.deviceId,
-            DataTypeCompound.VISIBLE,
-            response_container.dataBus.value,
-            response_container.dataBus.nonce)
+        return response_container
 
     def send_info_bus_request_gain_info_type_content(self) -> RetrievedDataDto:
         """Sends request to the board via info bus to retrieve info of gain type."""
 
-        request_container = Request.RequestContainer()
-
-        info_bus_request = InfoBus.InfoBusRequestContent()
-        info_bus_request.infoType = InfoBus.InfoType.Gain
-
-        request_container.infoBus.CopyFrom(info_bus_request)
-
-        data_length = request_container.ByteSize().to_bytes(1, "big")
-        data = request_container.SerializeToString()
-
-        self.connection.write(data_length)
-        self.connection.write(data)
-
-        result_length_raw = self.connection.read(3)
-
-        result_length = int.from_bytes(result_length_raw, 'big')
-
-        result = self.connection.read(result_length)
-
-        response_container = Response.ResponseContainer()
-        response_container.ParseFromString(result)
+        data = self.__send_info_bus_request_content(InfoBus.InfoType.Gain)
 
         return RetrievedDataDto(
-            response_container.infoBus.deviceId,
+            data.infoBus.deviceId,
             InfoTypeCompound.GAIN,
-            response_container.infoBus.value,
-            response_container.infoBus.nonce)
+            data.infoBus.value,
+            data.infoBus.nonce)
 
     def send_info_bus_request_integral_time_info_type_content(self) -> RetrievedDataDto:
         """Sends request to the board via info bus to retrieve info of integral time type."""
 
-        request_container = Request.RequestContainer()
-
-        info_bus_request = InfoBus.InfoBusRequestContent()
-        info_bus_request.infoType = InfoBus.InfoType.IntegralTime
-
-        request_container.infoBus.CopyFrom(info_bus_request)
-
-        data_length = request_container.ByteSize().to_bytes(1, "big")
-        data = request_container.SerializeToString()
-
-        self.connection.write(data_length)
-        self.connection.write(data)
-
-        result_length_raw = self.connection.read(3)
-
-        result_length = int.from_bytes(result_length_raw, 'big')
-
-        result = self.connection.read(result_length)
-
-        response_container = Response.ResponseContainer()
-        response_container.ParseFromString(result)
+        data = self.__send_info_bus_request_content(InfoBus.InfoType.IntegralTime)
 
         return RetrievedDataDto(
-            response_container.infoBus.deviceId,
+            data.infoBus.deviceId,
             InfoTypeCompound.INTEGRAL_TIME,
-            response_container.infoBus.value,
-            response_container.infoBus.nonce)
+            data.infoBus.value,
+            data.infoBus.nonce)
 
     def send_info_bus_request_processed_requests_info_type_content(self) -> RetrievedDataDto:
         """Sends request to the board via info bus to retrieve info of processed requests time type."""
 
-        request_container = Request.RequestContainer()
-
-        info_bus_request = InfoBus.InfoBusRequestContent()
-        info_bus_request.infoType = InfoBus.InfoType.ProcessedRequests
-
-        request_container.infoBus.CopyFrom(info_bus_request)
-
-        data_length = request_container.ByteSize().to_bytes(1, "big")
-        data = request_container.SerializeToString()
-
-        self.connection.write(data_length)
-        self.connection.write(data)
-
-        result_length_raw = self.connection.read(3)
-
-        result_length = int.from_bytes(result_length_raw, 'big')
-
-        result = self.connection.read(result_length)
-
-        response_container = Response.ResponseContainer()
-        response_container.ParseFromString(result)
+        data = self.__send_info_bus_request_content(InfoBus.InfoType.ProcessedRequests)
 
         return RetrievedDataDto(
-            response_container.infoBus.deviceId,
+            data.infoBus.deviceId,
             InfoTypeCompound.PROCESSED_REQUESTS,
-            response_container.infoBus.value,
-            response_container.infoBus.nonce)
+            data.infoBus.value,
+            data.infoBus.nonce)
 
     def send_info_bus_request_device_available_info_type_content(self) -> RetrievedDataDto:
         """Sends request to the board via info bus to retrieve info of device available time type."""
 
+        data = self.__send_info_bus_request_content(InfoBus.InfoType.DeviceAvailable)
+
+        return RetrievedDataDto(
+            data.infoBus.deviceId,
+            InfoTypeCompound.DEVICE_AVAILABLE,
+            data.infoBus.value,
+            data.infoBus.nonce)
+
+    def __send_settings_bus_request_content(
+            self,
+            type: SettingsBus.SettingsType,
+            value: Union[None, SettingsTypeCompound] = None) -> (
+            Response.ResponseContainer):
+        """Sends request to the board via settings bus to set settings."""
+
         request_container = Request.RequestContainer()
 
-        info_bus_request = InfoBus.InfoBusRequestContent()
-        info_bus_request.infoType = InfoBus.InfoType.DeviceAvailable
+        settings_bus_request = SettingsBus.SettingsBusRequestContent()
+        settings_bus_request.settingsType = type
 
-        request_container.infoBus.CopyFrom(info_bus_request)
+        match SettingsTypeCompound:
+            case SettingsTypeCompound.SET_GAIN:
+                settings_bus_request.setGainValue = value
+
+            case SettingsTypeCompound.SET_INTEGRAL_TIME:
+                settings_bus_request.setIntegralTimeValue = value
+
+        request_container.settingsBus.CopyFrom(settings_bus_request)
 
         data_length = request_container.ByteSize().to_bytes(1, "big")
         data = request_container.SerializeToString()
@@ -276,11 +215,138 @@ class Client:
         response_container = Response.ResponseContainer()
         response_container.ParseFromString(result)
 
-        return RetrievedDataDto(
-            response_container.infoBus.deviceId,
-            InfoTypeCompound.DEVICE_AVAILABLE,
-            response_container.infoBus.value,
-            response_container.infoBus.nonce)
+        return response_container
+
+    def send_settings_bus_request_reset_settings_type_content(self) -> SetSettingsDto:
+        """Sends request to the board via settings bus to set setting of reset type."""
+
+        data = self.__send_settings_bus_request_content(SettingsBus.SettingsType.Reset)
+
+        return SetSettingsDto(
+            data.settingsBus.deviceId,
+            SettingsTypeCompound.RESET,
+            data.settingsBus.result,
+            data.settingsBus.nonce)
+
+    def send_settings_bus_request_set_gain_low_settings_type_content(self) -> SetSettingsDto:
+        """Sends request to the board via settings bus to set setting of set gain low type."""
+
+        data = self.__send_settings_bus_request_content(
+            SettingsBus.SettingsType.SetGain, SettingsBus.SetGrainSettingType.Low)
+
+        return SetSettingsDto(
+            data.settingsBus.deviceId,
+            SettingsTypeCompound.SET_GAIN,
+            data.settingsBus.result,
+            data.settingsBus.nonce)
+
+    def send_settings_bus_request_set_gain_medium_settings_type_content(self) -> SetSettingsDto:
+        """Sends request to the board via settings bus to set setting of set gain medium type."""
+
+        data = self.__send_settings_bus_request_content(
+            SettingsBus.SettingsType.SetGain, SettingsBus.SetGrainSettingType.Medium)
+
+        return SetSettingsDto(
+            data.settingsBus.deviceId,
+            SettingsTypeCompound.SET_GAIN,
+            data.settingsBus.result,
+            data.settingsBus.nonce)
+
+    def send_settings_bus_request_set_gain_high_settings_type_content(self) -> SetSettingsDto:
+        """Sends request to the board via settings bus to set setting of set gain high type."""
+
+        data = self.__send_settings_bus_request_content(
+            SettingsBus.SettingsType.SetGain, SettingsBus.SetGrainSettingType.High)
+
+        return SetSettingsDto(
+            data.settingsBus.deviceId,
+            SettingsTypeCompound.SET_GAIN,
+            data.settingsBus.result,
+            data.settingsBus.nonce)
+
+    def send_settings_bus_request_set_gain_max_settings_type_content(self) -> SetSettingsDto:
+        """Sends request to the board via settings bus to set setting of set gain max type."""
+
+        data = self.__send_settings_bus_request_content(
+            SettingsBus.SettingsType.SetGain, SettingsBus.SetGrainSettingType.Max)
+
+        return SetSettingsDto(
+            data.settingsBus.deviceId,
+            SettingsTypeCompound.SET_GAIN,
+            data.settingsBus.result,
+            data.settingsBus.nonce)
+
+    def send_settings_bus_request_set_integral_time_first_settings_type_content(self) -> SetSettingsDto:
+        """Sends request to the board via settings bus to set setting of set integral time first type."""
+
+        data = self.__send_settings_bus_request_content(
+            SettingsBus.SettingsType.SetIntegralTime, SettingsBus.SetIntegralTimeSettingType.First)
+
+        return SetSettingsDto(
+            data.settingsBus.deviceId,
+            SettingsTypeCompound.SET_INTEGRAL_TIME,
+            data.settingsBus.result,
+            data.settingsBus.nonce)
+
+    def send_settings_bus_request_set_integral_time_second_settings_type_content(self) -> SetSettingsDto:
+        """Sends request to the board via settings bus to set setting of set integral time second type."""
+
+        data = self.__send_settings_bus_request_content(
+            SettingsBus.SettingsType.SetIntegralTime, SettingsBus.SetIntegralTimeSettingType.Second)
+
+        return SetSettingsDto(
+            data.settingsBus.deviceId,
+            SettingsTypeCompound.SET_INTEGRAL_TIME,
+            data.settingsBus.result,
+            data.settingsBus.nonce)
+
+    def send_settings_bus_request_set_integral_time_third_settings_type_content(self) -> SetSettingsDto:
+        """Sends request to the board via settings bus to set setting of set integral time third type."""
+
+        data = self.__send_settings_bus_request_content(
+            SettingsBus.SettingsType.SetIntegralTime, SettingsBus.SetIntegralTimeSettingType.Third)
+
+        return SetSettingsDto(
+            data.settingsBus.deviceId,
+            SettingsTypeCompound.SET_INTEGRAL_TIME,
+            data.settingsBus.result,
+            data.settingsBus.nonce)
+
+    def send_settings_bus_request_set_integral_time_forth_settings_type_content(self) -> SetSettingsDto:
+        """Sends request to the board via settings bus to set setting of set integral time forth type."""
+
+        data = self.__send_settings_bus_request_content(
+            SettingsBus.SettingsType.SetIntegralTime, SettingsBus.SetIntegralTimeSettingType.Forth)
+
+        return SetSettingsDto(
+            data.settingsBus.deviceId,
+            SettingsTypeCompound.SET_INTEGRAL_TIME,
+            data.settingsBus.result,
+            data.settingsBus.nonce)
+
+    def send_settings_bus_request_set_integral_time_fifth_settings_type_content(self) -> SetSettingsDto:
+        """Sends request to the board via settings bus to set setting of set integral time fifth type."""
+
+        data = self.__send_settings_bus_request_content(
+            SettingsBus.SettingsType.SetIntegralTime, SettingsBus.SetIntegralTimeSettingType.Fifth)
+
+        return SetSettingsDto(
+            data.settingsBus.deviceId,
+            SettingsTypeCompound.SET_INTEGRAL_TIME,
+            data.settingsBus.result,
+            data.settingsBus.nonce)
+
+    def send_settings_bus_request_set_integral_time_sixth_settings_type_content(self) -> SetSettingsDto:
+        """Sends request to the board via settings bus to set setting of set integral time sixth type."""
+
+        data = self.__send_settings_bus_request_content(
+            SettingsBus.SettingsType.SetIntegralTime, SettingsTypeCompound.SET_INTEGRAL_TIME)
+
+        return SetSettingsDto(
+            data.settingsBus.deviceId,
+            SettingsTypeCompound.SET_INTEGRAL_TIME,
+            data.settingsBus.result,
+            data.settingsBus.nonce)
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Closes client connection."""

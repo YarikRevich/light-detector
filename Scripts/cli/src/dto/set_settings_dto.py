@@ -1,12 +1,6 @@
 from enum import Enum
 
 
-# uint32 deviceId = 1;
-# SettingsType settingsType = 2;
-# bool result = 3;
-# uint32 nonce = 4;
-
-
 class SettingsTypeCompound(Enum):
     """Represents settings compound used to represent result settings type."""
 
@@ -25,7 +19,7 @@ class SetSettingsDto:
     settings_type: SettingsTypeCompound
 
     # Represents result of the received result.
-    result: int
+    result: bool
 
     # Represents nonce of the received result.
     nonce: int

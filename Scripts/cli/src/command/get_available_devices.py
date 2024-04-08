@@ -11,7 +11,7 @@ class GetAvailableDevicesCommand:
     """Represents 'get_available_devices' command."""
 
     @staticmethod
-    def handle():
+    def handle() -> None:
         """Handles the execution of command wrapper."""
 
         result = []

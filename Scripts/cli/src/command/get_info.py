@@ -15,7 +15,7 @@ class GetInfoCommand:
     DEVICE_AVAILABLE_TYPE: str = "device_available"
 
     @staticmethod
-    def handle(device: str, baud_rate: int, type: str):
+    def handle(device: str, baud_rate: int, type: str) -> None:
         """Handles the execution of command wrapper."""
 
         if not is_device_available(device):

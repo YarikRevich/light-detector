@@ -24,6 +24,11 @@ public:
     static void toggle_action_success();
 
     /**
+     * Indicated operation action failure.
+     */
+    static void toggle_action_failure();
+
+    /**
      * Indicated invalid incoming request.
      */
     static void toggle_invalid_request();

@@ -1,6 +1,10 @@
+from typing import Optional
+
 from .get_available_devices import GetAvailableDevicesCommand
 from .get_data import GetDataCommand
 from .get_info import GetInfoCommand
+from .set_settings import SetSettingsCommand
+from visualizer import Visualizer
 
 
 class BaseCommand:
@@ -14,7 +18,7 @@ class BaseCommand:
 
     @staticmethod
     def get_data(device: str, baud_rate: int, type: str, series: int = 1, export: str = None, generate: bool = False,
-                 figure: str = "scatter") -> None:
+                 figure: str = Visualizer.PLOT_FIGURE) -> None:
         """
         Returns sensor data of selected type. The available data types are 'raw', 'full', 'infrared', 'visible'.
         Allows to perform a series of measurements and export that data to a graph view. The available figure types are
@@ -33,10 +37,12 @@ class BaseCommand:
         GetInfoCommand.handle(device, baud_rate, type)
 
     @staticmethod
-    def set_settings(device: str, baud_rate: int, type: str) -> None:
+    def set_settings(device: str, baud_rate: int, type: str, value: Optional[str]) -> None:
         """
-        Returns selected metadata info retrieved from the board.
-        The available info types are 'gain', 'integral_time', 'processed_requests'
+        Sets given settings to the board.
+        The available settings types are 'reset', 'set_gain'(with values 'low', 'medium', 'high', 'max'),
+        'set_integral_time'(with values 'first'(100ms), 'second'(200ms), 'third'(300ms), 'forth'(400ms), 'fifth'(500mx),
+        'sixth'(600ms)).
         """
 
-        GetInfoCommand.handle(device, baud_rate, type)
+        SetSettingsCommand.handle(device, baud_rate, type, value)
