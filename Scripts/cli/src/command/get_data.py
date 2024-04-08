@@ -6,6 +6,7 @@ from middleware import is_export_valid
 from visualizer import Visualizer
 
 from dto import RetrievedDataDto
+from dto import VisualizerMetadataDto
 from client import Client
 from tools import print_output
 
@@ -50,17 +51,20 @@ class GetDataCommand:
         logging.info("Data has been successfully retrieved.")
 
         if series > 1 and is_export_valid(export):
-            visualizer = Visualizer(export, data)
+            visualizer = Visualizer(
+                export,
+                data,
+                VisualizerMetadataDto(type, series))
 
             match figure:
                 case Visualizer.SCATTER_FIGURE:
                     visualizer.select_scatter()
 
-                case Visualizer.BAR_FIGURE:
-                    visualizer.select_bar()
-
                 case Visualizer.PLOT_FIGURE:
                     visualizer.select_plot()
+
+                case Visualizer.STAIRS_FIGURE:
+                    visualizer.select_stairs()
 
                 case _:
                     logging.error("Given figure type is not valid.")

@@ -22,7 +22,7 @@ class BaseCommand:
         """
         Returns sensor data of selected type. The available data types are 'raw', 'full', 'infrared', 'visible'.
         Allows to perform a series of measurements and export that data to a graph view. The available figure types are
-        'scatter' and 'bar'.
+        'scatter', 'plot', 'stairs' and 'bar'.
         """
 
         GetDataCommand.handle(device, baud_rate, type, series, export, generate, figure)

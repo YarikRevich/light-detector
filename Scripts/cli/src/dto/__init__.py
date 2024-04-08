@@ -8,3 +8,5 @@ from .retrieved_info_dto import RetrievedInfoDto
 
 from .set_settings_dto import SettingsTypeCompound
 from .set_settings_dto import SetSettingsDto
+
+from .visualizer_metadata_dto import VisualizerMetadataDto

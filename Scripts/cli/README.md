@@ -1,6 +1,5 @@
 # CLI
 
-[![Build](https://github.com/YarikRevich/ResourceTracker/actions/workflows/build.yml/badge.svg)](https://github.com/YarikRevich/ResourceTracker/actions/workflows/build.yml)
 ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 ![MacOS](https://img.shields.io/badge/MacOS-8773f5?style=for-the-badge&logo=macos&logoColor=black)
 [![StandWithUkraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
@@ -30,12 +29,12 @@ In order to build the project it's required to execute the following command. It
 make install
 ```
 
-# Use cases
+# Use Cases
 
 Most of the commands given below require **baud rate**. It is important to be the exact-supported value,
 otherwise requests will be ignored(in the given examples baud rate is equal to **9600**).
 
-## Get available devices
+## Get Available Devices
 
 The example below shows how to retrieve a set of all available devices, which can be used to perform other operations.
 ```shell
@@ -49,7 +48,7 @@ $ light-detector-cli get_available_devices
 ]
 ```
 
-## Get info
+## Get Info
 
 The examples below show all the possible ways to retrieve metadata information from the board. Baud rate is important to be the exact-supported value,
 otherwise requests will be ignored(in the given examples baud rate is equal to **9600**).
@@ -73,7 +72,7 @@ Available **gain** values:
 * 32 - high
 * 48 - max
 
-### Integral time
+### Integral Time
 
 The next example shows how to retrieve the value of integral time metadata information from the board. 
 ```shell
@@ -94,7 +93,7 @@ Available **integral time** values:
 * 4 - 500ms
 * 5 - 600ms
 
-### Processed requests
+### Processed Requests
 
 The next example shows how to retrieve the value of processed requests(amount of successful incoming requests, different from nonce) metadata information from the board.
 ```shell
@@ -107,7 +106,7 @@ instance(RetrievedInfoDto):
   value: 20
 ```
 
-### Device available
+### Device Available
 
 The next example shows how to retrieve the value of device available metadata information from the board.
 ```shell
@@ -184,3 +183,20 @@ $ light-detector-cli get_data --device="/dev/cu.usbmodem1203" --baud_rate="9600"
 
 ...
 ```
+
+Available **figure** values:
+* plot
+* stairs
+* scatter
+
+#### Plot
+
+![](./docs/examples/get-data-plot.png)
+
+#### Stairs
+
+![](./docs/examples/get-data-stairs.png)
+
+#### Scatter
+
+![](./docs/examples/get-data-scatter.png)

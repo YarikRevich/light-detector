@@ -1,6 +1,6 @@
 # light-detector
 
-[![Build](https://github.com/YarikRevich/ResourceTracker/actions/workflows/build.yml/badge.svg)](https://github.com/YarikRevich/ResourceTracker/actions/workflows/build.yml)
+[![Build](https://github.com/YarikRevich/light-detector/actions/workflows/build.yml/badge.svg)](https://github.com/YarikRevich/light-detector/actions/workflows/build.yml)
 ![STM32](https://img.shields.io/badge/stm32-blue)
 [![StandWithUkraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
 

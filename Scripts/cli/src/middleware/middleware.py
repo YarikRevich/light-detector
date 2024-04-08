@@ -44,6 +44,9 @@ def is_device_available(device: str) -> bool:
 def is_export_valid(src: str) -> bool:
     """Checks if the given export path is valid and can be used for diagram generation."""
 
+    if src is None:
+        return False
+
     return not os.path.isfile(src)
 
 
