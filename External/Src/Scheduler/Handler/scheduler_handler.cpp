@@ -427,8 +427,6 @@ int SchedulerHandler::process_settings_bus_request_content_response(
 
             return EXIT_FAILURE;
         }
-
-
     }
 
     Indicator::toggle_action_success();

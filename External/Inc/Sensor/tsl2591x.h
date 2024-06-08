@@ -83,7 +83,7 @@ public:
      *
      * @return read device id.
      */
-    static bool get_device_id();
+    static uint8_t get_device_id();
 
     /**
      * Resets light sensor to the default state, initializing device with default settings.

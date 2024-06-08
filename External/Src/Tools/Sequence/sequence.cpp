@@ -42,7 +42,7 @@ void Sequence<T>::traverse_until_succeed(std::function<int(T)> callback) {
 
         sequence.pop();
     }
-};
+}
 
 template <typename T>
 void Sequence<T>::add(const T& src) {

@@ -21,7 +21,7 @@ public:
      *
      * @return retrieved state of the mutex.
      */
-    bool is_locked() const;
+    [[nodiscard]] bool is_locked() const;
 private:
     /**
      * Represents current state of the mutex.
