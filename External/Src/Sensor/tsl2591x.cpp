@@ -14,7 +14,7 @@ bool TSL2591X::is_available() {
     return HAL_I2C_IsDeviceReady(&hi2c1, TSL2591X_ADDRESS, 1u, 10u) == HAL_OK;
 }
 
-bool TSL2591X::get_device_id() {
+uint8_t TSL2591X::get_device_id() {
     return read_byte(WHO_AM_I);
 };
 

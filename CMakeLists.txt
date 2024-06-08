@@ -49,11 +49,11 @@ else ()
     add_compile_options(-Og -g)
 endif ()
 
-include_directories(Core/Inc Core/External/Proto/Buffer Core/External/Proto/Buffer/Request Core/External/Proto/Buffer/Response Core/External/Sensor Core/External/Proto/Helper Core/External/Proto/Codec Core/External/Proto/Generated Core/External/Proto/Generated/Content Core/External/Scheduler Core/External/Scheduler/Handler Core/External/State Core/External/Tools/Indicator Core/External/Tools/Converter Core/External/Tools/Mutex Core/External/Tools/Sequence ThirdParty/Inc Drivers/STM32L4xx_HAL_Driver/Inc Drivers/STM32L4xx_HAL_Driver/Inc/Legacy Drivers/CMSIS/Device/ST/STM32L4xx/Include Drivers/CMSIS/Include)
+include_directories(Drivers/CMSIS/Include Drivers/STM32L4xx_HAL_Driver/Inc Drivers/STM32L4xx_HAL_Driver/Inc/Legacy Drivers/CMSIS/Device/ST/STM32L4xx/Include Core/Inc ThirdParty/Inc External/Inc/Proto/Buffer External/Inc/Proto/Buffer/Request External/Inc/Proto/Buffer/Response External/Inc/Sensor External/Inc/Proto/Helper External/Inc/Proto/Codec External/Inc/Proto/Generated External/Inc/Proto/Generated/Content External/Inc/Scheduler External/Inc/Scheduler/Handler External/Inc/State External/Inc/Tools/Indicator External/Inc/Tools/Converter External/Inc/Tools/Mutex External/Inc/Tools/Sequence)
 
 add_definitions(-DDEBUG -DUSE_HAL_DRIVER -DSTM32L476xx)
 
-file(GLOB_RECURSE SOURCES "ThirdParty/*.*" "Core/*.*" "Drivers/*.*")
+file(GLOB_RECURSE SOURCES "Core/*.*" "Drivers/*.*" "External/*.*" "ThirdParty/*.*")
 
 set(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32L476RGTX_FLASH.ld)
 
