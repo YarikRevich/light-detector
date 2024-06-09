@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
-from dto import RetrievedDataDto
-from dto import VisualizerMetadataDto
+from ..dto import RetrievedDataDto
+from ..dto import VisualizerMetadataDto
 
 
 class Visualizer:

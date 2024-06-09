@@ -1,6 +1,6 @@
 import fire
 
-from command import BaseCommand
+from .command import BaseCommand
 
 
 def main() -> None:

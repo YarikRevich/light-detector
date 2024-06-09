@@ -5,18 +5,18 @@ from serial import Serial
 from serial import SerialException
 from serial import EIGHTBITS
 
-from proto.Content import data_pb2 as DataBus
-from proto.Content import info_pb2 as InfoBus
-from proto.Content import settings_pb2 as SettingsBus
-from proto import request_pb2 as Request
-from proto import response_pb2 as Response
+from ..proto import data_pb2 as DataBus
+from ..proto import info_pb2 as InfoBus
+from ..proto import settings_pb2 as SettingsBus
+from ..proto import request_pb2 as Request
+from ..proto import response_pb2 as Response
 
-from dto import DataTypeCompound
-from dto import RetrievedDataDto
-from dto import InfoTypeCompound
-from dto import RetrievedInfoDto
-from dto import SettingsTypeCompound
-from dto import SetSettingsDto
+from ..dto import DataTypeCompound
+from ..dto import RetrievedDataDto
+from ..dto import InfoTypeCompound
+from ..dto import RetrievedInfoDto
+from ..dto import SettingsTypeCompound
+from ..dto import SetSettingsDto
 
 
 class Client:

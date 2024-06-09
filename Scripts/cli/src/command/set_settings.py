@@ -1,10 +1,10 @@
 import logging
 from typing import Optional
 
-from middleware import is_device_available
-from dto import SetSettingsDto
-from client import Client
-from tools import print_output
+from ..middleware import is_device_available
+from ..dto import SetSettingsDto
+from ..client import Client
+from ..tools import print_output
 
 
 class SetSettingsCommand:
@@ -54,7 +54,7 @@ class SetSettingsCommand:
         """Handles the execution of command wrapper."""
 
         if not is_device_available(device):
-            logging.error("Selected device is not available")
+            logging.info("Selected device is not available")
             return
 
         data: SetSettingsDto
@@ -78,7 +78,7 @@ class SetSettingsCommand:
                         data = SetSettingsCommand.process_set_gain_max_settings(device, baud_rate)
 
                     case _:
-                        logging.error("Given settings value type is not valid.")
+                        logging.info("Given settings value type is not valid.")
                         return
 
             case SetSettingsCommand.SET_INTEGRAL_TIME_TYPE:
@@ -108,11 +108,11 @@ class SetSettingsCommand:
                             device, baud_rate)
 
                     case _:
-                        logging.error("Given settings value type is not valid.")
+                        logging.info("Given settings value type is not valid.")
                         return
 
             case _:
-                logging.error("Given settings type is not valid.")
+                logging.info("Given settings type is not valid.")
                 return
 
         print_output(data)

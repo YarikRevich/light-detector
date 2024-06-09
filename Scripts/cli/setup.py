@@ -43,6 +43,6 @@ setup(
     packages=find_packages(exclude=["tests", ".github"]),
     install_requires=read_requirements(),
     entry_points={
-        "console_scripts": ["light-sensor-cli = src.cli.__main__:main"]
+        "console_scripts": ["light-sensor-cli = src.__main__:main"]
     },
 )

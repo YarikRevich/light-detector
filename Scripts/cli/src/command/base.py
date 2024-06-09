@@ -4,7 +4,8 @@ from .get_available_devices import GetAvailableDevicesCommand
 from .get_data import GetDataCommand
 from .get_info import GetInfoCommand
 from .set_settings import SetSettingsCommand
-from visualizer import Visualizer
+
+from ..visualizer import Visualizer
 
 
 class BaseCommand:
