@@ -18,6 +18,8 @@ from ..dto import RetrievedInfoDto
 from ..dto import SettingsTypeCompound
 from ..dto import SetSettingsDto
 
+from ..tools import perform_request_await
+
 
 class Client:
     """Represents client used to connect to remote device via serial port."""
@@ -51,6 +53,9 @@ class Client:
         data = request_container.SerializeToString()
 
         self.connection.write(data_length)
+
+        perform_request_await()
+
         self.connection.write(data)
 
         result_length_raw = self.connection.read(3)
@@ -122,6 +127,9 @@ class Client:
         data = request_container.SerializeToString()
 
         self.connection.write(data_length)
+
+        perform_request_await()
+
         self.connection.write(data)
 
         result_length_raw = self.connection.read(3)
@@ -193,6 +201,9 @@ class Client:
         data = request_container.SerializeToString()
 
         self.connection.write(data_length)
+
+        perform_request_await()
+
         self.connection.write(data)
 
         result_length_raw = self.connection.read(3)
