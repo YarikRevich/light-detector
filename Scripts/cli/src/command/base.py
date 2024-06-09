@@ -43,7 +43,7 @@ class BaseCommand:
         """
         Sets given settings to the board.
         The available settings types are 'reset', 'set_gain'(with values 'low', 'medium', 'high', 'max'),
-        'set_integral_time'(with values 'first'(100ms), 'second'(200ms), 'third'(300ms), 'forth'(400ms), 'fifth'(500mx),
+        'set_integral_time'(with values 'first'(100ms), 'second'(200ms), 'third'(300ms), 'forth'(400ms), 'fifth'(500ms),
         'sixth'(600ms)).
         """
 

@@ -33,7 +33,7 @@ def read_requirements() -> list[str]:
 
 
 setup(
-    name="light-sensor-cli",
+    name="light-detector-cli",
     version="0.0.1",
     description="A tool used to allows to perform operations on STM32L476RG board with installed TSL2591X light sensor with the help of serial connection.",
     url="https://github.com/YarikRevich/light-detector",
@@ -43,6 +43,6 @@ setup(
     packages=find_packages(exclude=["tests", ".github"]),
     install_requires=read_requirements(),
     entry_points={
-        "console_scripts": ["light-sensor-cli = src.__main__:main"]
+        "console_scripts": ["light-detector-cli = src.__main__:main"]
     },
 )

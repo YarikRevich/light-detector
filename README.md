@@ -17,17 +17,23 @@ Includes following features:
 
 ## Setup
 
-All setup related operations are processed via **Makefile** placed in the root directory.
+First of all connect your device to the board using pin-out given below. Then connect your board to serial port.
 
-First of all connect your board to the serial port.
+![](https://www.waveshare.com/w/A6Y79bcq/Kdy80nYY.php?f=TSL25911-Arduino-WS.jpg&width=900)
 
-In order to build **IOC** project it's required to **CubeMX** to generate **ELF** upload it with the help of
+In order to build **IOC** project using **light_detector.ioc** file it's required to use **STM CubeMX** to generate **ELF** file and upload it with the help of
 **STM Programmer**.
 
-> If **ProtocolBuffers** files need to be regenerated it's required to execute the following command:
+All supportive setup related operations are processed via **Makefile** placed in the project root directory.
+
+> If **ProtocolBuffers** bindings need to be regenerated it's required to execute the following command:
 ```shell
 make generate
 ```
+
+After successful installation, the board should signalize successful connection with the device:
+
+![](./Docs/Examples/signalization.gif)
 
 ## Scripts
 
