@@ -18,7 +18,7 @@ All the operations are perform with the usage of **ProtocolBuffers**.
 ## Setup
  
 First of all connect your board with device installed to serial port. Your board needs to have
-already installed software build, which allows communication with TSL2591X device.
+already installed software build, which allows communication with **TSL2591X** device.
 
 ![](https://www.waveshare.com/w/A6Y79bcq/Kdy80nYY.php?f=TSL25911-Arduino-WS.jpg&width=900)
 

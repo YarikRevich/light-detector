@@ -1,9 +1,9 @@
 import logging
 
-from middleware import is_device_available
-from dto import RetrievedInfoDto
-from client import Client
-from tools import print_output
+from ..middleware import is_device_available
+from ..dto import RetrievedInfoDto
+from ..client import Client
+from ..tools import print_output
 
 
 class GetInfoCommand:
@@ -19,7 +19,7 @@ class GetInfoCommand:
         """Handles the execution of command wrapper."""
 
         if not is_device_available(device):
-            logging.error("Selected device is not available")
+            logging.info("Selected device is not available")
             return
 
         data: RetrievedInfoDto
@@ -38,7 +38,7 @@ class GetInfoCommand:
                 data = GetInfoCommand.process_get_device_available_info(device, baud_rate)
 
             case _:
-                logging.error("Given info type is not valid.")
+                logging.info("Given info type is not valid.")
                 return
 
         print_output(data)

@@ -1,14 +1,14 @@
 import logging
 
-from middleware import is_device_available
-from middleware import is_export_valid
+from ..middleware import is_device_available
+from ..middleware import is_export_valid
 
-from visualizer import Visualizer
+from ..visualizer import Visualizer
 
-from dto import RetrievedDataDto
-from dto import VisualizerMetadataDto
-from client import Client
-from tools import print_output
+from ..dto import RetrievedDataDto
+from ..dto import VisualizerMetadataDto
+from ..client import Client
+from ..tools import print_output
 
 
 class GetDataCommand:
@@ -24,7 +24,7 @@ class GetDataCommand:
         """Handles the execution of command wrapper."""
 
         if not is_device_available(device):
-            logging.error("Selected device is not available")
+            logging.info("Selected device is not available")
             return
 
         data: list[RetrievedDataDto] = []
@@ -44,7 +44,7 @@ class GetDataCommand:
                     data.append(GetDataCommand.process_get_visible_data(device, baud_rate))
 
                 case _:
-                    logging.error("Given data type is not valid.")
+                    logging.info("Given data type is not valid.")
                     return
 
         print_output(data)
@@ -67,7 +67,7 @@ class GetDataCommand:
                     visualizer.select_stairs()
 
                 case _:
-                    logging.error("Given figure type is not valid.")
+                    logging.info("Given figure type is not valid.")
                     return
 
             visualizer.save()

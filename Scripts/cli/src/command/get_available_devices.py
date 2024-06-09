@@ -1,10 +1,10 @@
 import logging
 from serial.tools import list_ports
 
-from middleware import is_manufacturer_allowed
-from middleware import is_description_valid
-from dto import AvailableDevicesDto
-from tools import print_output
+from ..middleware import is_manufacturer_allowed
+from ..middleware import is_description_valid
+from ..dto import AvailableDevicesDto
+from ..tools import print_output
 
 
 class GetAvailableDevicesCommand:
@@ -25,4 +25,4 @@ class GetAvailableDevicesCommand:
 
             logging.info("Available devices have been successfully retrieved.")
         else:
-            logging.error("No available devices found.")
+            logging.info("No available devices found.")
